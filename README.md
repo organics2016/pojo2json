@@ -2,8 +2,6 @@
 
 A simple plugin for converting Java bean to JSON in IntelliJ IDEA
 
-git: https://github.com/organics2016/javabean2json
-
 Original author: linsage , git: https://github.com/linsage/java2json
 
 ## Screenshot
