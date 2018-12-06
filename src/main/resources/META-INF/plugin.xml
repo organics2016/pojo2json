@@ -7,7 +7,8 @@
 
     <description><![CDATA[
        <p>A simple plugin for converting Java bean to JSON</p>
-
+       <p>git: https://github.com/organics2016/javabean2json</p>
+       <p>Original author: linsage , git: https://github.com/linsage/java2json</p>
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
