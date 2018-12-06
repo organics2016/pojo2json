@@ -1,11 +1,13 @@
 <idea-plugin>
     <id>com.organics.javabean2json</id>
     <name>Javabean to Json</name>
+    <version>1.0.0</version>
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
+    <depends>com.intellij.modules.lang</depends>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+       <p>A simple plugin for converting Java bean to JSON</p>
+
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -14,6 +16,11 @@
     <depends>com.intellij.modules.lang</depends>
     -->
 
+    <change-notes><![CDATA[
+         <li>1.0.0 - First revision.</li>
+    ]]>
+    </change-notes>
+
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
     </extensions>
@@ -21,8 +28,8 @@
     <actions>
         <action class="com.organics.javabean2json.JavaBean2JsonAction"
                 id="com.organics.javabean2json.JavaBean2JsonAction"
-                text="ConvertToJson"
-                description="JavaBean Convert to Json">
+                text="Bean To Json"
+                description="Javabean Convert to Json">
 
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
 
