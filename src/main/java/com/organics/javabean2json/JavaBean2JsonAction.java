@@ -1,6 +1,7 @@
 package com.organics.javabean2json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -48,7 +49,7 @@ public class JavaBean2JsonAction extends AnAction {
         PsiClass selectedClass = PsiTreeUtil.getContextOfType(elementAt, PsiClass.class);
         try {
             Map<String, Object> kv = getFields(selectedClass);
-            String json = JSON.toJSONString(kv);
+            String json = JSON.toJSONString(kv, SerializerFeature.PrettyFormat);
             StringSelection selection = new StringSelection(json);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, selection);
