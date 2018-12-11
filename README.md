@@ -7,3 +7,5 @@ Original author: linsage , git: https://github.com/linsage/java2json
 ## Screenshot
 
 ![Image text](https://raw.githubusercontent.com/organics2016/javabean2json/master/screenshot/java2json.gif)
+
+https://plugins.jetbrains.com/plugin/11424-javabean-to-json
