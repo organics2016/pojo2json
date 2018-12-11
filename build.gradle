@@ -20,8 +20,8 @@ dependencies {
 intellij {
     version '2018.1.7'
 }
-patchPluginXml {
-    changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
 }
