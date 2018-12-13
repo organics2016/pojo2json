@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.organics.javabean2json</id>
     <name>Javabean to Json</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.lang</depends>
 
@@ -19,6 +19,7 @@
 
     <change-notes><![CDATA[
          <li>1.0.0 - First revision.</li>
+         <li>1.0.1 - fix dependence bug.</li>
     ]]>
     </change-notes>
 
