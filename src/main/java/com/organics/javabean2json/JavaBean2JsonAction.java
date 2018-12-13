@@ -1,7 +1,6 @@
 package com.organics.javabean2json;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.google.gson.GsonBuilder;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -28,6 +27,8 @@ public class JavaBean2JsonAction extends AnAction {
     @NonNls
     private static final Map<String, Object> normalTypes = new HashMap<>();
 
+    private static final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
+
     static {
         notificationGroup = new NotificationGroup("javabean2json.NotificationGroup", NotificationDisplayType.BALLOON, true);
 
@@ -49,7 +50,7 @@ public class JavaBean2JsonAction extends AnAction {
         PsiClass selectedClass = PsiTreeUtil.getContextOfType(elementAt, PsiClass.class);
         try {
             Map<String, Object> kv = getFields(selectedClass);
-            String json = JSON.toJSONString(kv, SerializerFeature.PrettyFormat);
+            String json = gsonBuilder.create().toJson(kv);
             StringSelection selection = new StringSelection(json);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, selection);
