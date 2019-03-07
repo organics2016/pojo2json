@@ -11,11 +11,6 @@
        <p>Original author: linsage , git: https://github.com/linsage/java2json</p>
     ]]></description>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
 
     <change-notes><![CDATA[
          <li>1.0.0 - First revision.</li>

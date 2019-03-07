@@ -1,28 +1,27 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.intellij' version '0.3.12'
+    id "org.jetbrains.intellij" version "0.4.2"
 }
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
 group 'com.organics'
-version '1.0.1'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
+version '1.0.2'
 
 intellij {
     version '2018.1.7'
-    plugins 'coverage' //Bundled plugin dependencies
+    updateSinceUntilBuild false
+}
+
+patchPluginXml {
+    sinceBuild 173.0
 }
 
 publishPlugin {
