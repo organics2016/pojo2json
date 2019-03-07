@@ -6,11 +6,9 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_1_8
 
-apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
 
 group 'com.organics'
 version '1.0.2'
@@ -21,7 +19,7 @@ intellij {
 }
 
 patchPluginXml {
-    sinceBuild 173.0
+    sinceBuild "173"
 }
 
 publishPlugin {
