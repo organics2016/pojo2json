@@ -16,8 +16,11 @@ import org.jetbrains.annotations.NonNls;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class JavaBean2JsonAction extends AnAction {
 
@@ -32,17 +35,17 @@ public class JavaBean2JsonAction extends AnAction {
     static {
         notificationGroup = new NotificationGroup("javabean2json.NotificationGroup", NotificationDisplayType.BALLOON, true);
 
+        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
         normalTypes.put("Boolean", false);
         normalTypes.put("Number", 0);
-        normalTypes.put("String", "");
-        normalTypes.put("Date", "");
-        normalTypes.put("LocalDateTime", "");
-        normalTypes.put("LocalDate", "");
+        normalTypes.put("CharSequence", "");
+        normalTypes.put("Date", time);
+        normalTypes.put("Temporal", time);
     }
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-
         Editor editor = e.getData(CommonDataKeys.EDITOR);
         PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
         Project project = e.getProject();
@@ -63,23 +66,7 @@ public class JavaBean2JsonAction extends AnAction {
         }
     }
 
-
-    public static PsiType getSuperTypes(PsiType type) {
-
-        PsiType[] types = type.getSuperTypes();
-        if (types.length == 0) {
-            return type;
-        } else {
-            PsiType superTypes = types[0];
-            if (superTypes.getPresentableText().startsWith("Object")) {
-                return type;
-            } else {
-                return getSuperTypes(superTypes);
-            }
-        }
-    }
-
-    public static Map<String, Object> getFields(PsiClass psiClass) {
+    private static Map<String, Object> getFields(PsiClass psiClass) {
         Map<String, Object> map = new LinkedHashMap<>();
 
         if (psiClass == null) {
@@ -87,52 +74,73 @@ public class JavaBean2JsonAction extends AnAction {
         }
 
         for (PsiField field : psiClass.getAllFields()) {
-            PsiType type = field.getType();
-            String name = field.getName();
-
-            if (type instanceof PsiPrimitiveType) {       //primitive Type
-                map.put(name, PsiTypesUtil.getDefaultValue(type));
-            } else if (type instanceof PsiArrayType) {   //array type
-                List<Object> list = new ArrayList<>();
-                PsiType deepType = type.getDeepComponentType();
-                String deepTypeName = deepType.getPresentableText();
-
-                if (deepType instanceof PsiPrimitiveType) {
-                    list.add(PsiTypesUtil.getDefaultValue(deepType));
-                } else if (normalTypes.containsKey(deepTypeName)) {
-                    list.add(normalTypes.get(deepTypeName));
-                } else {
-                    list.add(getFields(PsiUtil.resolveClassInType(deepType)));
-                }
-
-                map.put(name, list);
-
-            } else {    //reference Type
-                PsiType superTypes = getSuperTypes(type);
-                String fieldTypeName = superTypes.getPresentableText();
-
-                if (normalTypes.containsKey(fieldTypeName)) {    //normal Type
-                    map.put(name, normalTypes.get(fieldTypeName));
-
-                } else if (fieldTypeName.startsWith("Iterable")) {   //list type
-
-                    PsiType iterableType = PsiUtil.extractIterableTypeParameter(type, false);
-                    PsiClass iterableClass = PsiUtil.resolveClassInClassTypeOnly(iterableType);
-                    List<Object> list = new ArrayList<>();
-                    String classTypeName = iterableClass.getName();
-                    if (normalTypes.containsKey(classTypeName)) {
-                        list.add(normalTypes.get(classTypeName));
-                    } else {
-                        list.add(getFields(iterableClass));
-                    }
-                    map.put(name, list);
-
-                } else {    //class type
-                    map.put(name, getFields(PsiUtil.resolveClassInType(type)));
-                }
-            }
+            map.put(field.getName(), typeResolve(field.getType()));
         }
 
         return map;
     }
+
+
+    private static Object typeResolve(PsiType type) {
+
+
+        if (type instanceof PsiPrimitiveType) {       //primitive Type
+
+            return PsiTypesUtil.getDefaultValue(type);
+
+        } else if (type instanceof PsiArrayType) {   //array type
+
+            List<Object> list = new ArrayList<>();
+            PsiType deepType = type.getDeepComponentType();
+            list.add(typeResolve(deepType));
+
+            return list;
+
+        } else {    //reference Type
+            /*
+             * Object
+             * Iterable
+             * enum
+             * */
+            Map<String, Object> map = new LinkedHashMap<>();
+
+            PsiType[] types = type.getSuperTypes();
+            if (types.length == 0) {
+                return map;
+            } else {
+
+                List<String> fieldTypeNames = new ArrayList<>();
+
+                fieldTypeNames.add(type.getPresentableText());
+                fieldTypeNames.addAll(Arrays.stream(types).map(PsiType::getPresentableText).collect(Collectors.toList()));
+
+                if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {
+
+                    List<Object> list = new ArrayList<>();
+                    PsiType iterableType = PsiUtil.extractIterableTypeParameter(type, false);
+                    list.add(typeResolve(iterableType));
+
+                    return list;
+                } else if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Enum"))) {
+                    return map;
+                } else {
+                    List<String> retain = new ArrayList<>(fieldTypeNames);
+                    retain.retainAll(normalTypes.keySet());
+                    if (!retain.isEmpty()) {
+                        return normalTypes.get(retain.get(0));
+                    } else {
+                        PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
+                        if (psiClass != null) {
+                            for (PsiField field : psiClass.getAllFields()) {
+                                map.put(field.getName(), typeResolve(field.getType()));
+                            }
+                        }
+                        return map;
+                    }
+                }
+            }
+        }
+    }
 }
+
+
