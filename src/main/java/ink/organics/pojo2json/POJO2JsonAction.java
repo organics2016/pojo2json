@@ -1,4 +1,4 @@
-package com.organics.javabean2json;
+package ink.organics.pojo2json;
 
 import com.google.gson.GsonBuilder;
 import com.intellij.notification.*;
@@ -22,10 +22,11 @@ import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class JavaBean2JsonAction extends AnAction {
+public class POJO2JsonAction extends AnAction {
 
 
-    private static NotificationGroup notificationGroup;
+    private static final NotificationGroup notificationGroup =
+            new NotificationGroup("pojo2json.NotificationGroup", NotificationDisplayType.BALLOON, true);
 
     @NonNls
     private static final Map<String, Object> normalTypes = new HashMap<>();
@@ -33,7 +34,6 @@ public class JavaBean2JsonAction extends AnAction {
     private static final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
     static {
-        notificationGroup = new NotificationGroup("javabean2json.NotificationGroup", NotificationDisplayType.BALLOON, true);
 
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 

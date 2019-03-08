@@ -1,12 +1,12 @@
 <idea-plugin>
-    <id>com.organics.javabean2json</id>
-    <name>Javabean to Json</name>
+    <id>ink.organics.pojo2json</id>
+    <name>POJO to Json</name>
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.lang</depends>
 
     <description><![CDATA[
        <p>A simple plugin for converting Java bean to JSON</p>
-       <p>git: https://github.com/organics2016/javabean2json</p>
+       <p>git: https://github.com/organics2016/pojo2json</p>
        <p>Original author: linsage , git: https://github.com/linsage/java2json</p>
     ]]></description>
 
@@ -22,10 +22,10 @@
     </extensions>
 
     <actions>
-        <action class="com.organics.javabean2json.JavaBean2JsonAction"
-                id="com.organics.javabean2json.JavaBean2JsonAction"
-                text="Bean To Json"
-                description="Javabean Convert to Json">
+        <action class="ink.organics.pojo2json.POJO2JsonAction"
+                id="ink.organics.pojo2json.POJO2JsonAction"
+                text="POJO To Json"
+                description="POJO Convert to Json">
 
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
 

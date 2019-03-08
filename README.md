@@ -1,11 +1,11 @@
-# java2json
+# pojo2json
 
-A simple plugin for converting Java bean to JSON in IntelliJ IDEA
+A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 Original author: linsage , git: https://github.com/linsage/java2json
 
 ## Screenshot
 
-![Image text](https://raw.githubusercontent.com/organics2016/javabean2json/master/screenshot/java2json.gif)
+![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/java2json.gif)
 
-https://plugins.jetbrains.com/plugin/11424-javabean-to-json
+
