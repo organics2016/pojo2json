@@ -1,12 +1,15 @@
 plugins {
-    id "org.jetbrains.intellij" version "0.4.2"
+    id "org.jetbrains.intellij" version "0.4.4"
 }
 
 repositories {
     mavenCentral()
 }
 
+apply plugin: 'java'
 sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 
 apply plugin: 'org.jetbrains.intellij'
 
@@ -14,6 +17,7 @@ group 'ink.organics'
 version '1.0.2'
 
 intellij {
+    plugins 'coverage'
     version '2018.1.7'
     updateSinceUntilBuild false
 }
@@ -23,6 +27,7 @@ patchPluginXml {
 }
 
 publishPlugin {
+    token "perm:b3JnYW5pY3M=.cG9qbzJqc29u.EFMshObMZUntPOIVFFqe9vd3qeRFRY"
     username intellijPublishUsername
     password intellijPublishPassword
 }
