@@ -10,7 +10,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 
 apply plugin: 'org.jetbrains.intellij'
 
-group 'com.organics'
+group 'ink.organics'
 version '1.0.2'
 
 intellij {
