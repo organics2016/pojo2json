@@ -18,6 +18,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,13 +36,17 @@ public class POJO2JsonAction extends AnAction {
 
     static {
 
-        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime now = LocalDateTime.now();
+        String dateTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         normalTypes.put("Boolean", false);
         normalTypes.put("Number", 0);
         normalTypes.put("CharSequence", "");
-        normalTypes.put("Date", time);
-        normalTypes.put("Temporal", time);
+        normalTypes.put("Date", dateTime);
+        normalTypes.put("Temporal", dateTime);
+        normalTypes.put("LocalDateTime", dateTime);
+        normalTypes.put("LocalDate", now.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        normalTypes.put("LocalTime", now.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
 
     @Override
@@ -122,7 +127,7 @@ public class POJO2JsonAction extends AnAction {
 
                     return list;
                 } else if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Enum"))) {
-                    return map;
+                    return "";
                 } else {
                     List<String> retain = new ArrayList<>(fieldTypeNames);
                     retain.retainAll(normalTypes.keySet());
