@@ -17,6 +17,10 @@
          <li>1.0.0 - First revision.</li>
          <li>1.0.1 - fix dependence bug.</li>
          <li>1.0.2 - Fix Parsing enum times wrong and support Java8 time type.</li>
+         <li>1.0.3
+             - Think of enum as a string.
+             - Special time type processing optimization.
+         </li>
     ]]>
     </change-notes>
 
