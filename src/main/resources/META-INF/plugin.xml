@@ -7,9 +7,9 @@
     <description><![CDATA[
        <p>A simple plugin for converting Java bean to JSON</p>
        <p>git: https://github.com/organics2016/pojo2json</p>
-       <p>Original author: linsage , git: https://github.com/linsage/java2json</p>
        <p>Support BigDecimal and other Numeric objects.</p>
        <p>Support Java8 time type.</p>
+       <p>Support Enum.</p>
     ]]></description>
 
 
