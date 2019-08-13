@@ -16,9 +16,9 @@ import org.jetbrains.annotations.NonNls;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,7 +43,7 @@ public class POJO2JsonAction extends AnAction {
         normalTypes.put("Number", 0);
         normalTypes.put("CharSequence", "");
         normalTypes.put("Date", dateTime);
-        normalTypes.put("Temporal", dateTime);
+        normalTypes.put("Temporal", Instant.now().toEpochMilli());
         normalTypes.put("LocalDateTime", dateTime);
         normalTypes.put("LocalDate", now.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         normalTypes.put("LocalTime", now.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
@@ -124,10 +124,22 @@ public class POJO2JsonAction extends AnAction {
                     List<Object> list = new ArrayList<>();
                     PsiType iterableType = PsiUtil.extractIterableTypeParameter(type, false);
                     list.add(typeResolve(iterableType));
-
                     return list;
-                } else if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Enum"))) {
-                    return "";
+
+
+                } else if (PsiUtil.resolveClassInClassTypeOnly(type).isEnum()) {
+
+                    ArrayList<String> list = new ArrayList<>();
+                    for (PsiField field : PsiUtil.resolveClassInClassTypeOnly(type).getFields()) {
+                        if (field instanceof PsiEnumConstant) {
+                            list.add(field.getName());
+                        }
+                    }
+                    if (list.isEmpty()) {
+                        list.add("");
+                    }
+                    return list;
+
                 } else {
                     List<String> retain = new ArrayList<>(fieldTypeNames);
                     retain.retainAll(normalTypes.keySet());
