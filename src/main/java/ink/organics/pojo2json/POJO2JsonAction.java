@@ -129,16 +129,12 @@ public class POJO2JsonAction extends AnAction {
 
                 } else if (PsiUtil.resolveClassInClassTypeOnly(type).isEnum()) {
 
-                    ArrayList<String> list = new ArrayList<>();
                     for (PsiField field : PsiUtil.resolveClassInClassTypeOnly(type).getFields()) {
                         if (field instanceof PsiEnumConstant) {
-                            list.add(field.getName());
+                            return field.getName();
                         }
                     }
-                    if (list.isEmpty()) {
-                        list.add("");
-                    }
-                    return list;
+                    return "";
 
                 } else {
                     List<String> retain = new ArrayList<>(fieldTypeNames);

@@ -14,7 +14,7 @@ tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 apply plugin: 'org.jetbrains.intellij'
 
 group 'ink.organics'
-version '1.0.3'
+version '1.0.4'
 
 intellij {
     plugins 'coverage'
@@ -23,7 +23,7 @@ intellij {
 }
 
 patchPluginXml {
-    sinceBuild "173"
+    sinceBuild "181"
 }
 
 publishPlugin {
