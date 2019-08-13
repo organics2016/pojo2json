@@ -21,6 +21,7 @@
              - Think of enum as a string.
              - Special time type processing optimization.
          </li>
+         <li>1.0.4 - Support enum constant.</li>
     ]]>
     </change-notes>
 
