@@ -22,6 +22,7 @@
              - Special time type processing optimization.
          </li>
          <li>1.0.4 - Support enum constant.</li>
+         <li>1.0.5 - fix idea 192.* compatibility problems.</li>
     ]]>
     </change-notes>
 
