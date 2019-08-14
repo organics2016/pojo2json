@@ -20,7 +20,7 @@ patchPluginXml {
 }
 
 publishPlugin {
-    token "perm:b3JnYW5pY3M=.cG9qbzJqc29u.EFMshObMZUntPOIVFFqe9vd3qeRFRY"
+    token intellijPublishToken
     username intellijPublishUsername
     password intellijPublishPassword
 }
