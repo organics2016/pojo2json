@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.intellij" version "0.4.4"
+    id "org.jetbrains.intellij" version "0.4.10"
 }
 
 repositories {
@@ -11,8 +11,7 @@ version '1.0.5'
 
 intellij {
     plugins 'java'
-    plugins 'coverage'
-    version '2018.1.7'
+    version '2019.2'
     updateSinceUntilBuild false
 }
 

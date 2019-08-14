@@ -3,6 +3,9 @@
     <name>POJO to Json</name>
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.lang</depends>
+    <!-- https://blog.jetbrains.com/platform/2019/06/java-functionality-extracted-as-a-plugin/ -->
+    <depends>com.intellij.modules.java</depends>
+
 
     <description><![CDATA[
        <p>A simple plugin for converting Java bean to JSON</p>
@@ -26,8 +29,6 @@
     ]]>
     </change-notes>
 
-    <!-- https://blog.jetbrains.com/platform/2019/06/java-functionality-extracted-as-a-plugin/ -->
-    <depends>com.intellij.modules.java</depends>
 
     <actions>
         <action class="ink.organics.pojo2json.POJO2JsonAction"
