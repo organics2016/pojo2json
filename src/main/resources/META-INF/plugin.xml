@@ -25,10 +25,6 @@
     ]]>
     </change-notes>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-    </extensions>
-
     <actions>
         <action class="ink.organics.pojo2json.POJO2JsonAction"
                 id="ink.organics.pojo2json.POJO2JsonAction"
