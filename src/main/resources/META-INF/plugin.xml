@@ -26,6 +26,9 @@
     ]]>
     </change-notes>
 
+    <!-- https://blog.jetbrains.com/platform/2019/06/java-functionality-extracted-as-a-plugin/ -->
+    <depends>com.intellij.modules.java</depends>
+
     <actions>
         <action class="ink.organics.pojo2json.POJO2JsonAction"
                 id="ink.organics.pojo2json.POJO2JsonAction"
