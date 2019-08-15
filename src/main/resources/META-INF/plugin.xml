@@ -26,7 +26,7 @@
          </li>
          <li>1.0.4 - Support enum constant.</li>
          <li>1.0.5 - fix idea 192.* compatibility problems.</li>
-         <li>1.0.6 - fix loop nesting stack overflow.</li>
+         <li>1.0.6 - fix loop nesting caused stack overflow.</li>
     ]]>
     </change-notes>
 
