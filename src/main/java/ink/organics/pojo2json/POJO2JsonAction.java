@@ -79,14 +79,14 @@ public class POJO2JsonAction extends AnAction {
         }
 
         for (PsiField field : psiClass.getAllFields()) {
-            map.put(field.getName(), typeResolve(field.getType(), null));
+            map.put(field.getName(), typeResolve(field.getType(), new ArrayList<>()));
         }
 
         return map;
     }
 
 
-    private static Object typeResolve(PsiType type, PsiType lastType) {
+    private static Object typeResolve(PsiType type, List<String> resolveHistory) {
 
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
@@ -95,7 +95,10 @@ public class POJO2JsonAction extends AnAction {
 
         } else if (type instanceof PsiArrayType) {   //array type
 
-            return arrayTypeResolve(type, lastType, false);
+            List<Object> list = new ArrayList<>();
+            PsiType deepType = type.getDeepComponentType();
+            list.add(typeResolve(deepType, resolveHistory));
+            return list;
 
         } else {    //reference Type
 
@@ -106,6 +109,7 @@ public class POJO2JsonAction extends AnAction {
             if (types.length == 0) {
                 return map;
             } else {
+
 
                 PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
 
@@ -131,7 +135,10 @@ public class POJO2JsonAction extends AnAction {
 
                     if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {// Iterable
 
-                        return arrayTypeResolve(type, lastType, true);
+                        List<Object> list = new ArrayList<>();
+                        PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
+                        list.add(typeResolve(deepType, resolveHistory));
+                        return list;
 
                     } else { // Object
 
@@ -141,12 +148,14 @@ public class POJO2JsonAction extends AnAction {
                             return normalTypes.get(retain.get(0));
                         } else {
 
-                            if (lastType != null && lastType.getCanonicalText().equals(type.getCanonicalText())) {
+                            if (resolveHistory.contains(type.getCanonicalText())) {
                                 return map;
                             }
 
+                            resolveHistory.add(type.getCanonicalText());
+
                             for (PsiField field : psiClass.getAllFields()) {
-                                map.put(field.getName(), typeResolve(field.getType(), type));
+                                map.put(field.getName(), typeResolve(field.getType(), resolveHistory));
                             }
                             return map;
                         }
@@ -154,32 +163,6 @@ public class POJO2JsonAction extends AnAction {
                 }
             }
         }
-    }
-
-
-    private static List<Object> arrayTypeResolve(PsiType type, PsiType lastType, boolean iterable) {
-
-        List<Object> list = new ArrayList<>();
-
-        PsiType deepType;
-        if (iterable) {
-            deepType = PsiUtil.extractIterableTypeParameter(type, false);
-        } else {
-            deepType = type.getDeepComponentType();
-        }
-
-        if (deepType == null) {
-            return list;
-        }
-
-        if (lastType != null && lastType.getCanonicalText().equals(deepType.getCanonicalText())) {
-            return list;
-        } else {
-            list.add(typeResolve(deepType, type));
-        }
-
-        return list;
-
     }
 }
 
