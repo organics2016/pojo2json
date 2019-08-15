@@ -102,34 +102,24 @@ public class POJO2JsonAction extends AnAction {
             return list;
 
         } else {    //reference Type
-            /*
-             * Object
-             * Iterable
-             * enum
-             * */
+
             Map<String, Object> map = new LinkedHashMap<>();
 
             PsiType[] types = type.getSuperTypes();
+
             if (types.length == 0) {
                 return map;
             } else {
 
-                List<String> fieldTypeNames = new ArrayList<>();
+                PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
 
-                fieldTypeNames.add(type.getPresentableText());
-                fieldTypeNames.addAll(Arrays.stream(types).map(PsiType::getPresentableText).collect(Collectors.toList()));
+                if (psiClass == null) {
+                    return map;
+                }
 
-                if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {
+                if (psiClass.isEnum()) { // enum
 
-                    List<Object> list = new ArrayList<>();
-                    PsiType iterableType = PsiUtil.extractIterableTypeParameter(type, false);
-                    list.add(typeResolve(iterableType));
-                    return list;
-
-
-                } else if (PsiUtil.resolveClassInClassTypeOnly(type).isEnum()) {
-
-                    for (PsiField field : PsiUtil.resolveClassInClassTypeOnly(type).getFields()) {
+                    for (PsiField field : psiClass.getFields()) {
                         if (field instanceof PsiEnumConstant) {
                             return field.getName();
                         }
@@ -137,18 +127,32 @@ public class POJO2JsonAction extends AnAction {
                     return "";
 
                 } else {
-                    List<String> retain = new ArrayList<>(fieldTypeNames);
-                    retain.retainAll(normalTypes.keySet());
-                    if (!retain.isEmpty()) {
-                        return normalTypes.get(retain.get(0));
-                    } else {
-                        PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
-                        if (psiClass != null) {
+
+                    List<String> fieldTypeNames = new ArrayList<>();
+
+                    fieldTypeNames.add(type.getPresentableText());
+                    fieldTypeNames.addAll(Arrays.stream(types).map(PsiType::getPresentableText).collect(Collectors.toList()));
+
+                    if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {// Iterable
+
+                        List<Object> list = new ArrayList<>();
+                        PsiType iterableType = PsiUtil.extractIterableTypeParameter(type, false);
+                        list.add(typeResolve(iterableType));
+                        return list;
+
+
+                    } else { // Object
+
+                        List<String> retain = new ArrayList<>(fieldTypeNames);
+                        retain.retainAll(normalTypes.keySet());
+                        if (!retain.isEmpty()) {
+                            return normalTypes.get(retain.get(0));
+                        } else {
                             for (PsiField field : psiClass.getAllFields()) {
                                 map.put(field.getName(), typeResolve(field.getType()));
                             }
+                            return map;
                         }
-                        return map;
                     }
                 }
             }
