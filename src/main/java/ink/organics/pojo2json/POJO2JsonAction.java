@@ -79,14 +79,14 @@ public class POJO2JsonAction extends AnAction {
         }
 
         for (PsiField field : psiClass.getAllFields()) {
-            map.put(field.getName(), typeResolve(field.getType(), new ArrayList<>()));
+            map.put(field.getName(), typeResolve(field.getType()));
         }
 
         return map;
     }
 
 
-    private static Object typeResolve(PsiType type, List<String> resolveHistory) {
+    private static Object typeResolve(PsiType type) {
 
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
@@ -97,7 +97,7 @@ public class POJO2JsonAction extends AnAction {
 
             List<Object> list = new ArrayList<>();
             PsiType deepType = type.getDeepComponentType();
-            list.add(typeResolve(deepType, resolveHistory));
+            list.add(typeResolve(deepType));
             return list;
 
         } else {    //reference Type
@@ -137,7 +137,7 @@ public class POJO2JsonAction extends AnAction {
 
                         List<Object> list = new ArrayList<>();
                         PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                        list.add(typeResolve(deepType, resolveHistory));
+                        list.add(typeResolve(deepType));
                         return list;
 
                     } else { // Object
@@ -147,15 +147,8 @@ public class POJO2JsonAction extends AnAction {
                         if (!retain.isEmpty()) {
                             return normalTypes.get(retain.get(0));
                         } else {
-
-                            if (resolveHistory.contains(type.getCanonicalText())) {
-                                return map;
-                            }
-
-                            resolveHistory.add(type.getCanonicalText());
-
                             for (PsiField field : psiClass.getAllFields()) {
-                                map.put(field.getName(), typeResolve(field.getType(), resolveHistory));
+                                map.put(field.getName(), typeResolve(field.getType()));
                             }
                             return map;
                         }
