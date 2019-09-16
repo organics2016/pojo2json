@@ -18,6 +18,7 @@ Thanks to the developer @linsage
         - Special time type processing optimization.
 * 1.0.4 - Support enum constant.
 * 1.0.5 - fix idea 192.* compatibility problems.
+* 1.0.6 - fix loop nesting caused stack overflow.
 
 
 ## Plugin
@@ -27,5 +28,4 @@ https://plugins.jetbrains.com/plugin/12066-pojo-to-json
 
 ## Future
 
-* fix loop nesting caused stack overflow
 * Support Javadoc
