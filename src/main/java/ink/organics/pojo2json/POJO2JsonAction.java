@@ -79,15 +79,16 @@ public class POJO2JsonAction extends AnAction {
         }
 
         for (PsiField field : psiClass.getAllFields()) {
-            map.put(field.getName(), typeResolve(field.getType()));
+            map.put(field.getName(), typeResolve(field.getType(), 0));
         }
 
         return map;
     }
 
 
-    private static Object typeResolve(PsiType type) {
+    private static Object typeResolve(PsiType type, int level) {
 
+        level = ++level;
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 
@@ -97,7 +98,7 @@ public class POJO2JsonAction extends AnAction {
 
             List<Object> list = new ArrayList<>();
             PsiType deepType = type.getDeepComponentType();
-            list.add(typeResolve(deepType));
+            list.add(typeResolve(deepType, level));
             return list;
 
         } else {    //reference Type
@@ -132,7 +133,7 @@ public class POJO2JsonAction extends AnAction {
 
                     List<Object> list = new ArrayList<>();
                     PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                    list.add(typeResolve(deepType));
+                    list.add(typeResolve(deepType, level));
                     return list;
 
                 } else { // Object
@@ -142,9 +143,15 @@ public class POJO2JsonAction extends AnAction {
                     if (!retain.isEmpty()) {
                         return normalTypes.get(retain.get(0));
                     } else {
-                        for (PsiField field : psiClass.getAllFields()) {
-                            map.put(field.getName(), typeResolve(field.getType()));
+
+                        if (level > 128) {
+                            return map;
                         }
+
+                        for (PsiField field : psiClass.getAllFields()) {
+                            map.put(field.getName(), typeResolve(field.getType(), level));
+                        }
+
                         return map;
                     }
                 }
