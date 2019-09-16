@@ -16,8 +16,8 @@ import org.jetbrains.annotations.NonNls;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.*;
@@ -43,7 +43,7 @@ public class POJO2JsonAction extends AnAction {
         normalTypes.put("Number", 0);
         normalTypes.put("CharSequence", "");
         normalTypes.put("Date", dateTime);
-        normalTypes.put("Temporal", Instant.now().toEpochMilli());
+        normalTypes.put("Temporal", now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         normalTypes.put("LocalDateTime", dateTime);
         normalTypes.put("LocalDate", now.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         normalTypes.put("LocalTime", now.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
@@ -104,54 +104,48 @@ public class POJO2JsonAction extends AnAction {
 
             Map<String, Object> map = new LinkedHashMap<>();
 
-            PsiType[] types = type.getSuperTypes();
+            PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
 
-            if (types.length == 0) {
+            if (psiClass == null) {
                 return map;
+            }
+
+            if (psiClass.isEnum()) { // enum
+
+                for (PsiField field : psiClass.getFields()) {
+                    if (field instanceof PsiEnumConstant) {
+                        return field.getName();
+                    }
+                }
+                return "";
+
             } else {
 
+                List<String> fieldTypeNames = new ArrayList<>();
 
-                PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
+                PsiType[] types = type.getSuperTypes();
 
-                if (psiClass == null) {
-                    return map;
-                }
+                fieldTypeNames.add(type.getPresentableText());
+                fieldTypeNames.addAll(Arrays.stream(types).map(PsiType::getPresentableText).collect(Collectors.toList()));
 
-                if (psiClass.isEnum()) { // enum
+                if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {// Iterable
 
-                    for (PsiField field : psiClass.getFields()) {
-                        if (field instanceof PsiEnumConstant) {
-                            return field.getName();
+                    List<Object> list = new ArrayList<>();
+                    PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
+                    list.add(typeResolve(deepType));
+                    return list;
+
+                } else { // Object
+
+                    List<String> retain = new ArrayList<>(fieldTypeNames);
+                    retain.retainAll(normalTypes.keySet());
+                    if (!retain.isEmpty()) {
+                        return normalTypes.get(retain.get(0));
+                    } else {
+                        for (PsiField field : psiClass.getAllFields()) {
+                            map.put(field.getName(), typeResolve(field.getType()));
                         }
-                    }
-                    return "";
-
-                } else {
-
-                    List<String> fieldTypeNames = new ArrayList<>();
-
-                    fieldTypeNames.add(type.getPresentableText());
-                    fieldTypeNames.addAll(Arrays.stream(types).map(PsiType::getPresentableText).collect(Collectors.toList()));
-
-                    if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {// Iterable
-
-                        List<Object> list = new ArrayList<>();
-                        PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                        list.add(typeResolve(deepType));
-                        return list;
-
-                    } else { // Object
-
-                        List<String> retain = new ArrayList<>(fieldTypeNames);
-                        retain.retainAll(normalTypes.keySet());
-                        if (!retain.isEmpty()) {
-                            return normalTypes.get(retain.get(0));
-                        } else {
-                            for (PsiField field : psiClass.getAllFields()) {
-                                map.put(field.getName(), typeResolve(field.getType()));
-                            }
-                            return map;
-                        }
+                        return map;
                     }
                 }
             }
