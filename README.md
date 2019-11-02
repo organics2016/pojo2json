@@ -19,6 +19,7 @@ Thanks to the developer @linsage
 * 1.0.4 - Support enum constant.
 * 1.0.5 - fix idea 192.* compatibility problems.
 * 1.0.6 - fix loop nesting caused stack overflow.
+* 1.0.7 - All floating-point types retain two decimal places.
 
 
 ## Plugin
