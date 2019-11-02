@@ -65,6 +65,11 @@ public class POJO2JsonAction extends AnAction {
             String message = "Convert " + selectedClass.getName() + " to JSON success, copied to clipboard.";
             Notification success = notificationGroup.createNotification(message, NotificationType.INFORMATION);
             Notifications.Bus.notify(success, project);
+
+
+        } catch (KnownException ex) {
+            Notification warn = notificationGroup.createNotification(ex.getMessage(), NotificationType.WARNING);
+            Notifications.Bus.notify(warn, project);
         } catch (Exception ex) {
             Notification error = notificationGroup.createNotification("Convert to JSON failed.", NotificationType.ERROR);
             Notifications.Bus.notify(error, project);
@@ -145,7 +150,7 @@ public class POJO2JsonAction extends AnAction {
                     } else {
 
                         if (level > 128) {
-                            return map;
+                            throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 
                         for (PsiField field : psiClass.getAllFields()) {
