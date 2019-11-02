@@ -9,13 +9,14 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.psi.util.PsiUtil;
 import org.jetbrains.annotations.NonNls;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -34,12 +35,18 @@ public class POJO2JsonAction extends AnAction {
 
     private static final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
+    private static final BigDecimal zero = BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY);
+
     static {
 
         LocalDateTime now = LocalDateTime.now();
         String dateTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+
         normalTypes.put("Boolean", false);
+        normalTypes.put("Float", zero);
+        normalTypes.put("Double", zero);
+        normalTypes.put("BigDecimal", zero);
         normalTypes.put("Number", 0);
         normalTypes.put("CharSequence", "");
         normalTypes.put("Date", dateTime);
@@ -76,6 +83,7 @@ public class POJO2JsonAction extends AnAction {
         }
     }
 
+
     private static Map<String, Object> getFields(PsiClass psiClass) {
         Map<String, Object> map = new LinkedHashMap<>();
 
@@ -97,7 +105,7 @@ public class POJO2JsonAction extends AnAction {
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 
-            return PsiTypesUtil.getDefaultValue(type);
+            return getDefaultValue(type);
 
         } else if (type instanceof PsiArrayType) {   //array type
 
@@ -149,7 +157,7 @@ public class POJO2JsonAction extends AnAction {
                         return normalTypes.get(retain.get(0));
                     } else {
 
-                        if (level > 128) {
+                        if (level > 500) {
                             throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 
@@ -161,6 +169,31 @@ public class POJO2JsonAction extends AnAction {
                     }
                 }
             }
+        }
+    }
+
+
+    public static Object getDefaultValue(PsiType type) {
+        if (!(type instanceof PsiPrimitiveType)) return null;
+        switch (type.getCanonicalText()) {
+            case "boolean":
+                return false;
+            case "byte":
+                return (byte) 0;
+            case "char":
+                return '\0';
+            case "short":
+                return (short) 0;
+            case "int":
+                return 0;
+            case "long":
+                return 0L;
+            case "float":
+                return zero;
+            case "double":
+                return zero;
+            default:
+                return null;
         }
     }
 }
