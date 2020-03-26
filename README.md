@@ -7,7 +7,7 @@ Thanks to the developer @linsage
 
 ## Screenshot
 
-![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/java2json.gif)
+![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/pojo2json.gif)
 
 ## Update
 
