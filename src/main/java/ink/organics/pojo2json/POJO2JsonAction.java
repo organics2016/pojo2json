@@ -1,7 +1,10 @@
 package ink.organics.pojo2json;
 
 import com.google.gson.GsonBuilder;
-import com.intellij.notification.*;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationGroup;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -28,7 +31,7 @@ public class POJO2JsonAction extends AnAction {
 
 
     private static final NotificationGroup notificationGroup =
-            new NotificationGroup("pojo2json.NotificationGroup", NotificationDisplayType.BALLOON, true);
+            NotificationGroup.balloonGroup("pojo2json.NotificationGroup");
 
     @NonNls
     private static final Map<String, Object> normalTypes = new HashMap<>();

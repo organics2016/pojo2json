@@ -11,12 +11,12 @@ version '1.0.8'
 
 intellij {
     plugins 'java'
-    version '2019.2'
+    version '2019.3'
     updateSinceUntilBuild false
 }
 
 patchPluginXml {
-    sinceBuild "181"
+    sinceBuild "193"
 }
 
 publishPlugin {
