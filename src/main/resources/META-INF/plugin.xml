@@ -16,21 +16,14 @@
 
 
     <change-notes><![CDATA[
-         <li>1.0.0 - First revision.</li>
-         <li>1.0.1 - fix dependence bug.</li>
-         <li>1.0.2 - Fix Parsing enum times wrong and support Java8 time type.</li>
-         <li>1.0.3
-             - Think of enum as a string.
-             - Special time type processing optimization.
-         </li>
-         <li>1.0.4 - Support enum constant.</li>
-         <li>1.0.5 - fix idea 192.* compatibility problems.</li>
-         <li>1.0.6 - fix loop nesting caused stack overflow.</li>
-         <li>1.0.7 - All floating-point types retain two decimal places.</li>
-         <li>1.0.8 - Fix incompatible dependencies.</li>
+         <p>1.0.9 version</p>
+         <li>Compatible with IDEA version 2020.3 and later no longer supports previous versions</li>
     ]]>
     </change-notes>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="pojo2json.NotificationGroup" displayType="BALLOON" key="pojo2json.NotificationGroup"/>
+    </extensions>
 
     <actions>
         <action class="ink.organics.pojo2json.POJO2JsonAction"
