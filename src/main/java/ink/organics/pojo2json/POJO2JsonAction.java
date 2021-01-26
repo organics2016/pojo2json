@@ -10,50 +10,44 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
+import ink.organics.pojo2json.fake.*;
 import org.jetbrains.annotations.NonNls;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class POJO2JsonAction extends AnAction {
+public abstract class POJO2JsonAction extends AnAction {
 
 
-    private static final NotificationGroup notificationGroup =
+    private final NotificationGroup notificationGroup =
             NotificationGroupManager.getInstance().getNotificationGroup("pojo2json.NotificationGroup");
 
     @NonNls
-    private static final Map<String, Object> normalTypes = new HashMap<>();
+    private final Map<String, JsonFakeValuesService> normalTypes = new HashMap<>();
 
-    private static final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
+    private final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
-    private static final BigDecimal zero = BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY);
+    public POJO2JsonAction() {
 
-    static {
+        FakeDecimal fakeDecimal = new FakeDecimal();
+        FakeDateTime fakeDateTime = new FakeDateTime();
 
-        LocalDateTime now = LocalDateTime.now();
-        String dateTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-
-        normalTypes.put("Boolean", false);
-        normalTypes.put("Float", zero);
-        normalTypes.put("Double", zero);
-        normalTypes.put("BigDecimal", zero);
-        normalTypes.put("Number", 0);
-        normalTypes.put("CharSequence", "");
-        normalTypes.put("Date", dateTime);
-        normalTypes.put("Temporal", now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-        normalTypes.put("LocalDateTime", dateTime);
-        normalTypes.put("LocalDate", now.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        normalTypes.put("LocalTime", now.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        normalTypes.put("Boolean", new FakeBoolean());
+        normalTypes.put("Float", fakeDecimal);
+        normalTypes.put("Double", fakeDecimal);
+        normalTypes.put("BigDecimal", fakeDecimal);
+        normalTypes.put("Number", new FakeInteger());
+        normalTypes.put("Character", new FakeChar());
+        normalTypes.put("CharSequence", new FakeString());
+        normalTypes.put("Date", fakeDateTime);
+        normalTypes.put("Temporal", new FakeTemporal());
+        normalTypes.put("LocalDateTime", fakeDateTime);
+        normalTypes.put("LocalDate", new FakeDate());
+        normalTypes.put("LocalTime", new FakeTime());
     }
 
     @Override
@@ -84,7 +78,10 @@ public class POJO2JsonAction extends AnAction {
     }
 
 
-    private static Map<String, Object> getFields(PsiClass psiClass) {
+    protected abstract Object getFakeValue(JsonFakeValuesService jsonFakeValuesService);
+
+
+    private Map<String, Object> getFields(PsiClass psiClass) {
         Map<String, Object> map = new LinkedHashMap<>();
 
         if (psiClass == null) {
@@ -99,13 +96,13 @@ public class POJO2JsonAction extends AnAction {
     }
 
 
-    private static Object typeResolve(PsiType type, int level) {
+    private Object typeResolve(PsiType type, int level) {
 
         level = ++level;
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 
-            return getDefaultValue(type);
+            return getPrimitiveTypeValue(type);
 
         } else if (type instanceof PsiArrayType) {   //array type
 
@@ -154,7 +151,7 @@ public class POJO2JsonAction extends AnAction {
                     List<String> retain = new ArrayList<>(fieldTypeNames);
                     retain.retainAll(normalTypes.keySet());
                     if (!retain.isEmpty()) {
-                        return normalTypes.get(retain.get(0));
+                        return this.getFakeValue(normalTypes.get(retain.get(0)));
                     } else {
 
                         if (level > 500) {
@@ -173,25 +170,20 @@ public class POJO2JsonAction extends AnAction {
     }
 
 
-    public static Object getDefaultValue(PsiType type) {
-        if (!(type instanceof PsiPrimitiveType)) return null;
+    public Object getPrimitiveTypeValue(PsiType type) {
         switch (type.getCanonicalText()) {
             case "boolean":
-                return false;
+                return this.getFakeValue(normalTypes.get("Boolean"));
             case "byte":
-                return (byte) 0;
-            case "char":
-                return '\0';
             case "short":
-                return (short) 0;
             case "int":
-                return 0;
             case "long":
-                return 0L;
+                return this.getFakeValue(normalTypes.get("Number"));
             case "float":
-                return zero;
             case "double":
-                return zero;
+                return this.getFakeValue(normalTypes.get("BigDecimal"));
+            case "char":
+                return this.getFakeValue(normalTypes.get("Character"));
             default:
                 return null;
         }

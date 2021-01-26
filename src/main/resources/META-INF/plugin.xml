@@ -26,12 +26,21 @@
     </extensions>
 
     <actions>
-        <action class="ink.organics.pojo2json.POJO2JsonAction"
-                id="ink.organics.pojo2json.POJO2JsonAction"
+        <action class="ink.organics.pojo2json.POJO2JsonDefaultAction"
+                id="ink.organics.pojo2json.POJO2JsonDefaultAction"
                 text="POJO To Json"
-                description="POJO Convert to Json">
+                description="POJO To Json">
 
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+
+        </action>
+
+        <action class="ink.organics.pojo2json.POJO2JsonRandomAction"
+                id="ink.organics.pojo2json.POJO2JsonRandomAction"
+                text="POJO To Json Random Values"
+                description="POJO To Json Random Values">
+
+            <add-to-group group-id="EditorPopupMenu" relative-to-action="ink.organics.pojo2json.POJO2JsonDefaultAction" anchor="after"/>
 
         </action>
     </actions>
