@@ -16,8 +16,9 @@
 
 
     <change-notes><![CDATA[
-         <p>1.0.9 version</p>
-         <li>Compatible with IDEA version 2020.3 and later no longer supports previous versions</li>
+         <p>1.0.10 version</p>
+         <li>Add a new option to the menu</li>
+         <li>The resulting JSON will have some random values</li>
     ]]>
     </change-notes>
 
@@ -29,7 +30,7 @@
         <action class="ink.organics.pojo2json.POJO2JsonDefaultAction"
                 id="ink.organics.pojo2json.POJO2JsonDefaultAction"
                 text="POJO To Json"
-                description="POJO To Json">
+                description="Convert POJO to JSON and copy to the shear plate">
 
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
 
@@ -38,7 +39,7 @@
         <action class="ink.organics.pojo2json.POJO2JsonRandomAction"
                 id="ink.organics.pojo2json.POJO2JsonRandomAction"
                 text="POJO To Json Random Values"
-                description="POJO To Json Random Values">
+                description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
 
             <add-to-group group-id="EditorPopupMenu" relative-to-action="ink.organics.pojo2json.POJO2JsonDefaultAction" anchor="after"/>
 
