@@ -11,6 +11,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.awt.*;
@@ -89,7 +90,7 @@ public abstract class POJO2JsonAction extends AnAction {
         }
 
         for (PsiField field : psiClass.getAllFields()) {
-            map.put(field.getName(), typeResolve(field.getType(), 0));
+            map.put(fieldResolve(field), typeResolve(field.getType(), 0));
         }
 
         return map;
@@ -159,7 +160,7 @@ public abstract class POJO2JsonAction extends AnAction {
                         }
 
                         for (PsiField field : psiClass.getAllFields()) {
-                            map.put(field.getName(), typeResolve(field.getType(), level));
+                            map.put(fieldResolve(field), typeResolve(field.getType(), level));
                         }
 
                         return map;
@@ -187,6 +188,28 @@ public abstract class POJO2JsonAction extends AnAction {
             default:
                 return null;
         }
+    }
+
+    private String fieldResolve(PsiField field) {
+
+        PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
+        if (annotation != null) {
+            String fieldName = annotation.findAttributeValue("value").getText()
+                    .replace("\"", "");
+            if (StringUtils.isNotBlank(fieldName)) {
+                return fieldName;
+            }
+        }
+
+        annotation = field.getAnnotation("com.alibaba.fastjson.annotation.JSONField");
+        if (annotation != null) {
+            String fieldName = annotation.findAttributeValue("name").getText()
+                    .replace("\"", "");
+            if (StringUtils.isNotBlank(fieldName)) {
+                return fieldName;
+            }
+        }
+        return field.getName();
     }
 }
 
