@@ -21,7 +21,6 @@ https://plugins.jetbrains.com/plugin/12066-pojo-to-json
 
 <!-- Plugin description end -->
 
-
 ## Contributors
 
 Ideas and partial realization from
