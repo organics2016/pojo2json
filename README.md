@@ -1,9 +1,8 @@
-## pojo2json
+<!-- Plugin description -->
+
+## POJO to JSON
 
 A simple plugin for converting POJO to JSON in IntelliJ IDEA
-
-Ideas and partial realization from https://github.com/linsage/java2json
-Thanks to the developer @linsage
 
 ### Support
 
@@ -19,3 +18,11 @@ Thanks to the developer @linsage
 ### Plugin
 
 https://plugins.jetbrains.com/plugin/12066-pojo-to-json
+
+<!-- Plugin description end -->
+
+
+## Contributors
+
+Ideas and partial realization from
+[![linsage](https://avatars.githubusercontent.com/u/12984934?s=28)linsage](https://github.com/linsage)
