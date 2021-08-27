@@ -6,12 +6,6 @@
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
 
-    <change-notes><![CDATA[
-         <b>1.0.11 version</b>
-         <li>Support Jackson and Fastjson annotations.</li>
-    ]]>
-    </change-notes>
-
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="pojo2json.NotificationGroup" displayType="BALLOON" key="pojo2json.NotificationGroup"/>
     </extensions>
