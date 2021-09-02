@@ -59,7 +59,12 @@ public abstract class POJO2JsonAction extends AnAction {
         PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
         PsiClass selectedClass = PsiTreeUtil.getContextOfType(elementAt, PsiClass.class);
         try {
-            Map<String, Object> kv = getFields(selectedClass);
+
+            if (selectedClass == null) {
+                throw new KnownException("Can't find class scope, move the cursor within the class scope.");
+            }
+
+            Map<String, Object> kv = parseClass(selectedClass, 0);
             String json = gsonBuilder.create().toJson(kv);
             StringSelection selection = new StringSelection(json);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -73,7 +78,7 @@ public abstract class POJO2JsonAction extends AnAction {
             Notification warn = notificationGroup.createNotification(ex.getMessage(), NotificationType.WARNING);
             Notifications.Bus.notify(warn, project);
         } catch (Exception ex) {
-            Notification error = notificationGroup.createNotification("Convert to JSON failed.", NotificationType.ERROR);
+            Notification error = notificationGroup.createNotification("Convert to JSON failed. " + ex, NotificationType.ERROR);
             Notifications.Bus.notify(error, project);
         }
     }
@@ -82,22 +87,58 @@ public abstract class POJO2JsonAction extends AnAction {
     protected abstract Object getFakeValue(JsonFakeValuesService jsonFakeValuesService);
 
 
-    private Map<String, Object> getFields(PsiClass psiClass) {
-        Map<String, Object> map = new LinkedHashMap<>();
-
-        if (psiClass == null) {
-            return map;
+    private Map<String, Object> parseClass(PsiClass psiClass, int level) {
+        PsiAnnotation annotation = psiClass.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreType.class.getName());
+        if (annotation != null) {
+            return null;
         }
-
-        for (PsiField field : psiClass.getAllFields()) {
-            map.put(fieldResolve(field), typeResolve(field.getType(), 0));
-        }
-
-        return map;
+        return Arrays.stream(psiClass.getAllFields())
+                .map(field -> parseField(field, level))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (ov, nv) -> ov, LinkedHashMap::new));
     }
 
+    private Map.Entry<String, Object> parseField(PsiField field, int level) {
+        PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnore.class.getName());
+        if (annotation != null) {
+            return null;
+        }
 
-    private Object typeResolve(PsiType type, int level) {
+        String fieldKey = parseFieldKey(field);
+        Object fieldValue = parseFieldValue(field, level);
+        if (fieldKey == null || fieldValue == null) {
+            return null;
+        }
+        return Map.entry(fieldKey, fieldValue);
+    }
+
+    private String parseFieldKey(PsiField field) {
+
+        PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
+        if (annotation != null) {
+            String fieldName = annotation.findAttributeValue("value").getText()
+                    .replace("\"", "");
+            if (StringUtils.isNotBlank(fieldName)) {
+                return fieldName;
+            }
+        }
+
+        annotation = field.getAnnotation("com.alibaba.fastjson.annotation.JSONField");
+        if (annotation != null) {
+            String fieldName = annotation.findAttributeValue("name").getText()
+                    .replace("\"", "");
+            if (StringUtils.isNotBlank(fieldName)) {
+                return fieldName;
+            }
+        }
+        return field.getName();
+    }
+
+    private Object parseFieldValue(PsiField field, int level) {
+        return parseFieldValueType(field.getType(), level);
+    }
+
+    private Object parseFieldValueType(PsiType type, int level) {
 
         level = ++level;
 
@@ -109,17 +150,15 @@ public abstract class POJO2JsonAction extends AnAction {
 
             List<Object> list = new ArrayList<>();
             PsiType deepType = type.getDeepComponentType();
-            list.add(typeResolve(deepType, level));
+            list.add(parseFieldValueType(deepType, level));
             return list;
 
         } else {    //reference Type
 
-            Map<String, Object> map = new LinkedHashMap<>();
-
             PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
 
             if (psiClass == null) {
-                return map;
+                return new LinkedHashMap<>();
             }
 
             if (psiClass.isEnum()) { // enum
@@ -144,7 +183,7 @@ public abstract class POJO2JsonAction extends AnAction {
 
                     List<Object> list = new ArrayList<>();
                     PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                    list.add(typeResolve(deepType, level));
+                    list.add(parseFieldValueType(deepType, level));
                     return list;
 
                 } else { // Object
@@ -159,11 +198,7 @@ public abstract class POJO2JsonAction extends AnAction {
                             throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 
-                        for (PsiField field : psiClass.getAllFields()) {
-                            map.put(fieldResolve(field), typeResolve(field.getType(), level));
-                        }
-
-                        return map;
+                        return parseClass(psiClass, level);
                     }
                 }
             }
@@ -190,27 +225,6 @@ public abstract class POJO2JsonAction extends AnAction {
         }
     }
 
-    private String fieldResolve(PsiField field) {
-
-        PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
-        if (annotation != null) {
-            String fieldName = annotation.findAttributeValue("value").getText()
-                    .replace("\"", "");
-            if (StringUtils.isNotBlank(fieldName)) {
-                return fieldName;
-            }
-        }
-
-        annotation = field.getAnnotation("com.alibaba.fastjson.annotation.JSONField");
-        if (annotation != null) {
-            String fieldName = annotation.findAttributeValue("name").getText()
-                    .replace("\"", "");
-            if (StringUtils.isNotBlank(fieldName)) {
-                return fieldName;
-            }
-        }
-        return field.getName();
-    }
 }
 
 
