@@ -99,13 +99,12 @@ public abstract class POJO2JsonAction extends AnAction {
     }
 
     private Map.Entry<String, Object> parseField(PsiField field, int level, List<String> ignoreProperties) {
-        PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnore.class.getName());
-        if (annotation != null) {
+        if (ignoreProperties.contains(field.getName())) {
             return null;
         }
 
-        String fieldKey = parseFieldKey(field, ignoreProperties);
-        if (fieldKey == null) {
+        PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnore.class.getName());
+        if (annotation != null) {
             return null;
         }
 
@@ -114,6 +113,7 @@ public abstract class POJO2JsonAction extends AnAction {
             ignoreProperties = POJO2JsonPsiUtils.arrayTextToList(annotation.findAttributeValue("value").getText());
         }
 
+        String fieldKey = parseFieldKey(field);
         Object fieldValue = parseFieldValue(field, level, ignoreProperties);
         if (fieldValue == null) {
             return null;
@@ -121,11 +121,7 @@ public abstract class POJO2JsonAction extends AnAction {
         return Map.entry(fieldKey, fieldValue);
     }
 
-    private String parseFieldKey(PsiField field, List<String> ignoreProperties) {
-        if (ignoreProperties.contains(field.getName())) {
-            return null;
-        }
-
+    private String parseFieldKey(PsiField field) {
         PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
         if (annotation != null) {
             String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("value").getText());
