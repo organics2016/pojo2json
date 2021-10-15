@@ -78,7 +78,7 @@ public abstract class POJO2JsonAction extends AnAction {
             Notification warn = notificationGroup.createNotification(ex.getMessage(), NotificationType.WARNING);
             Notifications.Bus.notify(warn, project);
         } catch (Exception ex) {
-            Notification error = notificationGroup.createNotification("Convert to JSON failed. " + ex, NotificationType.ERROR);
+            Notification error = notificationGroup.createNotification("Convert to JSON failed. " + ex.getMessage(), NotificationType.ERROR);
             Notifications.Bus.notify(error, project);
         }
     }
