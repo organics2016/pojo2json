@@ -160,10 +160,9 @@ public abstract class POJO2JsonAction extends AnAction {
 
         } else if (type instanceof PsiArrayType) {   //array type
 
-            List<Object> list = new ArrayList<>();
             PsiType deepType = type.getDeepComponentType();
-            list.add(parseFieldValueType(deepType, level, ignoreProperties));
-            return list;
+            Object obj = parseFieldValueType(deepType, level, ignoreProperties);
+            return obj != null ? List.of(obj) : List.of();
 
         } else {    //reference Type
 
@@ -193,10 +192,9 @@ public abstract class POJO2JsonAction extends AnAction {
 
                 if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {// Iterable
 
-                    List<Object> list = new ArrayList<>();
                     PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                    list.add(parseFieldValueType(deepType, level, ignoreProperties));
-                    return list;
+                    Object obj = parseFieldValueType(deepType, level, ignoreProperties);
+                    return obj != null ? List.of(obj) : List.of();
 
                 } else { // Object
 
