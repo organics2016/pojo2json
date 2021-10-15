@@ -17,16 +17,19 @@ public class POJO2JsonPsiUtils {
 
         text = StringUtils.deleteWhitespace(text);
 
-        if (!(text.startsWith("{") &&
+        if (text.startsWith("{") &&
                 text.endsWith("}") &&
-                text.length() > 2)) {
+                text.length() > 2) {
 
-            return List.of();
+            return Arrays.stream(text.substring(1, text.length() - 1)
+                    .replace("\"", "")
+                    .split(","))
+                    .collect(Collectors.toList());
+
+        } else if (text.matches("^\"\\w+\"$")) {
+            return List.of(text.replace("\"", ""));
         }
 
-        return Arrays.stream(text.substring(1, text.length() - 1)
-                .replace("\"", "")
-                .split(","))
-                .collect(Collectors.toList());
+        return List.of();
     }
 }
