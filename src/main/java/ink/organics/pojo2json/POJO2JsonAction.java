@@ -111,7 +111,7 @@ public abstract class POJO2JsonAction extends AnAction {
 
         PsiDocComment docComment = field.getDocComment();
         if (docComment != null) {
-            ignoreProperties = POJO2JsonPsiUtils.docTextToList("@JsonIgnore", docComment.getText());
+            ignoreProperties = POJO2JsonPsiUtils.docTextToList("@JsonIgnoreProperties", docComment.getText());
         } else {
             annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreProperties.class.getName());
             if (annotation != null) {
