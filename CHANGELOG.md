@@ -1,10 +1,16 @@
 # POJO to JSON Changelog
 
-## [1.0.12]
+## [1.1.0]
+
+### Security
+
+- Update Gradle build process
 
 ### Added
 
-- Test Publish Plugin
+- Support @JsonIgnore
+- Support @JsonIgnoreProperties
+- Support @JsonIgnoreType
 
 ## [1.0.11]
 

@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "ink.organics"
-version = "1.0.12"
+version = "1.1.0"
 
 
 repositories {
