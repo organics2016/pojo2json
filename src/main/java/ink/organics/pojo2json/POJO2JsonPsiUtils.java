@@ -32,4 +32,23 @@ public class POJO2JsonPsiUtils {
 
         return List.of();
     }
+
+    public static List<String> docTextToList(String tags, String text) {
+
+        if (!text.contains(tags)) {
+            return List.of();
+        }
+        
+        int start = text.indexOf(tags) + tags.length();
+        int end = start;
+        while (text.charAt(end) != '\n') {
+            end++;
+        }
+        if (start == end) {
+            return List.of();
+        }
+
+        return Arrays.stream(StringUtils.deleteWhitespace(text.substring(start, end + 1)).split(","))
+                .collect(Collectors.toList());
+    }
 }

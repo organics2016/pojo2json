@@ -8,6 +8,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
@@ -108,9 +109,14 @@ public abstract class POJO2JsonAction extends AnAction {
             return null;
         }
 
-        annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreProperties.class.getName());
-        if (annotation != null) {
-            ignoreProperties = POJO2JsonPsiUtils.arrayTextToList(annotation.findAttributeValue("value").getText());
+        PsiDocComment docComment = field.getDocComment();
+        if (docComment != null) {
+            ignoreProperties = POJO2JsonPsiUtils.docTextToList("@JsonIgnore", docComment.getText());
+        } else {
+            annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreProperties.class.getName());
+            if (annotation != null) {
+                ignoreProperties = POJO2JsonPsiUtils.arrayTextToList(annotation.findAttributeValue("value").getText());
+            }
         }
 
         String fieldKey = parseFieldKey(field);
