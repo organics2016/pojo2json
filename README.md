@@ -49,11 +49,25 @@ eg:
  }
 }
 ```
+or
+```
+{
+ "a":{
+  "a":{
+   "a":{
+     "a":{
+        .........
+      }
+    }
+   }
+ }
+}
+```
 Perhaps both will happen for entity but this entity are not suitable for JSON.<br>
 So you can try to serialize your POJO using Jackson to see what happens.<br>
-What is a POJO? I think it's least an anemia model.
+What is a POJO? I think least it's not a single model.
 
-- How to solve this problem?
+- But how to solve this problem?
 
 You can try the following methods.
 
