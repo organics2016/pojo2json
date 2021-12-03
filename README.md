@@ -49,8 +49,8 @@ eg:
  }
 }
 ```
-Perhaps both will happen for entity but this entity are not suitable for JSON.
-So you can try to serialize your POJO using Jackson to see what happens.
+Perhaps both will happen for entity but this entity are not suitable for JSON.<br>
+So you can try to serialize your POJO using Jackson to see what happens.<br>
 What is a POJO? I think it's least an anemia model.
 
 - How to solve this problem?
