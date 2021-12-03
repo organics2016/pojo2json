@@ -4,8 +4,6 @@
 
 A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
-## Support
-
 - Support BigDecimal and other Numeric objects.
 - Support Java8 time type.
 - Support Enum.
@@ -14,6 +12,50 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 ## Screenshot
 
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/pojo2json.gif)
+
+## Q&A
+
+- Why always report errors when use it?
+```
+This class reference level exceeds maximum limit or has nested references!
+```
+When the program throws this warning there are only two possibilities.
+
+1. This class reference level > 500 
+
+eg:
+```
+{
+ {
+  {
+    .......501
+  }
+ }
+}
+```
+2. This class or parent class has nested references
+
+eg:
+```
+{
+ "a":{
+  "b":{
+   "a":{
+     "b":{
+        .........
+      }
+    }
+   }
+ }
+}
+```
+Perhaps both will happen for entity but this entity are not suitable for JSON.
+So you can try to serialize your POJO using Jackson to see what happens.
+What is a POJO? I think it's least an anemia model.
+
+- How to solve this problem?
+
+You can try the following methods.
 
 ## Support Annotations and Javadoc
 
