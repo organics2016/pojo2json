@@ -50,6 +50,7 @@ public abstract class POJO2JsonAction extends AnAction {
         normalTypes.put("LocalDateTime", fakeDateTime);
         normalTypes.put("LocalDate", new FakeDate());
         normalTypes.put("LocalTime", new FakeTime());
+        normalTypes.put("ZonedDateTime", new FakeZonedDateTime());
     }
 
     @Override
