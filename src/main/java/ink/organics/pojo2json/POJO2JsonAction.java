@@ -12,8 +12,10 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
+import kotlin.sequences.Sequence;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.uast.*;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -59,19 +61,26 @@ public abstract class POJO2JsonAction extends AnAction {
         PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
         Project project = e.getProject();
         PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
-        PsiClass selectedClass = PsiTreeUtil.getContextOfType(elementAt, PsiClass.class);
+
+        // ADAPTS to all JVM platform languages
+        UElement uElement = UastContextKt.toUElement(elementAt, UElement.class);
         try {
 
-            if (selectedClass == null) {
+            if (uElement == null) {
+                throw new KnownException("Can't find class scope, move the cursor over the class name.");
+            }
+            UClass uClass =  UastUtils.getContainingUClass(uElement);
+
+            if (uClass == null) {
                 throw new KnownException("Can't find class scope, move the cursor within the class scope.");
             }
 
-            Map<String, Object> kv = parseClass(selectedClass, 0, List.of());
+            Map<String, Object> kv = parseClass(uClass.getJavaPsi(), 0, List.of());
             String json = gsonBuilder.create().toJson(kv);
             StringSelection selection = new StringSelection(json);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, selection);
-            String message = "Convert " + selectedClass.getName() + " to JSON success, copied to clipboard.";
+            String message = "Convert " + uClass.getName() + " to JSON success, copied to clipboard.";
             Notification success = notificationGroup.createNotification(message, NotificationType.INFORMATION);
             Notifications.Bus.notify(success, project);
 
