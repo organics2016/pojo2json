@@ -13,10 +13,7 @@ import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.uast.UClass;
-import org.jetbrains.uast.UElement;
-import org.jetbrains.uast.UastContextKt;
-import org.jetbrains.uast.UastUtils;
+import org.jetbrains.uast.*;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
