@@ -130,7 +130,7 @@ public abstract class POJO2JsonAction extends AnAction {
         }
 
         String fieldKey = parseFieldKey(field);
-		// for kotlin Companion not is field.
+        // for kotlin Companion not is field.
         if ("Companion".equals(fieldKey)) {
 			return null;
 		}
