@@ -31,6 +31,13 @@ public abstract class POJO2JsonAction extends AnAction {
     @NonNls
     private final Map<String, JsonFakeValuesService> normalTypes = new HashMap<>();
 
+    @NonNls
+    private final List<String> iterableTypes = List.of(
+            "Iterable",
+            "Collection",
+            "List",
+            "Set");
+
     private final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
     public POJO2JsonAction() {
@@ -186,12 +193,17 @@ public abstract class POJO2JsonAction extends AnAction {
 
                 List<String> fieldTypeNames = new ArrayList<>();
 
-                PsiType[] types = type.getSuperTypes();
-
                 fieldTypeNames.add(type.getPresentableText());
-                fieldTypeNames.addAll(Arrays.stream(types).map(PsiType::getPresentableText).collect(Collectors.toList()));
+                fieldTypeNames.addAll(Arrays.stream(type.getSuperTypes())
+                        .map(PsiType::getPresentableText).collect(Collectors.toList()));
 
-                if (fieldTypeNames.stream().anyMatch(s -> s.startsWith("Collection") || s.startsWith("Iterable"))) {// Iterable
+
+                boolean iterable = fieldTypeNames.stream().map(typeName -> {
+                    int subEnd = typeName.indexOf("<");
+                    return typeName.substring(0, subEnd > 0 ? subEnd : typeName.length());
+                }).anyMatch(iterableTypes::contains);
+
+                if (iterable) {// Iterable
 
                     PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
                     Object obj = parseFieldValueType(deepType, level, ignoreProperties);
