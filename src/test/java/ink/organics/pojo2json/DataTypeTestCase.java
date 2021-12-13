@@ -3,6 +3,10 @@ package ink.organics.pojo2json;
 import com.fasterxml.jackson.databind.JsonNode;
 import testdata.EnumTestPOJO;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -82,5 +86,34 @@ public class DataTypeTestCase extends POJO2JsonJavaTestCase {
         assertTrue(result.get("listObject").get(0).isObject());
         assertTrue(result.get("listGenericObject").get(0).isObject());
         assertTrue(result.get("objectGeneric").isObject());
+    }
+
+
+    public void testSpecialObjectTestPOJO() {
+        JsonNode result = this.testAction("SpecialObjectTestPOJO.java", new POJO2JsonDefaultAction());
+
+        assertEquals(0, result.get("aByte").intValue());
+        assertEquals(0, result.get("aShort").shortValue());
+        assertEquals(0, result.get("integer").intValue());
+        assertEquals(0L, result.get("aLong").longValue());
+        assertEquals(0.00F, result.get("aFloat").floatValue());
+        assertEquals(0.00D, result.get("aDouble").doubleValue());
+        assertFalse(result.get("aBoolean").booleanValue());
+        assertEquals("c", result.get("character").textValue());
+        assertTrue(result.get("string").isTextual());
+        assertEquals(BigDecimal.valueOf(0).setScale(2, RoundingMode.UNNECESSARY), result.get("bigDecimal").decimalValue());
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter isof = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+        assertEquals(result.get("date").textValue(), LocalDateTime.parse(result.get("date").textValue(), dtf).format(dtf));
+        assertEquals(result.get("temporal").longValue(), Instant.ofEpochMilli(result.get("temporal").longValue()).toEpochMilli());
+        assertEquals(result.get("localDateTime").textValue(), LocalDateTime.parse(result.get("localDateTime").textValue(), dtf).format(dtf));
+        assertEquals(result.get("localDate").textValue(), LocalDate.parse(result.get("localDate").textValue(), df).format(df));
+        assertEquals(result.get("localTime").textValue(), LocalTime.parse(result.get("localTime").textValue(), tf).format(tf));
+        assertEquals(result.get("zonedDateTime").textValue(), ZonedDateTime.parse(result.get("zonedDateTime").textValue(), isof).format(isof));
+
     }
 }
