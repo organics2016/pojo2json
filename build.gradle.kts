@@ -9,6 +9,10 @@ plugins {
     id("org.jetbrains.changelog") version "1.3.0"
 }
 
+dependencies {
+    testCompileOnly("com.alibaba:fastjson:1.2.76")
+}
+
 group = "ink.organics"
 version = "1.1.0"
 

@@ -11,22 +11,19 @@
     </extensions>
 
     <actions>
-        <action class="ink.organics.pojo2json.POJO2JsonDefaultAction"
-                id="ink.organics.pojo2json.POJO2JsonDefaultAction"
-                text="POJO To Json"
-                description="Convert POJO to JSON and copy to the shear plate">
-
+        <group id="ink.organics.pojo2json.POJO2JsonGroup">
+            <action class="ink.organics.pojo2json.POJO2JsonDefaultAction"
+                    id="ink.organics.pojo2json.POJO2JsonDefaultAction"
+                    text="POJO To Json"
+                    description="Convert POJO to JSON and copy to the shear plate">
+            </action>
+            <action class="ink.organics.pojo2json.POJO2JsonRandomAction"
+                    id="ink.organics.pojo2json.POJO2JsonRandomAction"
+                    text="POJO To Json Random Values"
+                    description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
+            </action>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-
-        </action>
-
-        <action class="ink.organics.pojo2json.POJO2JsonRandomAction"
-                id="ink.organics.pojo2json.POJO2JsonRandomAction"
-                text="POJO To Json Random Values"
-                description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
-
-            <add-to-group group-id="EditorPopupMenu" relative-to-action="ink.organics.pojo2json.POJO2JsonDefaultAction" anchor="after"/>
-
-        </action>
+            <separator/>
+        </group>
     </actions>
 </idea-plugin>
