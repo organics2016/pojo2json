@@ -18,6 +18,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 public class POJO2JsonJavaTestCase extends BasePlatformTestCase {
 
@@ -37,13 +38,17 @@ public class POJO2JsonJavaTestCase extends BasePlatformTestCase {
     }
 
     @Override
+    protected boolean annotatedWith(@NotNull Class<? extends Annotation> annotationClass) {
+        return super.annotatedWith(annotationClass);
+    }
+
+    @Override
     protected String getTestDataPath() {
         return "src/test/java/testdata";
     }
 
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
-
         return new LightProjectDescriptor() {
             @Override
             public Sdk getSdk() {
