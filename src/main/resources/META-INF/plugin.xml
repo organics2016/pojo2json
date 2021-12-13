@@ -12,13 +12,16 @@
 
     <actions>
         <group id="ink.organics.pojo2json.POJO2JsonGroup">
+            <separator/>
             <action class="ink.organics.pojo2json.POJO2JsonDefaultAction"
                     id="ink.organics.pojo2json.POJO2JsonDefaultAction"
+                    icon="/icons/default.svg"
                     text="POJO To Json"
                     description="Convert POJO to JSON and copy to the shear plate">
             </action>
             <action class="ink.organics.pojo2json.POJO2JsonRandomAction"
                     id="ink.organics.pojo2json.POJO2JsonRandomAction"
+                    icon="/icons/random.svg"
                     text="POJO To Json Random Values"
                     description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
             </action>
