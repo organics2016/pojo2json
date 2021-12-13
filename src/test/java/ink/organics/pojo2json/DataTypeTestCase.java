@@ -3,6 +3,7 @@ package ink.organics.pojo2json;
 import com.fasterxml.jackson.databind.JsonNode;
 import testdata.EnumTestPOJO;
 
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -54,5 +55,32 @@ public class DataTypeTestCase extends POJO2JsonJavaTestCase {
     public void testIterableTestPOJO() {
         JsonNode result = this.testAction("IterableTestPOJO.java", new POJO2JsonDefaultAction());
 
+        assertTrue(result.get("iterable").isArray());
+        assertTrue(result.get("collection").isArray());
+        assertTrue(result.get("list").isArray());
+        assertTrue(result.get("arrayList").isArray());
+        assertTrue(result.get("linkedList").isArray());
+        assertTrue(result.get("set").isArray());
+        assertTrue(result.get("hashSet").isArray());
+        assertTrue(result.get("linkedHashSet").isArray());
+
+        assertTrue(StreamSupport.stream(result.get("iterable").spliterator(), false)
+                .map(JsonNode::intValue)
+                .collect(Collectors.toList())
+                .contains(0));
+    }
+
+    public void testGenericTestPOJO() {
+        JsonNode result = this.testAction("GenericTestPOJO.java", new POJO2JsonDefaultAction());
+
+        assertTrue(result.get("list").isArray());
+        assertTrue(result.get("listArr").get(0).isArray());
+        assertTrue(result.get("listListArr").get(0).get(0).isArray());
+        assertTrue(result.get("listEnum").get(0).isTextual());
+        assertTrue(result.get("listList").get(0).isArray());
+        assertTrue(result.get("listListList").get(0).get(0).isArray());
+        assertTrue(result.get("listObject").get(0).isObject());
+        assertTrue(result.get("listGenericObject").get(0).isObject());
+        assertTrue(result.get("objectGeneric").isObject());
     }
 }
