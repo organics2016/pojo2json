@@ -14,8 +14,6 @@ import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.uast.UClass;
-import org.jetbrains.uast.UElement;
-import org.jetbrains.uast.UastContextKt;
 import org.jetbrains.uast.UastUtils;
 
 import java.awt.*;
@@ -71,12 +69,8 @@ public abstract class POJO2JsonAction extends AnAction {
         Project project = e.getProject();
         PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
         // ADAPTS to all JVM platform languages
-        UElement uElement = UastContextKt.toUElement(elementAt, UElement.class);
+        UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
         try {
-            if (uElement == null) {
-                throw new KnownException("Can't find class scope, move the cursor over the class name.");
-            }
-            UClass uClass = UastUtils.getContainingUClass(uElement);
             if (uClass == null) {
                 throw new KnownException("Can't find class scope, move the cursor within the class scope.");
             }
