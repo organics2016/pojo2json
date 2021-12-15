@@ -20,7 +20,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
-public class POJO2JsonJavaTestCase extends BasePlatformTestCase {
+public abstract class POJO2JsonJavaTestCase extends BasePlatformTestCase {
 
 
     private final ObjectMapper objectMapper = new ObjectMapper();
