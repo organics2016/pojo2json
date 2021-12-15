@@ -1,5 +1,11 @@
 # POJO to JSON Changelog
 
+## [1.1.2]
+### Added
+- Support java.time.YearMonth
+- Support Kotlin (beta)
+- Support Scala (beta)
+
 ## [1.1.1]
 ### Fixed
 - Partial collection parsing error<br>

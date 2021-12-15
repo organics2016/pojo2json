@@ -9,6 +9,12 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 - Support Enum.
 - Partial support Jackson and Fastjson annotations.
 
+## Support JVM platform languages
+
+- Java - full support
+- Kotlin - beta, but full support
+- Scala - beta, but full support
+
 ## Screenshot
 
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/pojo2json.gif)
