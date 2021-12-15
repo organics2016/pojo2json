@@ -14,6 +14,10 @@ import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.uast.UClass;
+import org.jetbrains.uast.UElement;
+import org.jetbrains.uast.UastContextKt;
+import org.jetbrains.uast.UastUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -58,6 +62,7 @@ public abstract class POJO2JsonAction extends AnAction {
         normalTypes.put("LocalDate", new FakeDate());
         normalTypes.put("LocalTime", new FakeTime());
         normalTypes.put("ZonedDateTime", new FakeZonedDateTime());
+        normalTypes.put("YearMonth", new FakeYearMonth());
     }
 
     @Override
@@ -66,19 +71,23 @@ public abstract class POJO2JsonAction extends AnAction {
         PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
         Project project = e.getProject();
         PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
-        PsiClass selectedClass = PsiTreeUtil.getContextOfType(elementAt, PsiClass.class);
+        // ADAPTS to all JVM platform languages
+        UElement uElement = UastContextKt.toUElement(elementAt, UElement.class);
         try {
-
-            if (selectedClass == null) {
+            if (uElement == null) {
+                throw new KnownException("Can't find class scope, move the cursor over the class name.");
+            }
+            UClass uClass = UastUtils.getContainingUClass(uElement);
+            if (uClass == null) {
                 throw new KnownException("Can't find class scope, move the cursor within the class scope.");
             }
 
-            Map<String, Object> kv = parseClass(selectedClass, 0, List.of());
+            Map<String, Object> kv = parseClass(uClass.getJavaPsi(), 0, List.of());
             String json = gsonBuilder.create().toJson(kv);
             StringSelection selection = new StringSelection(json);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, selection);
-            String message = "Convert " + selectedClass.getName() + " to JSON success, copied to clipboard.";
+            String message = "Convert " + uClass.getName() + " to JSON success, copied to clipboard.";
             Notification success = notificationGroup.createNotification(message, NotificationType.INFORMATION);
             Notifications.Bus.notify(success, project);
 
@@ -128,6 +137,10 @@ public abstract class POJO2JsonAction extends AnAction {
         }
 
         String fieldKey = parseFieldKey(field);
+        // for kotlin Companion not is field.
+        if ("Companion".equals(fieldKey)) {
+            return null;
+        }
         Object fieldValue = parseFieldValue(field, level, ignoreProperties);
         if (fieldValue == null) {
             return null;
