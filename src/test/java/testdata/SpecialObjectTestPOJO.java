@@ -45,4 +45,6 @@ public class SpecialObjectTestPOJO {
 
     private ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
+    private YearMonth yearMonth = YearMonth.now();
+
 }

@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class FakeTime extends FakeTemporal implements JsonFakeValuesService {
+public class FakeLocalTime extends FakeTemporal implements JsonFakeValuesService {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 

@@ -103,17 +103,20 @@ public class DataTypeTestCase extends POJO2JsonJavaTestCase {
         assertTrue(result.get("string").isTextual());
         assertEquals(BigDecimal.valueOf(0).setScale(2, RoundingMode.UNNECESSARY), result.get("bigDecimal").decimalValue());
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        DateTimeFormatter isof = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        DateTimeFormatter ldtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter ldf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter ltf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter zdtf = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+        DateTimeFormatter ymf = DateTimeFormatter.ofPattern("yyyy-MM");
 
-        assertEquals(result.get("date").textValue(), LocalDateTime.parse(result.get("date").textValue(), dtf).format(dtf));
+        assertEquals(result.get("date").textValue(), LocalDateTime.parse(result.get("date").textValue(), ldtf).format(ldtf));
         assertEquals(result.get("temporal").longValue(), Instant.ofEpochMilli(result.get("temporal").longValue()).toEpochMilli());
-        assertEquals(result.get("localDateTime").textValue(), LocalDateTime.parse(result.get("localDateTime").textValue(), dtf).format(dtf));
-        assertEquals(result.get("localDate").textValue(), LocalDate.parse(result.get("localDate").textValue(), df).format(df));
-        assertEquals(result.get("localTime").textValue(), LocalTime.parse(result.get("localTime").textValue(), tf).format(tf));
-        assertEquals(result.get("zonedDateTime").textValue(), ZonedDateTime.parse(result.get("zonedDateTime").textValue(), isof).format(isof));
+        assertEquals(result.get("localDateTime").textValue(), LocalDateTime.parse(result.get("localDateTime").textValue(), ldtf).format(ldtf));
+        assertEquals(result.get("localDate").textValue(), LocalDate.parse(result.get("localDate").textValue(), ldf).format(ldf));
+        assertEquals(result.get("localTime").textValue(), LocalTime.parse(result.get("localTime").textValue(), ltf).format(ltf));
+        assertEquals(result.get("zonedDateTime").textValue(), ZonedDateTime.parse(result.get("zonedDateTime").textValue(), zdtf).format(zdtf));
+        assertEquals(result.get("yearMonth").textValue(), YearMonth.parse(result.get("yearMonth").textValue(), ymf).format(ymf));
 
     }
+
 }

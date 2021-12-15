@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class FakeDate extends FakeTemporal implements JsonFakeValuesService {
+public class FakeLocalDate extends FakeTemporal implements JsonFakeValuesService {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

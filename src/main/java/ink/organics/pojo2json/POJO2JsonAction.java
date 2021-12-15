@@ -9,7 +9,6 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +46,7 @@ public abstract class POJO2JsonAction extends AnAction {
     public POJO2JsonAction() {
 
         FakeDecimal fakeDecimal = new FakeDecimal();
-        FakeDateTime fakeDateTime = new FakeDateTime();
+        FakeLocalDateTime fakeLocalDateTime = new FakeLocalDateTime();
 
         normalTypes.put("Boolean", new FakeBoolean());
         normalTypes.put("Float", fakeDecimal);
@@ -56,11 +55,11 @@ public abstract class POJO2JsonAction extends AnAction {
         normalTypes.put("Number", new FakeInteger());
         normalTypes.put("Character", new FakeChar());
         normalTypes.put("CharSequence", new FakeString());
-        normalTypes.put("Date", fakeDateTime);
+        normalTypes.put("Date", fakeLocalDateTime);
         normalTypes.put("Temporal", new FakeTemporal());
-        normalTypes.put("LocalDateTime", fakeDateTime);
-        normalTypes.put("LocalDate", new FakeDate());
-        normalTypes.put("LocalTime", new FakeTime());
+        normalTypes.put("LocalDateTime", fakeLocalDateTime);
+        normalTypes.put("LocalDate", new FakeLocalDate());
+        normalTypes.put("LocalTime", new FakeLocalTime());
         normalTypes.put("ZonedDateTime", new FakeZonedDateTime());
         normalTypes.put("YearMonth", new FakeYearMonth());
     }

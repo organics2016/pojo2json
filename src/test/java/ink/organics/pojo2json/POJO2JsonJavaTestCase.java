@@ -69,7 +69,8 @@ public abstract class POJO2JsonJavaTestCase extends BasePlatformTestCase {
         Transferable result = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 
         try {
-            JsonNode jsonNode = objectMapper.readTree(String.valueOf(result.getTransferData(DataFlavor.stringFlavor)));
+            String jsonStr = String.valueOf(result.getTransferData(DataFlavor.stringFlavor));
+            JsonNode jsonNode = objectMapper.readTree(jsonStr);
             System.out.println(jsonNode.toPrettyString());
             return jsonNode;
         } catch (UnsupportedFlavorException | IOException e) {
