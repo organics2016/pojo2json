@@ -1,6 +1,20 @@
 <!-- Plugin description -->
 
-# POJO to JSON
+# POJO to Json
+
+[![][idea-img]][plugin]
+[![][license-img]][github]
+[![][release-img]][plugin]
+[![][download-img]][plugin]
+
+[idea-img]: https://img.shields.io/badge/IntelliJ%20IDEA%20Plugins-000000?logo=IntelliJ-idea&logoColor=white
+[license-img]: https://img.shields.io/github/license/organics2016/pojo2json
+[release-img]: https://img.shields.io/jetbrains/plugin/v/12066
+[download-img]: https://img.shields.io/jetbrains/plugin/d/12066
+
+[github]: https://github.com/organics2016/pojo2json
+[plugin]: https://plugins.jetbrains.com/plugin/12066-pojo-to-json
+
 
 A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
@@ -18,6 +32,18 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 ## Screenshot
 
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/pojo2json.gif)
+
+## Installation
+
+- **Install in IDEA:**
+    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search<b>"POJO to Json"</b></kbd> > <kbd>Install</kbd>
+
+- **Manual Install:**
+    - [plugin] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> -> Select the plug-in package and install（No need to unzip）
+
+## Usage
+
+- <kbd>Open the target class file</kbd> > <kbd>Right click</kbd> > <kbd>POJO To Json</kbd> > <kbd>Json result will copy to clipboard</kbd>
 
 ## Q&A
 
@@ -216,15 +242,9 @@ paste result:
   "roles": []
 }
 ```
-
-
-## Plugin
-
-https://plugins.jetbrains.com/plugin/12066-pojo-to-json
-
 <!-- Plugin description end -->
 
 ## Contributors
 
 Ideas and partial realization from
-[![linsage](https://avatars.githubusercontent.com/u/12984934?s=28)linsage](https://github.com/linsage)
+[![](https://avatars.githubusercontent.com/u/12984934?s=28)linsage](https://github.com/linsage)
