@@ -4,7 +4,7 @@ import ink.organics.pojo2json.POJO2JsonDefaultAction;
 import ink.organics.pojo2json.test.model.AnnotationTestModel;
 import ink.organics.pojo2json.test.model.DataTypeTestModel;
 
-public class KotlinTestCase extends TestCase {
+public abstract class KotlinTestCase extends TestCase {
 
     private final DataTypeTestModel dataTypeTestModel = new DataTypeTestModel(this);
 
