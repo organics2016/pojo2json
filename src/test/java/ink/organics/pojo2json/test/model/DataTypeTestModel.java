@@ -1,7 +1,10 @@
-package ink.organics.pojo2json;
+package ink.organics.pojo2json.test.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import testdata.EnumTestPOJO;
+import com.intellij.openapi.actionSystem.AnAction;
+import ink.organics.pojo2json.POJO2JsonDefaultAction;
+import ink.organics.pojo2json.test.TestCase;
+import testdata.java.EnumTestPOJO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,27 +13,33 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.*;
 
-public class DataTypeTestCase extends POJO2JsonJavaTestCase {
+public class DataTypeTestModel extends TestModel {
+
+    private final BigDecimal zero = BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY);
 
 
-    public void testPrimitiveTestPOJO() {
+    public DataTypeTestModel(TestCase testCase) {
+        super(testCase);
+    }
 
-        JsonNode result = this.testAction("PrimitiveTestPOJO.java", new POJO2JsonDefaultAction());
+    public void testPrimitiveTestPOJO(String fileName, AnAction action) {
+
+        JsonNode result = testCase.testAction(fileName, action);
 
         assertEquals(0, result.get("aByte").intValue());
         assertEquals(0, result.get("aShort").shortValue());
         assertEquals(0, result.get("anInt").intValue());
         assertEquals(0L, result.get("aLong").longValue());
-        assertEquals(0.00F, result.get("aFloat").floatValue());
-        assertEquals(0.00D, result.get("aDouble").doubleValue());
+        assertEquals(zero, result.get("aFloat").decimalValue());
+        assertEquals(zero, result.get("aDouble").decimalValue());
         assertEquals("c", result.get("aChar").textValue());
         assertFalse(result.get("aBoolean").booleanValue());
     }
 
-    public void testPrimitiveArrayTestPOJO() {
-        JsonNode result = this.testAction("PrimitiveArrayTestPOJO.java", new POJO2JsonDefaultAction());
+    public void testPrimitiveArrayTestPOJO(String fileName, AnAction action) {
+        JsonNode result = testCase.testAction(fileName, action);
 
         assertArrayEquals(new Integer[]{0},
                 StreamSupport.stream(result.get("bytes").spliterator(), false).map(JsonNode::intValue).toArray(Integer[]::new));
@@ -50,14 +59,14 @@ public class DataTypeTestCase extends POJO2JsonJavaTestCase {
                 StreamSupport.stream(result.get("booleans").spliterator(), false).map(JsonNode::booleanValue).toArray(Boolean[]::new));
     }
 
-    public void testEnumTestPOJO() {
-        JsonNode result = this.testAction("EnumTestPOJO.java", new POJO2JsonDefaultAction());
+    public void testEnumTestPOJO(String fileName, AnAction action) {
+        JsonNode result = testCase.testAction(fileName, action);
 
         assertEquals(EnumTestPOJO.Type.TYPE_A.name(), result.get("type").textValue());
     }
 
-    public void testIterableTestPOJO() {
-        JsonNode result = this.testAction("IterableTestPOJO.java", new POJO2JsonDefaultAction());
+    public void testIterableTestPOJO(String fileName, AnAction action) {
+        JsonNode result = testCase.testAction(fileName, new POJO2JsonDefaultAction());
 
         assertTrue(result.get("iterable").isArray());
         assertTrue(result.get("collection").isArray());
@@ -74,8 +83,8 @@ public class DataTypeTestCase extends POJO2JsonJavaTestCase {
                 .contains(0));
     }
 
-    public void testGenericTestPOJO() {
-        JsonNode result = this.testAction("GenericTestPOJO.java", new POJO2JsonDefaultAction());
+    public void testGenericTestPOJO(String fileName, AnAction action) {
+        JsonNode result = testCase.testAction(fileName, action);
 
         assertTrue(result.get("list").isArray());
         assertTrue(result.get("listArr").get(0).isArray());
@@ -88,16 +97,15 @@ public class DataTypeTestCase extends POJO2JsonJavaTestCase {
         assertTrue(result.get("objectGeneric").isObject());
     }
 
-
-    public void testSpecialObjectTestPOJO() {
-        JsonNode result = this.testAction("SpecialObjectTestPOJO.java", new POJO2JsonDefaultAction());
+    public void testSpecialObjectTestPOJO(String fileName, AnAction action) {
+        JsonNode result = testCase.testAction(fileName, action);
 
         assertEquals(0, result.get("aByte").intValue());
         assertEquals(0, result.get("aShort").shortValue());
         assertEquals(0, result.get("integer").intValue());
         assertEquals(0L, result.get("aLong").longValue());
-        assertEquals(0.00F, result.get("aFloat").floatValue());
-        assertEquals(0.00D, result.get("aDouble").doubleValue());
+        assertEquals(zero, result.get("aFloat").decimalValue());
+        assertEquals(zero, result.get("aDouble").decimalValue());
         assertFalse(result.get("aBoolean").booleanValue());
         assertEquals("c", result.get("character").textValue());
         assertTrue(result.get("string").isTextual());

@@ -1,4 +1,4 @@
-package ink.organics.pojo2json;
+package ink.organics.pojo2json.test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -20,12 +20,12 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 
-public abstract class POJO2JsonJavaTestCase extends BasePlatformTestCase {
+public abstract class TestCase extends BasePlatformTestCase {
 
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public POJO2JsonJavaTestCase() {
+    public TestCase() {
         // https://github.com/FasterXML/jackson-databind/issues/2087
         this.objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
         this.objectMapper.configure(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN, true);
@@ -43,9 +43,7 @@ public abstract class POJO2JsonJavaTestCase extends BasePlatformTestCase {
     }
 
     @Override
-    protected String getTestDataPath() {
-        return "src/test/java/testdata";
-    }
+    protected abstract String getTestDataPath();
 
     @Override
     protected LightProjectDescriptor getProjectDescriptor() {
@@ -57,14 +55,12 @@ public abstract class POJO2JsonJavaTestCase extends BasePlatformTestCase {
         };
     }
 
-    protected JsonNode testAction(@NotNull String fileName,
-                                  @NotNull AnAction action) {
+    public JsonNode testAction(@NotNull String fileName, @NotNull AnAction action) {
 
         myFixture.configureByFile(fileName);
         int offset = myFixture.findElementByText("class", PsiClass.class).getTextOffset();
         myFixture.getEditor().getCaretModel().moveToOffset(offset);
         myFixture.testAction(action);
-
 
         Transferable result = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 

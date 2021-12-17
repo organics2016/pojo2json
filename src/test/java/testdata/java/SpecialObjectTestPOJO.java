@@ -1,4 +1,4 @@
-package testdata;
+package testdata.java;
 
 import java.math.BigDecimal;
 import java.time.*;

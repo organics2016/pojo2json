@@ -1,4 +1,4 @@
-package testdata;
+package testdata.java;
 
 import java.util.*;
 
