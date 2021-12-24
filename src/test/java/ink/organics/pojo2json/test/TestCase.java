@@ -12,8 +12,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.uast.UElement;
-import org.jetbrains.uast.UastContextKt;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -62,8 +60,7 @@ public abstract class TestCase extends BasePlatformTestCase {
         // Open file and simulate user cursor position to class scope.
         myFixture.configureByFile(fileName);
         PsiElement psiElement = myFixture.findElementByText("class", PsiElement.class);
-        UElement uElement = UastContextKt.toUElement(psiElement);
-        int offset = uElement.getJavaPsi().getTextOffset();
+        int offset = psiElement.getTextOffset();
         myFixture.getEditor().getCaretModel().moveToOffset(offset);
 
         myFixture.testAction(action);

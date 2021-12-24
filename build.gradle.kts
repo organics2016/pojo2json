@@ -3,13 +3,14 @@ import org.jetbrains.changelog.markdownToHTML
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
+    // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
     // Java support
     id("java")
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.6.0"
-    // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.1.4"
-    // gradle-changelog-plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+    // Gradle IntelliJ Plugin
+    id("org.jetbrains.intellij") version "1.3.0"
+    // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
 }
 
@@ -29,7 +30,7 @@ intellij {
     version.set("2020.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
-    plugins.set(listOf("java", "Kotlin"))
+    plugins.set(listOf("java", "Kotlin", "IntelliLang"))
 }
 
 changelog {

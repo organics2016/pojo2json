@@ -16,10 +16,6 @@ public class KotlinTestCase extends TestCase {
         return "src/test/java/testdata/kotlin";
     }
 
-    // 测试环境中不知道为什么将 .kt file 识别为plan_text无法找到语言环境，导致无法定位 class Element 并解析.
-    public void testDemo() {
-        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.kt", new POJO2JsonDefaultAction());
-    }
 
     public void testKotlinDateType() {
         dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.kt", new POJO2JsonDefaultAction());
