@@ -8,7 +8,7 @@ class JsonIgnorePropertiesDocTestPOJO {
      */
     private val roles: List<Role>? = null
 
-    inner class Role {
+    class Role {
         private val roleName: String? = null
         private val users: List<JsonIgnorePropertiesDocTestPOJO>? = null
     }

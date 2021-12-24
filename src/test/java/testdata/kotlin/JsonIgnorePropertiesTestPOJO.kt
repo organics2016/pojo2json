@@ -6,7 +6,7 @@ class JsonIgnorePropertiesTestPOJO {
     @com.fasterxml.jackson.annotation.JsonIgnoreProperties("users", "aaa", "bbb")
     private val roles: List<Role>? = null
 
-    inner class Role {
+    class Role {
         private val roleName: String? = null
         private val users: List<JsonIgnorePropertiesTestPOJO>? = null
     }
