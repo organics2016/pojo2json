@@ -1,6 +1,6 @@
 <!-- Plugin description -->
 
-# POJO to Json
+# POJO to JSON
 
 [![][idea-img]][plugin]
 [![][license-img]][github]
@@ -36,14 +36,14 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 ## Installation
 
 - **Install in IDEA:**
-    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search<b>"POJO to Json"</b></kbd> > <kbd>Install</kbd>
+    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search<b>"POJO to JSON"</b></kbd> > <kbd>Install</kbd>
 
 - **Manual Install:**
     - [plugin] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> -> Select the plug-in package and install（No need to unzip）
     
 ## Usage
 
-- <kbd>Open the target class file</kbd> > <kbd>Right click</kbd> > <kbd>POJO To Json</kbd> > <kbd>Json result will copy to clipboard</kbd>
+- <kbd>Open the target class file</kbd> > <kbd>Right click</kbd> > <kbd>POJO To JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
 
 ## Q&A
 

@@ -30,7 +30,7 @@ intellij {
     version.set("2020.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
-    plugins.set(listOf("java", "Kotlin", "IntelliLang"))
+    plugins.set(listOf("java", "Kotlin"))
 }
 
 changelog {

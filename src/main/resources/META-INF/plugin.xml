@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>ink.organics.pojo2json</id>
-    <name>POJO to Json</name>
+    <name>POJO to JSON</name>
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
@@ -17,13 +17,13 @@
             <action class="ink.organics.pojo2json.POJO2JsonDefaultAction"
                     id="ink.organics.pojo2json.POJO2JsonDefaultAction"
                     icon="/icons/default.svg"
-                    text="POJO To Json"
+                    text="POJO To JSON"
                     description="Convert POJO to JSON and copy to the shear plate">
             </action>
             <action class="ink.organics.pojo2json.POJO2JsonRandomAction"
                     id="ink.organics.pojo2json.POJO2JsonRandomAction"
                     icon="/icons/random.svg"
-                    text="POJO To Json Random Values"
+                    text="POJO To JSON Random Values"
                     description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
             </action>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
