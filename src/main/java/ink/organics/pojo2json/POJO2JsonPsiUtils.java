@@ -17,9 +17,10 @@ public class POJO2JsonPsiUtils {
 
         text = StringUtils.deleteWhitespace(text);
 
-        if (text.startsWith("{") &&
-                text.endsWith("}") &&
-                text.length() > 2) {
+        boolean array = text.length() > 2 &&
+                ((text.startsWith("{") && text.endsWith("}")) ||   // Java
+                        (text.startsWith("(") && text.endsWith(")"))); // Kotlin
+        if (array) {
 
             return Arrays.stream(text.substring(1, text.length() - 1)
                     .replace("\"", "")
@@ -38,7 +39,7 @@ public class POJO2JsonPsiUtils {
         if (!text.contains(tags)) {
             return List.of();
         }
-        
+
         int start = text.indexOf(tags) + tags.length();
         int end = start;
         while (text.charAt(end) != '\n') {
