@@ -4,11 +4,12 @@
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
-    <depends>com.intellij.java</depends>
-    <depends>org.jetbrains.kotlin</depends>
+    <depends optional="true" config-file="plugin-java.xml">com.intellij.java</depends>
+    <depends optional="true" config-file="plugin-kotlin.xml">org.jetbrains.kotlin</depends>
+    <depends optional="true" config-file="plugin-scala.xml">org.intellij.scala</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <notificationGroup id="pojo2json.NotificationGroup" displayType="BALLOON" key="pojo2json.NotificationGroup"/>
+        <notificationGroup id="pojo2json.NotificationGroup" displayType="BALLOON"/>
     </extensions>
 
     <actions>

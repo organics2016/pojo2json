@@ -7,7 +7,7 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+//    id("org.jetbrains.kotlin.jvm") version "1.6.10"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij") version "1.3.0"
     // Gradle Changelog Plugin
@@ -30,7 +30,7 @@ intellij {
     version.set("2020.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
-    plugins.set(listOf("java", "Kotlin"))
+    plugins.set(listOf("java", "Kotlin", "org.intellij.scala:2020.3.21"))
 }
 
 changelog {

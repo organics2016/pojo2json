@@ -1,6 +1,8 @@
 package ink.organics.pojo2json;
 
 import com.google.gson.GsonBuilder;
+import com.intellij.lang.Language;
+import com.intellij.lang.java.JavaLanguage;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -12,7 +14,10 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.kotlin.idea.KotlinLanguage;
+import org.jetbrains.plugins.scala.Scala3Language;
+import org.jetbrains.plugins.scala.ScalaLanguage;
 import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UastUtils;
 
@@ -29,10 +34,8 @@ public abstract class POJO2JsonAction extends AnAction {
     private final NotificationGroup notificationGroup =
             NotificationGroupManager.getInstance().getNotificationGroup("pojo2json.NotificationGroup");
 
-    @NonNls
     private final Map<String, JsonFakeValuesService> normalTypes = new HashMap<>();
 
-    @NonNls
     private final List<String> iterableTypes = List.of(
             "Iterable",
             "Collection",
@@ -63,17 +66,36 @@ public abstract class POJO2JsonAction extends AnAction {
     }
 
     @Override
+    public void update(@NotNull AnActionEvent e) {
+        final Project project = e.getProject();
+        final Editor editor = e.getData(CommonDataKeys.EDITOR);
+        final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
+
+        boolean menuAllowed = false;
+        if (psiFile != null && editor != null && project != null) {
+            final Language language = psiFile.getLanguage();
+
+            menuAllowed = language.is(JavaLanguage.INSTANCE) ||
+                    language.is(KotlinLanguage.INSTANCE) ||
+                    language.is(ScalaLanguage.INSTANCE) ||
+                    language.is(Scala3Language.INSTANCE);
+        }
+        e.getPresentation().setEnabledAndVisible(menuAllowed);
+    }
+
+    @Override
     public void actionPerformed(AnActionEvent e) {
-        Editor editor = e.getData(CommonDataKeys.EDITOR);
-        PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
-        Project project = e.getProject();
-        PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
-        // ADAPTS to all JVM platform languages
-        UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
+        final Project project = e.getProject();
         try {
-            if (uClass == null) {
-                throw new KnownException("Can't find class scope, move the cursor within the class scope.");
+            final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
+            final String fileText = psiFile.getText();
+            int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("object");
+            if (offset < 0) {
+                throw new KnownException("Can't find class scope.");
             }
+            PsiElement elementAt = psiFile.findElementAt(offset);
+            // ADAPTS to all JVM platform languages
+            UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
 
             Map<String, Object> kv = parseClass(uClass.getJavaPsi(), 0, List.of());
             String json = gsonBuilder.create().toJson(kv);
@@ -130,8 +152,7 @@ public abstract class POJO2JsonAction extends AnAction {
         }
 
         String fieldKey = parseFieldKey(field);
-        // for kotlin Companion not is field.
-        if ("Companion".equals(fieldKey)) {
+        if (fieldKey == null) {
             return null;
         }
         Object fieldValue = parseFieldValue(field, level, ignoreProperties);
@@ -142,9 +163,16 @@ public abstract class POJO2JsonAction extends AnAction {
     }
 
     private String parseFieldKey(PsiField field) {
+        String fieldName = field.getName();
+
+        // for kotlin Companion not is field.
+        if ("Companion".equals(fieldName) || "INSTANCE".equals(fieldName)) {
+            return null;
+        }
+
         PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
         if (annotation != null) {
-            String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("value").getText());
+            fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("value").getText());
             if (StringUtils.isNotBlank(fieldName)) {
                 return fieldName;
             }
@@ -152,12 +180,12 @@ public abstract class POJO2JsonAction extends AnAction {
 
         annotation = field.getAnnotation("com.alibaba.fastjson.annotation.JSONField");
         if (annotation != null) {
-            String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("name").getText());
+            fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("name").getText());
             if (StringUtils.isNotBlank(fieldName)) {
                 return fieldName;
             }
         }
-        return field.getName();
+        return fieldName;
     }
 
     private Object parseFieldValue(PsiField field, int level, List<String> ignoreProperties) {
