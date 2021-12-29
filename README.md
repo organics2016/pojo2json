@@ -1,7 +1,3 @@
-<!-- Plugin description -->
-
-# POJO to JSON
-
 [![][idea-img]][plugin]
 [![][license-img]][github]
 [![][release-img]][plugin]
@@ -15,6 +11,9 @@
 [github]: https://github.com/organics2016/pojo2json
 [plugin]: https://plugins.jetbrains.com/plugin/12066-pojo-to-json
 
+<!-- Plugin description -->
+
+# POJO to JSON
 
 A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
