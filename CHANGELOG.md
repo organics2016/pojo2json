@@ -1,5 +1,13 @@
 # POJO to JSON Changelog
 
+## [1.1.3]
+### Fixed
+- Fixed where the Kotlin object cannot be parsed correctly.
+### Changed
+- Only show the menu in supporting files.
+- No need to move the cursor to the class scope, now the cursor can be anywhere in the file.  
+- Load optional plugin dependencies according to different environments.
+
 ## [1.1.2]
 ### Added
 - Support java.time.YearMonth
