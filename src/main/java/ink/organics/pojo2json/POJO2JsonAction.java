@@ -2,7 +2,6 @@ package ink.organics.pojo2json;
 
 import com.google.gson.GsonBuilder;
 import com.intellij.lang.Language;
-import com.intellij.lang.java.JavaLanguage;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -15,9 +14,6 @@ import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.kotlin.idea.KotlinLanguage;
-import org.jetbrains.plugins.scala.Scala3Language;
-import org.jetbrains.plugins.scala.ScalaLanguage;
 import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UastUtils;
 
@@ -75,10 +71,10 @@ public abstract class POJO2JsonAction extends AnAction {
         if (psiFile != null && editor != null && project != null) {
             final Language language = psiFile.getLanguage();
 
-            menuAllowed = language.is(JavaLanguage.INSTANCE) ||
-                    language.is(KotlinLanguage.INSTANCE) ||
-                    language.is(ScalaLanguage.INSTANCE) ||
-                    language.is(Scala3Language.INSTANCE);
+            // 语言环境未被装载时，使用language class会找不到类 所以这里用语言ID判断
+            menuAllowed = language.isKindOf("JAVA") ||
+                    language.isKindOf("kotlin") ||
+                    language.isKindOf("Scala");
         }
         e.getPresentation().setEnabledAndVisible(menuAllowed);
     }
