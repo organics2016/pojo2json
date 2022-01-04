@@ -17,6 +17,11 @@ public class KotlinTestCase extends TestCase {
     }
 
 
+    public void testIt() {
+        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.kt", new POJO2JsonDefaultAction());
+    }
+
+
     public void testKotlinDateType() {
         dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.kt", new POJO2JsonDefaultAction());
         dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.kt", new POJO2JsonDefaultAction());
