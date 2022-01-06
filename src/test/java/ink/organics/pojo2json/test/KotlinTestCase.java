@@ -17,7 +17,7 @@ public class KotlinTestCase extends TestCase {
     }
 
 
-    public void testIt() {
+    public void testThis() {
         annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.kt", new POJO2JsonDefaultAction());
     }
 
