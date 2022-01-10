@@ -34,13 +34,6 @@ public class AnnotationTestModel extends TestModel {
         assertNull(result.get("roles").get(0).get("users"));
     }
 
-    public void testJsonIgnorePropertiesDocTestPOJO(String fileName, AnAction action) {
-        JsonNode result = testCase.testAction(fileName, action);
-
-        assertNotNull(result.get("roles").get(0).get("roleName"));
-        assertNull(result.get("roles").get(0).get("users"));
-    }
-
     public void testJsonIgnoreTypeTestPOJO(String fileName, AnAction action) {
         JsonNode result = testCase.testAction(fileName, action);
 

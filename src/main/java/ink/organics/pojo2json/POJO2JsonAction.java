@@ -10,6 +10,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
+import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
@@ -144,6 +145,11 @@ public abstract class POJO2JsonAction extends AnAction {
 
         PsiDocComment docComment = field.getDocComment();
         if (docComment != null) {
+            PsiDocTag psiDocTag = docComment.findTagByName("JsonIgnore");
+            if (psiDocTag != null && "JsonIgnore".equals(psiDocTag.getName())) {
+                return null;
+            }
+
             ignoreProperties = POJO2JsonPsiUtils.docTextToList("@JsonIgnoreProperties", docComment.getText());
         } else {
             annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreProperties.class.getName());

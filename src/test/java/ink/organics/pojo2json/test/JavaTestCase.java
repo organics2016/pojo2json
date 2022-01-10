@@ -2,18 +2,9 @@ package ink.organics.pojo2json.test;
 
 
 import ink.organics.pojo2json.POJO2JsonDefaultAction;
-import ink.organics.pojo2json.test.model.AnnotationTestModel;
-import ink.organics.pojo2json.test.model.DataTypeTestModel;
-import ink.organics.pojo2json.test.model.StaticFieldTestModel;
+
 
 public class JavaTestCase extends TestCase {
-
-
-    private final DataTypeTestModel dataTypeTestModel = new DataTypeTestModel(this);
-
-    private final AnnotationTestModel annotationTestModel = new AnnotationTestModel(this);
-
-    private final StaticFieldTestModel staticFieldTestModel = new StaticFieldTestModel(this);
 
 
     @Override
@@ -39,8 +30,13 @@ public class JavaTestCase extends TestCase {
         annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new POJO2JsonDefaultAction());
         annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.java", new POJO2JsonDefaultAction());
         annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.java", new POJO2JsonDefaultAction());
-        annotationTestModel.testJsonIgnorePropertiesDocTestPOJO("JsonIgnorePropertiesDocTestPOJO.java", new POJO2JsonDefaultAction());
         annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.java", new POJO2JsonDefaultAction());
+    }
+
+
+    public void testJavaDoc() {
+        docTestModel.testJsonIgnoreDocTestPOJO("JsonIgnoreDocTestPOJO.java", new POJO2JsonDefaultAction());
+        docTestModel.testJsonIgnorePropertiesDocTestPOJO("JsonIgnorePropertiesDocTestPOJO.java", new POJO2JsonDefaultAction());
     }
 
 

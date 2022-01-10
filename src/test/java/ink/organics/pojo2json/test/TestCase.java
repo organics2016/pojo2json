@@ -11,6 +11,10 @@ import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import ink.organics.pojo2json.test.model.AnnotationTestModel;
+import ink.organics.pojo2json.test.model.DataTypeTestModel;
+import ink.organics.pojo2json.test.model.DocTestModel;
+import ink.organics.pojo2json.test.model.StaticFieldTestModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -24,6 +28,16 @@ public abstract class TestCase extends BasePlatformTestCase {
 
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
+
+
+    protected final DataTypeTestModel dataTypeTestModel = new DataTypeTestModel(this);
+
+    protected final AnnotationTestModel annotationTestModel = new AnnotationTestModel(this);
+
+    protected final DocTestModel docTestModel = new DocTestModel(this);
+
+    protected final StaticFieldTestModel staticFieldTestModel = new StaticFieldTestModel(this);
+
 
     public TestCase() {
         // https://github.com/FasterXML/jackson-databind/issues/2087
