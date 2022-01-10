@@ -23,7 +23,7 @@ import java.lang.annotation.Annotation;
 public abstract class TestCase extends BasePlatformTestCase {
 
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    protected final ObjectMapper objectMapper = new ObjectMapper();
 
     public TestCase() {
         // https://github.com/FasterXML/jackson-databind/issues/2087

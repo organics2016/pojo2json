@@ -16,6 +16,9 @@ plugins {
 
 dependencies {
     testCompileOnly("com.alibaba:fastjson:1.2.76")
+    // https://projectlombok.org/setup/gradle
+    testCompileOnly("org.projectlombok:lombok:1.18.22")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
 }
 
 group = "ink.organics"

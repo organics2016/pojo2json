@@ -128,6 +128,11 @@ public abstract class POJO2JsonAction extends AnAction {
     }
 
     private Map.Entry<String, Object> parseField(PsiField field, int level, List<String> ignoreProperties) {
+        // 移除所有 static 属性，这其中包括 kotlin 中的 companion object 和 INSTANCE
+        if (field.hasModifierProperty(PsiModifier.STATIC)) {
+            return null;
+        }
+
         if (ignoreProperties.contains(field.getName())) {
             return null;
         }
@@ -160,11 +165,6 @@ public abstract class POJO2JsonAction extends AnAction {
 
     private String parseFieldKey(PsiField field) {
         String fieldName = field.getName();
-
-        // for kotlin Companion not is field.
-        if ("Companion".equals(fieldName) || "INSTANCE".equals(fieldName)) {
-            return null;
-        }
 
         PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
         if (annotation != null) {
