@@ -96,7 +96,7 @@ or
 ```
 Perhaps both will happen for entity but this entity are not suitable for JSON.<br>
 So you can try to serialize your POJO using Jackson to see what happens.<br>
-If not, you can submit a bug to GitHub issues with your target class :)
+If no exception, you can submit a bug to this repository issues with your target class :)
 
 - But how to solve this problem?
 
