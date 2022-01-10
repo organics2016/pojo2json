@@ -1,5 +1,12 @@
 # POJO to JSON Changelog
 
+## [1.1.4]
+### Added
+- Support Javadoc tags JsonIgnore
+### Changed
+- Not serialize static members,This includes Companion Object in kotlin.
+  Static members are associated with the class, not the instances.
+
 ## [1.1.3]
 ### Fixed
 - Fixed where the Kotlin object cannot be parsed correctly.

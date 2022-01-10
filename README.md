@@ -127,7 +127,7 @@ paste result:
 }
 ```
 
-### @JsonIgnore
+### @JsonIgnore or Javadoc tags JsonIgnore
 
 ```java
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -139,6 +139,18 @@ public class User {
     private String password;
 }
 ```
+or when there is no jackson library
+```java
+public class JsonIgnoreDocTestPOJO {
+
+  /**
+   * @JsonIgnore
+   */
+  private String username;
+  private String password;
+}
+```
+
 paste result:
 ```json
 {
@@ -166,19 +178,7 @@ public class User {
     }
 }
 ```
-paste result:
-```json
-{
-  "username": "",
-  "roles": [
-    {
-      "roleName": ""
-    }
-  ]
-}
-```
 or when there is no jackson library
-
 ```java
 import java.util.List;
 
