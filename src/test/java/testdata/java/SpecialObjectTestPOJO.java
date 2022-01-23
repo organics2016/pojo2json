@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.*;
 import java.time.temporal.Temporal;
 import java.util.Date;
+import java.util.UUID;
 
 public class SpecialObjectTestPOJO {
 
@@ -46,5 +47,9 @@ public class SpecialObjectTestPOJO {
     private ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
     private YearMonth yearMonth = YearMonth.now();
+
+    //-----
+
+    private UUID uuid = UUID.randomUUID();
 
 }

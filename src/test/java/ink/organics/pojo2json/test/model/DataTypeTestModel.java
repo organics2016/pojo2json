@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -125,6 +126,7 @@ public class DataTypeTestModel extends TestModel {
         assertEquals(result.get("zonedDateTime").textValue(), ZonedDateTime.parse(result.get("zonedDateTime").textValue(), zdtf).format(zdtf));
         assertEquals(result.get("yearMonth").textValue(), YearMonth.parse(result.get("yearMonth").textValue(), ymf).format(ymf));
 
+        assertEquals(result.get("uuid").textValue(), UUID.fromString(result.get("uuid").textValue()).toString());
     }
 
 }
