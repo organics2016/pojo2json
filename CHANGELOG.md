@@ -1,5 +1,10 @@
 # POJO to JSON Changelog
 
+## [1.1.5]
+### Added
+- Support java.util.UUID
+
+
 ## [1.1.4]
 ### Added
 - Support Javadoc tags JsonIgnore
