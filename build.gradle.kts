@@ -22,7 +22,7 @@ dependencies {
 }
 
 group = "ink.organics"
-version = "1.1.4"
+version = "1.1.5"
 
 
 repositories {
