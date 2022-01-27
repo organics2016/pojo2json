@@ -55,25 +55,50 @@ When the program throws this warning there are only two possibilities.
 1. This class reference level > 500 
 
 eg:
+```java
+public class A {
+    private B _0;
+    public class B {
+        private C _1;
+        public class C {
+            private D _2;
+            public class D {
+                // _3 ..... _501..
+            }
+        }
+    }
+}
+```
 ```
 {
- {
-  {
-    .......501
+  "_0": {
+    "_1": {
+      "_2": {
+        "......_501":{}
+      }
+    }
   }
- }
 }
 ```
 2. This class or parent class has nested references
 
 eg:
+```java
+public class A {
+    private B b;
+
+    public class B {
+        private A a;
+    }
+}
+```
 ```
 {
- "a":{
-  "b":{
-   "a":{
-     "b":{
-        .........
+ "b":{
+  "a":{
+   "b":{
+     "a":{
+        ......
       }
     }
    }
@@ -81,6 +106,11 @@ eg:
 }
 ```
 or
+```java
+public class A {
+    private A a;
+}
+```
 ```
 {
  "a":{
