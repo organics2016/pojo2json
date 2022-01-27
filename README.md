@@ -52,35 +52,7 @@ This class reference level exceeds maximum limit or has nested references!
 ```
 When the program throws this warning there are only two possibilities.
 
-1. This class reference level > 500 
-
-eg:
-```java
-public class A {
-    private B _0;
-    public class B {
-        private C _1;
-        public class C {
-            private D _2;
-            public class D {
-                // _3 ..... _501..
-            }
-        }
-    }
-}
-```
-```
-{
-  "_0": {
-    "_1": {
-      "_2": {
-        "......_501":{}
-      }
-    }
-  }
-}
-```
-2. This class or parent class has nested references
+1. This class or parent class has nested references
 
 eg:
 ```java
@@ -117,11 +89,40 @@ public class A {
   "a":{
    "a":{
      "a":{
-        .........
+        ......
       }
     }
    }
  }
+}
+```
+
+2. This class reference level > 500 
+
+eg:
+```java
+public class A {
+    private B _0;
+    public class B {
+        private C _1;
+        public class C {
+            private D _2;
+            public class D {
+                // _3 ..... _501..
+            }
+        }
+    }
+}
+```
+```
+{
+  "_0": {
+    "_1": {
+      "_2": {
+        "......_501":{}
+      }
+    }
+  }
 }
 ```
 Perhaps both will happen for entity but this entity are not suitable for JSON.<br>
