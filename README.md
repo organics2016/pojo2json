@@ -21,12 +21,12 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 - Support Java8 time type.
 - Support Enum.
 - Partial support Jackson and Fastjson annotations.
+- Support Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
 
 ## Support JVM platform languages
 
 - Java - full support
 - Kotlin - beta, but full support
-- Scala - beta, but full support
 
 ## Screenshot
 
