@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
-import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import ink.organics.pojo2json.test.model.AnnotationTestModel;
@@ -73,9 +72,6 @@ public abstract class TestCase extends BasePlatformTestCase {
 
         // Open file and simulate user cursor position to class scope.
         myFixture.configureByFile(fileName);
-        PsiElement psiElement = myFixture.findElementByText("class", PsiElement.class);
-        int offset = psiElement.getTextOffset();
-        myFixture.getEditor().getCaretModel().moveToOffset(offset);
 
         myFixture.testAction(action);
 

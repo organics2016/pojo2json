@@ -75,8 +75,7 @@ public abstract class POJO2JsonAction extends AnAction {
 
             // 语言环境未被装载时，使用language class会找不到类 所以这里用语言ID判断
             menuAllowed = language.isKindOf("JAVA") ||
-                    language.isKindOf("kotlin") ||
-                    language.isKindOf("Scala");
+                    language.isKindOf("kotlin");
         }
         e.getPresentation().setEnabledAndVisible(menuAllowed);
     }
@@ -87,7 +86,7 @@ public abstract class POJO2JsonAction extends AnAction {
         try {
             final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
             final String fileText = psiFile.getText();
-            int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("object");
+            int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
             if (offset < 0) {
                 throw new KnownException("Can't find class scope.");
             }
