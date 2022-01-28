@@ -1,7 +1,6 @@
 package ink.organics.pojo2json;
 
 import com.google.gson.GsonBuilder;
-import com.intellij.lang.Language;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -16,6 +15,7 @@ import ink.organics.pojo2json.fake.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.uast.UClass;
+import org.jetbrains.uast.UastLanguagePlugin;
 import org.jetbrains.uast.UastUtils;
 
 import java.awt.*;
@@ -71,11 +71,9 @@ public abstract class POJO2JsonAction extends AnAction {
 
         boolean menuAllowed = false;
         if (psiFile != null && editor != null && project != null) {
-            final Language language = psiFile.getLanguage();
-
-            // 语言环境未被装载时，使用language class会找不到类 所以这里用语言ID判断
-            menuAllowed = language.isKindOf("JAVA") ||
-                    language.isKindOf("kotlin");
+            menuAllowed = UastLanguagePlugin.Companion.getInstances()
+                    .stream()
+                    .anyMatch(l -> l.isFileSupported(psiFile.getName()));
         }
         e.getPresentation().setEnabledAndVisible(menuAllowed);
     }

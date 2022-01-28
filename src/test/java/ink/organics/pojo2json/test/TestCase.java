@@ -21,7 +21,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 
 public abstract class TestCase extends BasePlatformTestCase {
 
@@ -51,11 +50,6 @@ public abstract class TestCase extends BasePlatformTestCase {
     }
 
     @Override
-    protected boolean annotatedWith(@NotNull Class<? extends Annotation> annotationClass) {
-        return super.annotatedWith(annotationClass);
-    }
-
-    @Override
     protected abstract String getTestDataPath();
 
     @Override
@@ -67,6 +61,24 @@ public abstract class TestCase extends BasePlatformTestCase {
             }
         };
     }
+
+//    @Override
+//    protected LightProjectDescriptor getProjectDescriptor() {
+//        return new DefaultLightProjectDescriptor() {
+//            @Override
+//            public Sdk getSdk() {
+//                Sdk sdk = IdeaTestUtil.getMockJdk(JavaVersion.compose(11));
+//                System.out.println(sdk);
+//                return sdk;
+//            }
+//
+//            @Override
+//            public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
+//                MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
+//                model.getModuleExtension(LanguageLevelModuleExtension.class).setLanguageLevel(LanguageLevel.JDK_1_8);
+//            }
+//        };
+//    }
 
     public JsonNode testAction(@NotNull String fileName, @NotNull AnAction action) {
 

@@ -4,8 +4,7 @@
     <vendor email="374564811@qq.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="plugin-java.xml">com.intellij.java</depends>
-    <depends optional="true" config-file="plugin-kotlin.xml">org.jetbrains.kotlin</depends>
+    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="pojo2json.NotificationGroup" displayType="BALLOON"/>
