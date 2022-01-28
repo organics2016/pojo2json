@@ -1,9 +1,17 @@
 # POJO to JSON Changelog
 
+## [1.1.6]
+### Added
+- Support Java14 Records
+### Changed
+- Remove supporting scala
+- Remove supporting Kotlin Object-Declaration
+### Security
+- Remove invalid depends
+
 ## [1.1.5]
 ### Added
 - Support java.util.UUID
-
 
 ## [1.1.4]
 ### Added
