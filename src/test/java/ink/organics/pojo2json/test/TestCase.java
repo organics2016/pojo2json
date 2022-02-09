@@ -7,12 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.pom.java.LanguageLevel;
-import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.testFramework.fixtures.MavenDependencyUtil;
@@ -30,6 +27,15 @@ import java.io.IOException;
 
 public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
+    public static final LightProjectDescriptor MOCK_JAVA_11 = new ProjectDescriptor(LanguageLevel.JDK_11) {
+
+        @Override
+        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
+            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
+            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
+            super.configureModule(module, model, contentEntry);
+        }
+    };
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -58,42 +64,10 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
     @Override
     protected abstract String getTestDataPath();
 
-    public static final LightProjectDescriptor MOCK_JAVA = new ProjectDescriptor(LanguageLevel.JDK_11, false) {
-        @Override
-        public Sdk getSdk() {
-            Sdk sdk = IdeaTestUtil.getMockJdk(myLanguageLevel.toJavaVersion());
-            System.out.println(sdk);
-            return sdk;
-        }
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
-            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
-            super.configureModule(module, model, contentEntry);
-        }
-    };
-
-    public static final LightProjectDescriptor LOCAL_JAVA = new ProjectDescriptor(LanguageLevel.JDK_11, false) {
-        @Override
-        public Sdk getSdk() {
-            Sdk sdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            System.out.println(sdk);
-            return sdk;
-        }
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
-            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
-            super.configureModule(module, model, contentEntry);
-        }
-    };
-
 
     @Override
     protected @NotNull LightProjectDescriptor getProjectDescriptor() {
-        return MOCK_JAVA;
+        return MOCK_JAVA_11;
     }
 
 
