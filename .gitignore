@@ -5,6 +5,8 @@
 logs
 /build
 /gradle
+# 执行testcase时必须在这个java目录中部署mockJDK https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
+/java
 gradle.properties
 gradlew
 gradlew.bat
