@@ -96,35 +96,6 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
         return MOCK_JAVA;
     }
 
-    //    @Override
-//    protected LightProjectDescriptor getProjectDescriptor() {
-//        return new DefaultLightProjectDescriptor() {
-//
-//            @Override
-//            public Sdk getSdk() {
-//
-//                Sdk sdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-//                System.out.println(sdk);
-//                return sdk;
-//            }
-//
-//            @Override
-//            public Sdk getSdk() {
-//                Sdk sdk = IdeaTestUtil.getMockJdk(JavaVersion.compose(11));
-//                PsiTestUtil.addJdkAnnotations();
-//                PsiTestUtil.addRootsToJdk()
-//                System.out.println(sdk);
-//                return sdk;
-//            }
-//
-//            @Override
-//            public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-//                MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
-//                MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
-//                model.getModuleExtension(LanguageLevelModuleExtension.class).setLanguageLevel(LanguageLevel.JDK_11);
-//            }
-//        };
-//    }
 
     public JsonNode testAction(@NotNull String fileName, @NotNull AnAction action) {
 
