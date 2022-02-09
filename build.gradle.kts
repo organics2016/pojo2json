@@ -16,6 +16,7 @@ plugins {
 
 dependencies {
     testCompileOnly("com.alibaba:fastjson:1.2.76")
+    testCompileOnly("com.fasterxml.jackson.core:jackson-annotations:2.11.0")
     // https://projectlombok.org/setup/gradle
     testCompileOnly("org.projectlombok:lombok:1.18.22")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
@@ -48,6 +49,11 @@ tasks {
         targetCompatibility = "11"
         options.encoding = "UTF-8"
     }
+
+    test {
+        systemProperties(Pair("idea.home.path", project.projectDir))
+    }
+
     patchPluginXml {
         sinceBuild.set("203")
 

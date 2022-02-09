@@ -6,10 +6,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.impl.JavaAwareProjectJdkTableImpl;
+import com.intellij.openapi.roots.ContentEntry;
+import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.pom.java.LanguageLevel;
+import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.MavenDependencyUtil;
 import ink.organics.pojo2json.test.model.AnnotationTestModel;
 import ink.organics.pojo2json.test.model.DataTypeTestModel;
 import ink.organics.pojo2json.test.model.DocTestModel;
@@ -22,7 +28,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-public abstract class TestCase extends BasePlatformTestCase {
+public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
@@ -52,22 +58,61 @@ public abstract class TestCase extends BasePlatformTestCase {
     @Override
     protected abstract String getTestDataPath();
 
+    public static final LightProjectDescriptor MOCK_JAVA = new ProjectDescriptor(LanguageLevel.JDK_11, false) {
+        @Override
+        public Sdk getSdk() {
+            Sdk sdk = IdeaTestUtil.getMockJdk(myLanguageLevel.toJavaVersion());
+            System.out.println(sdk);
+            return sdk;
+        }
+
+        @Override
+        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
+            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
+            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
+            super.configureModule(module, model, contentEntry);
+        }
+    };
+
+    public static final LightProjectDescriptor LOCAL_JAVA = new ProjectDescriptor(LanguageLevel.JDK_11, false) {
+        @Override
+        public Sdk getSdk() {
+            Sdk sdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
+            System.out.println(sdk);
+            return sdk;
+        }
+
+        @Override
+        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
+            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
+            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
+            super.configureModule(module, model, contentEntry);
+        }
+    };
+
+
     @Override
-    protected LightProjectDescriptor getProjectDescriptor() {
-        return new LightProjectDescriptor() {
-            @Override
-            public Sdk getSdk() {
-                return JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
-            }
-        };
+    protected @NotNull LightProjectDescriptor getProjectDescriptor() {
+        return MOCK_JAVA;
     }
 
-//    @Override
+    //    @Override
 //    protected LightProjectDescriptor getProjectDescriptor() {
 //        return new DefaultLightProjectDescriptor() {
+//
+//            @Override
+//            public Sdk getSdk() {
+//
+//                Sdk sdk = JavaAwareProjectJdkTableImpl.getInstanceEx().getInternalJdk();
+//                System.out.println(sdk);
+//                return sdk;
+//            }
+//
 //            @Override
 //            public Sdk getSdk() {
 //                Sdk sdk = IdeaTestUtil.getMockJdk(JavaVersion.compose(11));
+//                PsiTestUtil.addJdkAnnotations();
+//                PsiTestUtil.addRootsToJdk()
 //                System.out.println(sdk);
 //                return sdk;
 //            }
@@ -75,7 +120,8 @@ public abstract class TestCase extends BasePlatformTestCase {
 //            @Override
 //            public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
 //                MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
-//                model.getModuleExtension(LanguageLevelModuleExtension.class).setLanguageLevel(LanguageLevel.JDK_1_8);
+//                MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
+//                model.getModuleExtension(LanguageLevelModuleExtension.class).setLanguageLevel(LanguageLevel.JDK_11);
 //            }
 //        };
 //    }
