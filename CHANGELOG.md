@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [1.1.7]
+### Fixed
+- When @JsonProperty value is no defined fallback to the field name.
+
 ## [1.1.6]
 ### Added
 - Support Java14 Records
