@@ -51,6 +51,8 @@ tasks {
     }
 
     test {
+        // 这个路径下要存在mockJDK，其目录结构为 java/mockJDK-$JAVA_VERSION$
+        // https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
         systemProperties(Pair("idea.home.path", project.projectDir))
     }
 
