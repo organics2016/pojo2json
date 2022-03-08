@@ -13,6 +13,10 @@ public class JavaTestCase extends TestCase {
     }
 
 
+    public void testCurrent() {
+        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new POJO2JsonDefaultAction());
+    }
+
     public void testJavaDateType() {
         dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.java", new POJO2JsonDefaultAction());
         dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.java", new POJO2JsonDefaultAction());

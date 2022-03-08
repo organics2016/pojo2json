@@ -168,11 +168,10 @@ public abstract class POJO2JsonAction extends AnAction {
     }
 
     private String parseFieldKey(PsiField field) {
-        String fieldName = field.getName();
 
         PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
         if (annotation != null) {
-            fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("value").getText());
+            String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("value").getText());
             if (StringUtils.isNotBlank(fieldName)) {
                 return fieldName;
             }
@@ -180,12 +179,12 @@ public abstract class POJO2JsonAction extends AnAction {
 
         annotation = field.getAnnotation("com.alibaba.fastjson.annotation.JSONField");
         if (annotation != null) {
-            fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("name").getText());
+            String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("name").getText());
             if (StringUtils.isNotBlank(fieldName)) {
                 return fieldName;
             }
         }
-        return fieldName;
+        return field.getName();
     }
 
     private Object parseFieldValue(PsiField field, int level, List<String> ignoreProperties) {

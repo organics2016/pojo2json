@@ -18,6 +18,7 @@ public class AnnotationTestModel extends TestModel {
 
         assertNotNull(result.get("name"));
         assertNotNull(result.get("pass"));
+        assertNotNull(result.get("userId"));
     }
 
     public void testJsonIgnoreTestPOJO(String fileName, AnAction action) {
