@@ -82,15 +82,21 @@ public abstract class POJO2JsonAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         final Project project = e.getProject();
         try {
+            final Editor editor = e.getData(CommonDataKeys.EDITOR);
             final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
             final String fileText = psiFile.getText();
-            int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
-            if (offset < 0) {
-                throw new KnownException("Can't find class scope.");
-            }
-            PsiElement elementAt = psiFile.findElementAt(offset);
+
+            PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
             // ADAPTS to all JVM platform languages
             UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
+            if (uClass == null) {
+                int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
+                if (offset < 0) {
+                    throw new KnownException("Can't find class scope.");
+                }
+                elementAt = psiFile.findElementAt(offset);
+                uClass = UastUtils.findContaining(elementAt, UClass.class);
+            }
 
             Map<String, Object> kv = parseClass(uClass.getJavaPsi(), 0, List.of());
             String json = gsonBuilder.create().toJson(kv);

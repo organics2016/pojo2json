@@ -45,4 +45,8 @@ public class JavaTestCase extends TestCase {
         staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.java", new POJO2JsonDefaultAction());
     }
 
+
+    public void testJavaMemberClass() {
+        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.java", new POJO2JsonDefaultAction());
+    }
 }

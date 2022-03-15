@@ -39,4 +39,7 @@ public class KotlinTestCase extends TestCase {
         staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.kt", new POJO2JsonDefaultAction());
     }
 
+    public void testKotlinMemberClass() {
+        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.kt", new POJO2JsonDefaultAction());
+    }
 }

@@ -10,13 +10,11 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ContentEntry;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.pom.java.LanguageLevel;
+import com.intellij.psi.PsiElement;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
 import com.intellij.testFramework.fixtures.MavenDependencyUtil;
-import ink.organics.pojo2json.test.model.AnnotationTestModel;
-import ink.organics.pojo2json.test.model.DataTypeTestModel;
-import ink.organics.pojo2json.test.model.DocTestModel;
-import ink.organics.pojo2json.test.model.StaticFieldTestModel;
+import ink.organics.pojo2json.test.model.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -48,6 +46,7 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
     protected final StaticFieldTestModel staticFieldTestModel = new StaticFieldTestModel(this);
 
+    protected final MemberClassTestModel memberClassTestModel = new MemberClassTestModel(this);
 
     public TestCase() {
         // https://github.com/FasterXML/jackson-databind/issues/2087
@@ -70,11 +69,17 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
         return MOCK_JAVA_11;
     }
 
-
     public JsonNode testAction(@NotNull String fileName, @NotNull AnAction action) {
+        return this.testAction(fileName, action, "class");
+    }
+
+    public JsonNode testAction(@NotNull String fileName, @NotNull AnAction action, String cursorPositionByText) {
 
         // Open file and simulate user cursor position to class scope.
         myFixture.configureByFile(fileName);
+        PsiElement psiElement = myFixture.findElementByText(cursorPositionByText, PsiElement.class);
+        int offset = psiElement.getTextOffset();
+        myFixture.getEditor().getCaretModel().moveToOffset(offset);
 
         myFixture.testAction(action);
 
