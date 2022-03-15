@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [1.1.8]
+### Changed
+- Only the class where the cursor is located is parsed. If the cursor is not in any class, the first class in the file is parsed.
+
 ## [1.1.7]
 ### Fixed
 - When @JsonProperty value is no defined fallback to the field name.
