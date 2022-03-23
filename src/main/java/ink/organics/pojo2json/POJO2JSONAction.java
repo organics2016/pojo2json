@@ -25,10 +25,10 @@ public abstract class POJO2JSONAction extends AnAction {
     private final NotificationGroup notificationGroup =
             NotificationGroupManager.getInstance().getNotificationGroup("pojo2json.NotificationGroup");
 
-    private final ink.organics.pojo2json.parser.POJO2JSONParser POJO2JSONParser;
+    private final POJO2JSONParser pojo2JSONParser;
 
-    public POJO2JSONAction(POJO2JSONParser POJO2JSONParser) {
-        this.POJO2JSONParser = POJO2JSONParser;
+    public POJO2JSONAction(POJO2JSONParser pojo2JSONParser) {
+        this.pojo2JSONParser = pojo2JSONParser;
     }
 
     @Override
@@ -66,7 +66,7 @@ public abstract class POJO2JSONAction extends AnAction {
                 uClass = UastUtils.findContaining(elementAt, UClass.class);
             }
 
-            String json = POJO2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
+            String json = pojo2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
 
             StringSelection selection = new StringSelection(json);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
