@@ -1,4 +1,4 @@
-package ink.organics.pojo2json;
+package ink.organics.pojo2json.parser;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class POJO2JsonPsiUtils {
+public class POJO2JSONParserUtils {
 
 
     public static String psiTextToString(String psiText) {

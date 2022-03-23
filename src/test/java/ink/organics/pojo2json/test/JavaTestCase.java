@@ -1,7 +1,7 @@
 package ink.organics.pojo2json.test;
 
 
-import ink.organics.pojo2json.POJO2JsonDefaultAction;
+import ink.organics.pojo2json.POJO2JSONDefaultAction;
 
 
 public class JavaTestCase extends TestCase {
@@ -14,39 +14,39 @@ public class JavaTestCase extends TestCase {
 
 
     public void testCurrent() {
-        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new POJO2JsonDefaultAction());
+        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new POJO2JSONDefaultAction());
     }
 
     public void testJavaDateType() {
-        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.java", new POJO2JsonDefaultAction());
-        dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.java", new POJO2JsonDefaultAction());
-        dataTypeTestModel.testEnumTestPOJO("EnumTestPOJO.java", new POJO2JsonDefaultAction());
-        dataTypeTestModel.testIterableTestPOJO("IterableTestPOJO.java", new POJO2JsonDefaultAction());
-        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new POJO2JsonDefaultAction());
-        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new POJO2JsonDefaultAction());
+        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.java", new POJO2JSONDefaultAction());
+        dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.java", new POJO2JSONDefaultAction());
+        dataTypeTestModel.testEnumTestPOJO("EnumTestPOJO.java", new POJO2JSONDefaultAction());
+        dataTypeTestModel.testIterableTestPOJO("IterableTestPOJO.java", new POJO2JSONDefaultAction());
+        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new POJO2JSONDefaultAction());
+        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new POJO2JSONDefaultAction());
     }
 
 
     public void testJavaAnnotation() {
-        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new POJO2JsonDefaultAction());
-        annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.java", new POJO2JsonDefaultAction());
-        annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.java", new POJO2JsonDefaultAction());
-        annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.java", new POJO2JsonDefaultAction());
+        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new POJO2JSONDefaultAction());
+        annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.java", new POJO2JSONDefaultAction());
+        annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.java", new POJO2JSONDefaultAction());
+        annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.java", new POJO2JSONDefaultAction());
     }
 
 
     public void testJavaDoc() {
-        docTestModel.testJsonIgnoreDocTestPOJO("JsonIgnoreDocTestPOJO.java", new POJO2JsonDefaultAction());
-        docTestModel.testJsonIgnorePropertiesDocTestPOJO("JsonIgnorePropertiesDocTestPOJO.java", new POJO2JsonDefaultAction());
+        docTestModel.testJsonIgnoreDocTestPOJO("JsonIgnoreDocTestPOJO.java", new POJO2JSONDefaultAction());
+        docTestModel.testJsonIgnorePropertiesDocTestPOJO("JsonIgnorePropertiesDocTestPOJO.java", new POJO2JSONDefaultAction());
     }
 
 
     public void testJavaStaticField() {
-        staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.java", new POJO2JsonDefaultAction());
+        staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.java", new POJO2JSONDefaultAction());
     }
 
 
     public void testJavaMemberClass() {
-        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.java", new POJO2JsonDefaultAction());
+        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.java", new POJO2JSONDefaultAction());
     }
 }

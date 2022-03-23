@@ -1,4 +1,4 @@
-package ink.organics.pojo2json;
+package ink.organics.pojo2json.parser;
 
 public class KnownException extends RuntimeException {
 

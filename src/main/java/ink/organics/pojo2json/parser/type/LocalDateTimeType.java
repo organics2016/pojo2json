@@ -1,24 +1,24 @@
-package ink.organics.pojo2json.fake;
+package ink.organics.pojo2json.parser.type;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class FakeZonedDateTime extends FakeTemporal implements JsonFakeValuesService {
+public class LocalDateTimeType extends TemporalType implements SpecifyType {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Object random() {
-        return ZonedDateTime
+        return LocalDateTime
                 .ofInstant(Instant.ofEpochMilli((long) super.random()), ZoneId.systemDefault())
                 .format(formatter);
     }
 
     @Override
     public Object def() {
-        return ZonedDateTime
+        return LocalDateTime
                 .ofInstant(Instant.ofEpochMilli((long) super.def()), ZoneId.systemDefault())
                 .format(formatter);
     }

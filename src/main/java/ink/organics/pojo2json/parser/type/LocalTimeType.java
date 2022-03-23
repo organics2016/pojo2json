@@ -1,11 +1,11 @@
-package ink.organics.pojo2json.fake;
+package ink.organics.pojo2json.parser.type;
 
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class FakeLocalTime extends FakeTemporal implements JsonFakeValuesService {
+public class LocalTimeType extends TemporalType implements SpecifyType {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 

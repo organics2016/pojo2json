@@ -1,4 +1,4 @@
-package ink.organics.pojo2json.fake;
+package ink.organics.pojo2json.parser.type;
 
 import java.time.Instant;
 import java.time.YearMonth;
@@ -6,7 +6,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FakeYearMonth extends FakeTemporal implements JsonFakeValuesService {
+public class YearMonthType extends TemporalType implements SpecifyType {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 

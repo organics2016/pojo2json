@@ -1,22 +1,22 @@
-package ink.organics.pojo2json;
+package ink.organics.pojo2json.parser;
 
 import com.google.gson.GsonBuilder;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.util.PsiUtil;
-import ink.organics.pojo2json.fake.*;
+import ink.organics.pojo2json.parser.type.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PsiClassParser {
+public abstract class POJO2JSONParser {
 
 
     private final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
-    private final Map<String, JsonFakeValuesService> normalTypes = new HashMap<>();
+    private final Map<String, SpecifyType> specifyTypes = new HashMap<>();
 
     private final List<String> iterableTypes = List.of(
             "Iterable",
@@ -24,27 +24,29 @@ public class PsiClassParser {
             "List",
             "Set");
 
-    public PsiClassParser() {
+    public POJO2JSONParser() {
 
-        FakeDecimal fakeDecimal = new FakeDecimal();
-        FakeLocalDateTime fakeLocalDateTime = new FakeLocalDateTime();
+        DecimalType decimalType = new DecimalType();
+        LocalDateTimeType localDateTimeType = new LocalDateTimeType();
 
-        normalTypes.put("Boolean", new FakeBoolean());
-        normalTypes.put("Float", fakeDecimal);
-        normalTypes.put("Double", fakeDecimal);
-        normalTypes.put("BigDecimal", fakeDecimal);
-        normalTypes.put("Number", new FakeInteger());
-        normalTypes.put("Character", new FakeChar());
-        normalTypes.put("CharSequence", new FakeString());
-        normalTypes.put("Date", fakeLocalDateTime);
-        normalTypes.put("Temporal", new FakeTemporal());
-        normalTypes.put("LocalDateTime", fakeLocalDateTime);
-        normalTypes.put("LocalDate", new FakeLocalDate());
-        normalTypes.put("LocalTime", new FakeLocalTime());
-        normalTypes.put("ZonedDateTime", new FakeZonedDateTime());
-        normalTypes.put("YearMonth", new FakeYearMonth());
-        normalTypes.put("UUID", new FakeUUID());
+        specifyTypes.put("Boolean", new BooleanType());
+        specifyTypes.put("Float", decimalType);
+        specifyTypes.put("Double", decimalType);
+        specifyTypes.put("BigDecimal", decimalType);
+        specifyTypes.put("Number", new IntegerType());
+        specifyTypes.put("Character", new CharType());
+        specifyTypes.put("CharSequence", new StringType());
+        specifyTypes.put("Date", localDateTimeType);
+        specifyTypes.put("Temporal", new TemporalType());
+        specifyTypes.put("LocalDateTime", localDateTimeType);
+        specifyTypes.put("LocalDate", new LocalDateType());
+        specifyTypes.put("LocalTime", new LocalTimeType());
+        specifyTypes.put("ZonedDateTime", new ZonedDateTimeType());
+        specifyTypes.put("YearMonth", new YearMonthType());
+        specifyTypes.put("UUID", new UUIDType());
     }
+
+    protected abstract Object getFakeValue(SpecifyType specifyType);
 
     public String psiClassToJSONString(PsiClass psiClass) {
         Map<String, Object> kv = parseClass(psiClass, 0, List.of());
@@ -85,11 +87,11 @@ public class PsiClassParser {
                 return null;
             }
 
-            ignoreProperties = POJO2JsonPsiUtils.docTextToList("@JsonIgnoreProperties", docComment.getText());
+            ignoreProperties = POJO2JSONParserUtils.docTextToList("@JsonIgnoreProperties", docComment.getText());
         } else {
             annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreProperties.class.getName());
             if (annotation != null) {
-                ignoreProperties = POJO2JsonPsiUtils.arrayTextToList(annotation.findAttributeValue("value").getText());
+                ignoreProperties = POJO2JSONParserUtils.arrayTextToList(annotation.findAttributeValue("value").getText());
             }
         }
 
@@ -108,7 +110,7 @@ public class PsiClassParser {
 
         PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
         if (annotation != null) {
-            String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("value").getText());
+            String fieldName = POJO2JSONParserUtils.psiTextToString(annotation.findAttributeValue("value").getText());
             if (StringUtils.isNotBlank(fieldName)) {
                 return fieldName;
             }
@@ -116,7 +118,7 @@ public class PsiClassParser {
 
         annotation = field.getAnnotation("com.alibaba.fastjson.annotation.JSONField");
         if (annotation != null) {
-            String fieldName = POJO2JsonPsiUtils.psiTextToString(annotation.findAttributeValue("name").getText());
+            String fieldName = POJO2JSONParserUtils.psiTextToString(annotation.findAttributeValue("name").getText());
             if (StringUtils.isNotBlank(fieldName)) {
                 return fieldName;
             }
@@ -152,12 +154,7 @@ public class PsiClassParser {
 
             if (psiClass.isEnum()) { // enum
 
-                for (PsiField field : psiClass.getFields()) {
-                    if (field instanceof PsiEnumConstant) {
-                        return field.getName();
-                    }
-                }
-                return "";
+                return this.getFakeValue(new EnumType(psiClass));
 
             } else {
 
@@ -182,9 +179,9 @@ public class PsiClassParser {
                 } else { // Object
 
                     List<String> retain = new ArrayList<>(fieldTypeNames);
-                    retain.retainAll(normalTypes.keySet());
+                    retain.retainAll(specifyTypes.keySet());
                     if (!retain.isEmpty()) {
-                        return this.getFakeValue(normalTypes.get(retain.get(0)));
+                        return this.getFakeValue(specifyTypes.get(retain.get(0)));
                     } else {
 
                         if (level > 500) {
@@ -201,17 +198,17 @@ public class PsiClassParser {
     private Object getPrimitiveTypeValue(PsiType type) {
         switch (type.getCanonicalText()) {
             case "boolean":
-                return this.getFakeValue(normalTypes.get("Boolean"));
+                return this.getFakeValue(specifyTypes.get("Boolean"));
             case "byte":
             case "short":
             case "int":
             case "long":
-                return this.getFakeValue(normalTypes.get("Number"));
+                return this.getFakeValue(specifyTypes.get("Number"));
             case "float":
             case "double":
-                return this.getFakeValue(normalTypes.get("BigDecimal"));
+                return this.getFakeValue(specifyTypes.get("BigDecimal"));
             case "char":
-                return this.getFakeValue(normalTypes.get("Character"));
+                return this.getFakeValue(specifyTypes.get("Character"));
             default:
                 return null;
         }
