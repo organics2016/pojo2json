@@ -8,6 +8,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="pojo2json.NotificationGroup" displayType="BALLOON"/>
+        <toolWindow factoryClass="ink.organics.pojo2json.POJO2JSONToolWindowFactory"
+                    id="POJO to JSON"
+                    anchor="right"
+                    secondary="false"
+                    icon="AllIcons.FileTypes.Json"
+                    canCloseContents="true"/>
     </extensions>
 
     <actions>
