@@ -37,6 +37,6 @@ public class EnumType implements SpecifyType {
             return "";
         }
 
-        return psiFieldNames.get(RandomUtils.nextInt(0, psiFieldNames.size() - 1));
+        return psiFieldNames.get(RandomUtils.nextInt(0, psiFieldNames.size()));
     }
 }
