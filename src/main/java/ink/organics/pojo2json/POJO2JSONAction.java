@@ -1,6 +1,5 @@
 package ink.organics.pojo2json;
 
-import com.intellij.json.JsonFileType;
 import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -13,8 +12,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentFactory;
-import com.intellij.ui.content.ContentManager;
 import ink.organics.pojo2json.parser.KnownException;
 import ink.organics.pojo2json.parser.POJO2JSONParser;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +26,8 @@ import java.awt.datatransfer.StringSelection;
 public abstract class POJO2JSONAction extends AnAction {
 
 
-    private final NotificationGroup notificationGroup = NotificationGroupManager.getInstance().getNotificationGroup("pojo2json.NotificationGroup");
+    private final NotificationGroup notificationGroup = NotificationGroupManager.getInstance()
+            .getNotificationGroup("pojo2json.NotificationGroup");
 
     private final POJO2JSONParser pojo2JSONParser;
 
@@ -45,7 +43,9 @@ public abstract class POJO2JSONAction extends AnAction {
 
         boolean menuAllowed = false;
         if (psiFile != null && editor != null && project != null) {
-            menuAllowed = UastLanguagePlugin.Companion.getInstances().stream().anyMatch(l -> l.isFileSupported(psiFile.getName()));
+            menuAllowed = UastLanguagePlugin.Companion.getInstances()
+                    .stream()
+                    .anyMatch(l -> l.isFileSupported(psiFile.getName()));
         }
         e.getPresentation().setEnabledAndVisible(menuAllowed);
     }
@@ -73,7 +73,7 @@ public abstract class POJO2JSONAction extends AnAction {
             String json = pojo2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
 
             outputClipboard(json);
-            outputToolWindow(json, project, editor, uClass);
+            outputToolWindow(json, project);
 
             String message = "Convert " + uClass.getName() + " to JSON success, copied to clipboard.";
             Notification success = notificationGroup.createNotification(message, NotificationType.INFORMATION);
@@ -94,27 +94,18 @@ public abstract class POJO2JSONAction extends AnAction {
         clipboard.setContents(selection, selection);
     }
 
-    private void outputToolWindow(String jsonResult, Project project, Editor editor, UClass uClass) {
+    private void outputToolWindow(String jsonResult, Project project) {
         ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("POJO to JSON");
         if (toolWindow == null) {
             return;
         }
 
-        EditorTextField editorTextField = new EditorTextField(jsonResult, project, JsonFileType.INSTANCE);
-        editorTextField.setFontInheritedFromLAF(false);
-        editorTextField.setFont(editor.getContentComponent().getFont());
-
-        ContentManager contentManager = toolWindow.getContentManager();
-        Content content = contentManager.findContent(uClass.getName());
-        if (content != null) {
-            content.setComponent(editorTextField);
-            contentManager.setSelectedContent(content);
-        } else {
-            // TODO 这里有个问题。第一次创建的content 无法设置焦点
-            content = ContentFactory.SERVICE.getInstance().createContent(editorTextField, uClass.getName(), false);
-            contentManager.addContent(content);
+        Content content = toolWindow.getContentManager().getContent(0);
+        if (content == null) {
+            return;
         }
-        contentManager.requestFocus(content, true);
+        EditorTextField editorTextField = (EditorTextField) content.getComponent();
+        editorTextField.setText(jsonResult);
     }
 }
 
