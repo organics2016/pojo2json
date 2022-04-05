@@ -14,7 +14,9 @@ public class POJO2JSONToolWindowFactory implements ToolWindowFactory {
 
     @Override
     public boolean isApplicable(@NotNull Project project) {
-        return ToolWindowFactory.super.isApplicable(project);
+//        return ToolWindowFactory.super.isApplicable(project);
+        // TODO 暂时不确定提供窗口是否有意义
+        return false;
     }
 
     /**
