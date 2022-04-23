@@ -1,5 +1,11 @@
 # POJO to JSON Changelog
 
+## [1.2.0]
+### Changed
+- Optimize Enum random values
+### Security
+- Controller refactor
+
 ## [1.1.8]
 ### Changed
 - Only the class where the cursor is located is parsed. If the cursor is not in any class, the first class in the file is parsed.
