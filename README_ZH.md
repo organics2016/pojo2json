@@ -17,18 +17,18 @@
 
 # POJO to JSON
 
-A simple plugin for converting POJO to JSON in IntelliJ IDEA
+将 POJO 转换为 JSON 的简单插件
 
-- Support BigDecimal and other Numeric objects.
-- Support Java8 time type.
-- Support Enum.
-- Partial support Jackson and Fastjson annotations.
-- Support Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
+- 支持 BigDecimal 和其他的 Numeric
+- 支持 Java8 时间类型
+- 支持 枚举
+- 部分支持 Jackson 和 Fastjson 注解
+- 支持 Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
 
 ## Support JVM platform languages
 
-- Java - full support
-- Kotlin - beta, but full support
+- Java - 完全支持
+- Kotlin - 大概, 完全支持
 
 ## Screenshot
 
@@ -36,25 +36,25 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 ## Installation
 
-- **Install in IDEA:**
+- **IDEA中安装:**
     - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search<b>"POJO to JSON"</b></kbd> > <kbd>Install</kbd>
 
-- **Manual Install:**
+- **手动安装:**
     - [plugin] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> -> Select the plug-in package and install（No need to unzip）
     
 ## Usage
 
-- <kbd>Open the target class file</kbd> > <kbd>Right click</kbd> > <kbd>POJO To JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
+- <kbd>打开目标class文件</kbd> > <kbd>右键单击</kbd> > <kbd>POJO To JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
 
 ## Q&A
 
-- Why always report errors when use it?
+- 为什么使用的时候总是报错？
 ```
 This class reference level exceeds maximum limit or has nested references!
 ```
-When the program throws this warning there are only two possibilities.
+当程序抛出此警告时，只有两种可能性。
 
-1. This class or parent class has nested references
+1. 这个 class 或父级 class 存在嵌套引用
 
 eg:
 ```java
@@ -99,7 +99,7 @@ public class A {
 }
 ```
 
-2. This class reference level > 500 
+2. 当前class的引用层级 > 500 
 
 eg:
 ```java
@@ -127,13 +127,13 @@ public class A {
   }
 }
 ```
-Perhaps both will happen for entity but this entity are not suitable for JSON.<br>
-So you can try to serialize your POJO using Jackson to see what happens.<br>
-If no exception, you can submit a bug to this repository issues with your target class :)
+也许这两种情况都会发生在实体上，但这个实体不适合JSON。<br>
+您可以尝试使用 Jackson 序列化您的 POJO 看看会发生什么。<br>
+如果没有任何异常, 可以将您的POJO作为例子向此repo的Issues提交BUG :)
 
-- But how to solve this problem?
+- 但是如何解决这个问题呢？
 
-You can try the following methods.
+您可以尝试以下方法。
 
 ## Support Annotations and Javadoc
 
@@ -172,7 +172,7 @@ public class User {
     private String password;
 }
 ```
-or when there is no jackson library
+或者当您没有导入 jackson 库时
 ```java
 public class JsonIgnoreDocTestPOJO {
 
@@ -211,7 +211,7 @@ public class User {
     }
 }
 ```
-or when there is no jackson library
+或者当您没有导入 jackson 库时
 ```java
 import java.util.List;
 
@@ -242,11 +242,11 @@ paste result:
 }
 ```
 
-You may encounter this problem during use.
+您在使用过程中可能会遇到此问题。
 ```
 This class reference level exceeds maximum limit or has nested references!
 ```
-The above method can solve the nested reference problem well.
+上述方法可以很好地解决嵌套引用问题。
 
 ### @JsonIgnoreType
 
@@ -278,5 +278,5 @@ paste result:
 
 ## Contributors
 
-Ideas and partial realization from
+想法和部分实现来自
 [![](https://avatars.githubusercontent.com/u/12984934?s=28)linsage](https://github.com/linsage)
