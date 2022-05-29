@@ -5,11 +5,9 @@ import com.intellij.ide.scratch.ScratchRootType;
 import com.intellij.ide.util.PsiNavigationSupport;
 import com.intellij.json.JsonFileType;
 import com.intellij.json.JsonLanguage;
-import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -29,11 +27,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class ProjectViewPopupMenuAction extends AnAction {
-
-    private static final Logger LOG = Logger.getInstance(ProjectViewPopupMenuAction.class);
-
-    private final NotificationGroup notificationGroup = NotificationGroupManager.getInstance()
-            .getNotificationGroup("pojo2json.NotificationGroup");
 
     private final POJO2JSONParser pojo2JSONParser;
 
@@ -96,14 +89,15 @@ public abstract class ProjectViewPopupMenuAction extends AnAction {
                 .ifPresent(virtualFile ->
                         PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, 0).navigate(true));
 
-        if (!warnMap.isEmpty()) {
-            warnMap.keySet()
-                    .stream()
-                    .map(name -> name + "," + warnMap.get(name))
-                    .forEach(errorMsg -> {
-                        Notification warn = notificationGroup.createNotification(errorMsg, NotificationType.WARNING);
-                        Notifications.Bus.notify(warn, project);
-                    });
+
+        if (warnMap.isEmpty()) {
+            Notifier.notifyInfo("Convert all POJO to JSON success and create files to Scratches folder.", project);
+            return;
         }
+
+        warnMap.keySet()
+                .stream()
+                .map(fileName -> fileName + "," + warnMap.get(fileName))
+                .forEach(errorMsg -> Notifier.notifyWarn(errorMsg, project));
     }
 }

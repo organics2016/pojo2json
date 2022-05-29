@@ -1,6 +1,5 @@
 package ink.organics.pojo2json;
 
-import com.intellij.notification.*;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -20,10 +19,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public abstract class EditorPopupMenuAction extends AnAction {
-
-
-    private final NotificationGroup notificationGroup = NotificationGroupManager.getInstance()
-            .getNotificationGroup("pojo2json.NotificationGroup");
 
     private final POJO2JSONParser pojo2JSONParser;
 
@@ -49,44 +44,35 @@ public abstract class EditorPopupMenuAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         final Project project = e.getProject();
-        try {
-            final Editor editor = e.getData(CommonDataKeys.EDITOR);
-            final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
-            final String fileText = psiFile.getText();
+        final Editor editor = e.getData(CommonDataKeys.EDITOR);
+        final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
+        final String fileText = psiFile.getText();
 
-            PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
-            // ADAPTS to all JVM platform languages
-            UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
-            if (uClass == null) {
-                int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
-                if (offset < 0) {
-                    throw new KnownException("Can't find class scope.");
-                }
-                elementAt = psiFile.findElementAt(offset);
-                uClass = UastUtils.findContaining(elementAt, UClass.class);
+        PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
+        // ADAPTS to all JVM platform languages
+        UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
+        if (uClass == null) {
+            int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
+            if (offset < 0) {
+                Notifier.notifyWarn("Can't find class scope.", project);
+                return;
             }
+            elementAt = psiFile.findElementAt(offset);
+            uClass = UastUtils.findContaining(elementAt, UClass.class);
+        }
 
+        try {
             String json = pojo2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
 
-            outputClipboard(json);
+            StringSelection selection = new StringSelection(json);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(selection, selection);
 
-            String message = "Convert " + uClass.getName() + " to JSON success, copied to clipboard.";
-            Notification success = notificationGroup.createNotification(message, NotificationType.INFORMATION);
-            Notifications.Bus.notify(success, project);
+            Notifier.notifyInfo("Convert " + uClass.getName() + " to JSON success, copied to clipboard.", project);
 
         } catch (KnownException ex) {
-            Notification warn = notificationGroup.createNotification(ex.getMessage(), NotificationType.WARNING);
-            Notifications.Bus.notify(warn, project);
-        } catch (Exception ex) {
-            Notification error = notificationGroup.createNotification("Convert to JSON failed. " + ex.getMessage(), NotificationType.ERROR);
-            Notifications.Bus.notify(error, project);
+            Notifier.notifyWarn(ex.getMessage(), project);
         }
-    }
-
-    private void outputClipboard(String jsonResult) {
-        StringSelection selection = new StringSelection(jsonResult);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(selection, selection);
     }
 }
 
