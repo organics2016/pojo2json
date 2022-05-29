@@ -14,10 +14,6 @@ import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UastLanguagePlugin;
 import org.jetbrains.uast.UastUtils;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-
 public abstract class EditorPopupMenuAction extends AnAction {
 
     private final POJO2JSONParser pojo2JSONParser;
@@ -64,9 +60,7 @@ public abstract class EditorPopupMenuAction extends AnAction {
         try {
             String json = pojo2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
 
-            StringSelection selection = new StringSelection(json);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(selection, selection);
+            ClipboardHandler.copyToClipboard(json);
 
             Notifier.notifyInfo("Convert " + uClass.getName() + " to JSON success, copied to clipboard.", project);
 

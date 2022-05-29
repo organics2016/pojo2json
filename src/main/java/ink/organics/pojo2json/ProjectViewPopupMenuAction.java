@@ -20,10 +20,9 @@ import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UastLanguagePlugin;
 import org.jetbrains.uast.UastUtils;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class ProjectViewPopupMenuAction extends AnAction {
@@ -50,7 +49,7 @@ public abstract class ProjectViewPopupMenuAction extends AnAction {
         final VirtualFile[] selectFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
         final Map<String, String> warnMap = new LinkedHashMap<>();
 
-        Arrays.stream(selectFiles)
+        List<VirtualFile> efficientFiles = Arrays.stream(selectFiles)
                 .filter(virtualFile ->
                         UastLanguagePlugin.Companion.getInstances().stream().anyMatch(l -> l.isFileSupported(virtualFile.getName())))
                 .map(virtualFile -> {
@@ -83,16 +82,26 @@ public abstract class ProjectViewPopupMenuAction extends AnAction {
 
                 })
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList()) // 这里归集以结束上一个表达式，否则 findFirst 在表达式的优先级会被提前
-                .stream()
-                .findFirst()
-                .ifPresent(virtualFile ->
-                        PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, 0).navigate(true));
+                .collect(Collectors.toList()); // 这里归集以结束上一个表达式，否则 findFirst 在表达式的优先级会被提前
 
 
-        if (warnMap.isEmpty()) {
-            Notifier.notifyInfo("Convert all POJO to JSON success and create files to Scratches folder.", project);
-            return;
+        if (efficientFiles.isEmpty()) {
+            Notifier.notifyWarn("No convertible files.", project);
+        } else {
+            VirtualFile virtualFile = efficientFiles.get(0);
+
+            try {
+                ClipboardHandler.copyToClipboard(new String(virtualFile.contentsToByteArray(), StandardCharsets.UTF_8));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Notifier.notifyError(ex.getMessage(), project);
+            }
+
+            if (efficientFiles.size() > 1) {
+                PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, 0).navigate(true);
+            }
+
+            Notifier.notifyInfo("Convert all POJO to JSON success and create json files to Scratches folder, " + virtualFile.getName() + " copied to clipboard.", project);
         }
 
         warnMap.keySet()
