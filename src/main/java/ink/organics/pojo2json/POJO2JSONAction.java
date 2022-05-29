@@ -6,12 +6,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.ui.EditorTextField;
-import com.intellij.ui.content.Content;
 import ink.organics.pojo2json.parser.KnownException;
 import ink.organics.pojo2json.parser.POJO2JSONParser;
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +69,6 @@ public abstract class POJO2JSONAction extends AnAction {
             String json = pojo2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
 
             outputClipboard(json);
-            outputToolWindow(json, project);
 
             String message = "Convert " + uClass.getName() + " to JSON success, copied to clipboard.";
             Notification success = notificationGroup.createNotification(message, NotificationType.INFORMATION);
@@ -92,20 +87,6 @@ public abstract class POJO2JSONAction extends AnAction {
         StringSelection selection = new StringSelection(jsonResult);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(selection, selection);
-    }
-
-    private void outputToolWindow(String jsonResult, Project project) {
-        ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow("POJO to JSON");
-        if (toolWindow == null) {
-            return;
-        }
-
-        Content content = toolWindow.getContentManager().getContent(0);
-        if (content == null) {
-            return;
-        }
-        EditorTextField editorTextField = (EditorTextField) content.getComponent();
-        editorTextField.setText(jsonResult);
     }
 }
 
