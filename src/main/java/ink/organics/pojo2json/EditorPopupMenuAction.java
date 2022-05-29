@@ -19,7 +19,7 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
-public abstract class POJO2JSONAction extends AnAction {
+public abstract class EditorPopupMenuAction extends AnAction {
 
 
     private final NotificationGroup notificationGroup = NotificationGroupManager.getInstance()
@@ -27,7 +27,7 @@ public abstract class POJO2JSONAction extends AnAction {
 
     private final POJO2JSONParser pojo2JSONParser;
 
-    public POJO2JSONAction(POJO2JSONParser pojo2JSONParser) {
+    public EditorPopupMenuAction(POJO2JSONParser pojo2JSONParser) {
         this.pojo2JSONParser = pojo2JSONParser;
     }
 

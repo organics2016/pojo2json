@@ -11,21 +11,39 @@
     </extensions>
 
     <actions>
-        <group id="ink.organics.pojo2json.POJO2JsonGroup">
+        <group id="ink.organics.pojo2json.EditorPopupMenuGroup">
             <separator/>
-            <action class="ink.organics.pojo2json.POJO2JSONDefaultAction"
-                    id="ink.organics.pojo2json.POJO2JSONDefaultAction"
+            <action class="ink.organics.pojo2json.EditorPopupMenuDefaultAction"
+                    id="ink.organics.pojo2json.EditorPopupMenuDefaultAction"
                     icon="AllIcons.Json.Object"
                     text="POJO To JSON"
                     description="Convert POJO to JSON and copy to the shear plate">
             </action>
-            <action class="ink.organics.pojo2json.POJO2JSONRandomAction"
-                    id="ink.organics.pojo2json.POJO2JSONRandomAction"
+            <action class="ink.organics.pojo2json.EditorPopupMenuRandomAction"
+                    id="ink.organics.pojo2json.EditorPopupMenuRandomAction"
                     icon="AllIcons.Json.Object"
                     text="POJO To JSON Random Values"
                     description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
             </action>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <separator/>
+        </group>
+
+        <group id="ink.organics.pojo2json.ProjectViewPopupMenuGroup">
+            <separator/>
+            <action class="ink.organics.pojo2json.ProjectViewPopupMenuDefaultAction"
+                    id="ink.organics.pojo2json.ProjectViewPopupMenuDefaultAction"
+                    icon="AllIcons.Json.Object"
+                    text="POJO To JSON"
+                    description="Convert POJO to JSON and copy to the shear plate">
+            </action>
+            <action class="ink.organics.pojo2json.ProjectViewPopupMenuRandomAction"
+                    id="ink.organics.pojo2json.ProjectViewPopupMenuRandomAction"
+                    icon="AllIcons.Json.Object"
+                    text="POJO To JSON Random Values"
+                    description="Convert POJO to JSON and copy to the shear plate and randomly generate some test data">
+            </action>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
             <separator/>
         </group>
     </actions>
