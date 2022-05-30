@@ -9,7 +9,7 @@ plugins {
     // Kotlin support
 //    id("org.jetbrains.kotlin.jvm") version "1.6.10"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.3.0"
+    id("org.jetbrains.intellij") version "1.6.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
 }
@@ -50,6 +50,10 @@ tasks {
         options.encoding = "UTF-8"
     }
 
+    buildSearchableOptions {
+        enabled = false
+    }
+
     test {
         // 这个路径下要存在mockJDK，其目录结构为 java/mockJDK-$JAVA_VERSION$
         // https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
@@ -76,8 +80,14 @@ tasks {
         changeNotes.set(provider { changelog.getLatest().toHTML() })
     }
 
+    signPlugin {
+        certificateChain.set(File(projectDir, ".keys/chain.crt").readText(Charsets.UTF_8))
+        privateKey.set(File(projectDir, ".keys/private.pem").readText(Charsets.UTF_8))
+        password.set(properties("PRIVATE_KEY_PASSWORD"))
+    }
+
     publishPlugin {
-        token.set(properties("intellijPublishToken"))
+        token.set(properties("PUBLISH_TOKEN"))
     }
 }
 
