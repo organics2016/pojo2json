@@ -11,9 +11,9 @@
 [github]: https://github.com/organics2016/pojo2json
 [plugin]: https://plugins.jetbrains.com/plugin/12066-pojo-to-json
 
-<!-- Plugin description -->
-
 ### [中文](./README_ZH.md) | [English](./README.md)
+
+<!-- Plugin description -->
 
 # POJO to JSON
 
@@ -32,7 +32,12 @@
 
 ## Screenshot
 
-![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/pojo2json.gif)
+ヘ(_ _ヘ)
+![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
+╰(￣▽￣)╮
+![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)
+ヽ(°◇° )ノ
+![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/batch.gif)
 
 ## Installation
 
