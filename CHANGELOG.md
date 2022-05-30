@@ -1,5 +1,14 @@
 # POJO to JSON Changelog
 
+## [1.2.1]
+### Added
+- Add batch operation.
+- Add project view list operation.
+### Security
+- Controller refactor
+### Remove
+- Remove window tool
+
 ## [1.2.0]
 ### Changed
 - Optimize Enum random values
