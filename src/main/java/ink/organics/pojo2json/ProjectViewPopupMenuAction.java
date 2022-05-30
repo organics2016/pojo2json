@@ -5,7 +5,6 @@ import com.intellij.ide.scratch.ScratchRootType;
 import com.intellij.ide.util.PsiNavigationSupport;
 import com.intellij.json.JsonFileType;
 import com.intellij.json.JsonLanguage;
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
@@ -17,20 +16,18 @@ import ink.organics.pojo2json.parser.KnownException;
 import ink.organics.pojo2json.parser.POJO2JSONParser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.uast.UClass;
-import org.jetbrains.uast.UastLanguagePlugin;
 import org.jetbrains.uast.UastUtils;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class ProjectViewPopupMenuAction extends AnAction {
-
-    private final POJO2JSONParser pojo2JSONParser;
+public abstract class ProjectViewPopupMenuAction extends POJO2JSONAction {
 
     public ProjectViewPopupMenuAction(POJO2JSONParser pojo2JSONParser) {
-        this.pojo2JSONParser = pojo2JSONParser;
+        super(pojo2JSONParser);
     }
 
     @Override
@@ -38,7 +35,11 @@ public abstract class ProjectViewPopupMenuAction extends AnAction {
         final Project project = e.getProject();
         final VirtualFile[] selectFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
 
-        boolean menuAllowed = selectFiles != null && selectFiles.length > 0 && project != null;
+        boolean menuAllowed =
+                selectFiles != null
+                        && selectFiles.length > 0
+                        && Arrays.stream(selectFiles).noneMatch(VirtualFile::isDirectory)
+                        && project != null;
 
         e.getPresentation().setEnabledAndVisible(menuAllowed);
     }
@@ -47,19 +48,28 @@ public abstract class ProjectViewPopupMenuAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         final Project project = e.getProject();
         final VirtualFile[] selectFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+
+        if (selectFiles.length == 1) {
+            pojo2jsonAction(PsiUtil.getPsiFile(project, selectFiles[0]));
+            return;
+        }
+
         final Map<String, String> warnMap = new LinkedHashMap<>();
 
-        List<VirtualFile> efficientFiles = Arrays.stream(selectFiles)
-                .filter(virtualFile ->
-                        UastLanguagePlugin.Companion.getInstances().stream().anyMatch(l -> l.isFileSupported(virtualFile.getName())))
+        Arrays.stream(selectFiles)
                 .map(virtualFile -> {
 
                     final PsiFile psiFile = PsiUtil.getPsiFile(project, virtualFile);
+                    if (!uastSupported(psiFile)) {
+                        warnMap.put(psiFile.getName(), "This file can't convert to json.");
+                        return null;
+                    }
+
                     final String fileText = psiFile.getText();
-                    int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
+                    final int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
 
                     if (offset < 0) {
-                        warnMap.put(virtualFile.getName(), "Can't find class scope.");
+                        warnMap.put(psiFile.getName(), "Can't find class scope.");
                         return null;
                     }
 
@@ -76,33 +86,19 @@ public abstract class ProjectViewPopupMenuAction extends AnAction {
                                 ScratchFileService.Option.create_if_missing);
 
                     } catch (KnownException ex) {
-                        warnMap.put(virtualFile.getName(), ex.getMessage());
+                        warnMap.put(psiFile.getName(), ex.getMessage());
                         return null;
                     }
 
                 })
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList()); // 这里归集以结束上一个表达式，否则 findFirst 在表达式的优先级会被提前
-
-
-        if (efficientFiles.isEmpty()) {
-            Notifier.notifyWarn("No convertible files.", project);
-        } else {
-            VirtualFile virtualFile = efficientFiles.get(0);
-
-            try {
-                ClipboardHandler.copyToClipboard(new String(virtualFile.contentsToByteArray(), StandardCharsets.UTF_8));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                Notifier.notifyError(ex.getMessage(), project);
-            }
-
-            if (efficientFiles.size() > 1) {
-                PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, 0).navigate(true);
-            }
-
-            Notifier.notifyInfo("Convert all POJO to JSON success and create json files to Scratches folder, " + virtualFile.getName() + " copied to clipboard.", project);
-        }
+                .collect(Collectors.toList()) // 这里归集以结束上一个表达式，否则 findFirst 在表达式的优先级会被提前
+                .stream()
+                .findFirst()
+                .ifPresent(virtualFile -> {
+                    PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, 0).navigate(true);
+                    Notifier.notifyInfo("Convert all POJO to JSON finish and created json files to Scratches folder.", project);
+                });
 
         warnMap.keySet()
                 .stream()
