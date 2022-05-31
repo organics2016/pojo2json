@@ -32,11 +32,10 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 ## Screenshot
 
-ヘ(_ _ヘ)
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
-╰(￣▽￣)╮
+
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)
-ヽ(°◇° )ノ
+
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/batch.gif)
 
 ## Installation
