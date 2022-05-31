@@ -30,26 +30,25 @@
 - Java - 完全支持
 - Kotlin - 大概, 完全支持
 
-## Screenshot
+## Usage
 
+- <kbd>打开class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
 
+- <kbd>项目视图选择一个class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)
 
+- <kbd>项目视图选择多个class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将生成到 Scratches 文件夹中</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/batch.gif)
 
 ## Installation
 
 - **IDEA中安装:**
-    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search<b>"POJO to JSON"</b></kbd> > <kbd>Install</kbd>
+    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>搜索<b>"POJO to JSON"</b></kbd> > <kbd>Install</kbd>
 
 - **手动安装:**
     - [plugin] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> -> Select the plug-in package and install（No need to unzip）
     
-## Usage
-
-- <kbd>打开目标class文件</kbd> > <kbd>右键单击</kbd> > <kbd>POJO To JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
-
 ## Q&A
 
 - 为什么使用的时候总是报错？

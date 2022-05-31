@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [1.2.2]
+### Changed
+- Optimize menu operation.
+
 ## [1.2.1]
 ### Added
 - Add batch operation.

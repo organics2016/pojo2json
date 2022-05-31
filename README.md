@@ -30,12 +30,15 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 - Java - full support
 - Kotlin - beta, but full support
 
-## Screenshot
+## Usage
 
+- <kbd>Open class file</kbd> > <kbd>Right click</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
 
+- <kbd>Project view select a class file</kbd> > <kbd>Right click</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)
 
+- <kbd>Project view select multiple files</kbd> > <kbd>Right click</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will generate to files in the Scratches folder</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/batch.gif)
 
 ## Installation
@@ -46,10 +49,6 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 - **Manual Install:**
     - [plugin] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> -> Select the plug-in package and install（No need to unzip）
     
-## Usage
-
-- <kbd>Open the target class file</kbd> > <kbd>Right click</kbd> > <kbd>POJO To JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
-
 ## Q&A
 
 - Why always report errors when use it?
