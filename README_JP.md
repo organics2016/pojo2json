@@ -17,47 +17,47 @@
 
 # POJO to JSON
 
-将 POJO 转换为 JSON 的简单插件
+POJOをJSONに変換するシンプルなプラグイン
 
-- 支持 BigDecimal 和其他的 Numeric
-- 支持 Java8 时间类型
-- 支持 枚举
-- 部分支持 Jackson 和 Fastjson 注解
-- 支持 Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
+- BigDecimalと他のNumericぷったいをサポートます
+- Java8の時間タイプをサポートます
+- Enumをサポートます
+- JacksonとFastjsonの注釈は部分的なサポートます
+- Java14のRecordsをサポートます [JEP-359](https://openjdk.java.net/jeps/359)
 
 ## Support JVM platform languages
 
-- Java - 完全支持
-- Kotlin - 大概, 完全支持
+- Java - 完全にサポートます
+- Kotlin - test,完全にサポートされている可能性があります
 
 ## Usage
 
-- <kbd>打开class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
+- <kbd>classのファイルを開く</kbd> > <kbd>右クリック</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSONの結果がクリップボードにコピーされます</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
 
-- <kbd>项目视图选择一个class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
+- <kbd>Project viewでclassのファイルを選択</kbd> > <kbd>右クリック</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSONの結果がクリップボードにコピーされます</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)
 
-- <kbd>项目视图选择多个class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将生成到 Scratches 文件夹中</kbd>
+- <kbd>Project viewで複数のファイルを選択</kbd> > <kbd>右クリック</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will generate to files in the Scratches folder</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/batch.gif)
 
 ## Installation
 
-- **IDEA中安装:**
-    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>搜索<b>"POJO to JSON"</b></kbd> > <kbd>Install</kbd>
+- **Install in IDEA:**
+    - <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search<b>"POJO to JSON"</b></kbd> > <kbd>Install</kbd>
 
-- **手动安装:**
+- **Manual Install:**
     - [plugin] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd> -> Select the plug-in package and install（No need to unzip）
     
 ## Q&A
 
-- 为什么使用的时候总是报错？
+- 使用時に常にエラーを報告するのはなぜですか？
 ```
 This class reference level exceeds maximum limit or has nested references!
 ```
-当程序抛出此警告时，只有两种可能性。
+When the program throws this warning there are only two possibilities.
 
-1. 这个 class 或父级 class 存在嵌套引用
+1. This class or parent class has nested references
 
 eg:
 ```java
@@ -102,7 +102,7 @@ public class A {
 }
 ```
 
-2. 当前class的引用层级 > 500 
+2. This class reference level > 500 
 
 eg:
 ```java
@@ -130,13 +130,13 @@ public class A {
   }
 }
 ```
-也许这两种情况都会发生在实体上，但这个实体不适合JSON。<br>
-您可以尝试使用 Jackson 序列化您的 POJO 看看会发生什么。<br>
-如果没有任何异常, 可以将您的POJO作为例子向此repo的Issues提交BUG :)
+Perhaps both will happen for entity but this entity are not suitable for JSON.<br>
+So you can try to serialize your POJO using Jackson to see what happens.<br>
+If no exception, you can submit a bug to this repository issues with your target class :)
 
-- 但是如何解决这个问题呢？
+- But how to solve this problem?
 
-您可以尝试以下方法。
+You can try the following methods.
 
 ## Support Annotations and Javadoc
 
@@ -175,7 +175,7 @@ public class User {
     private String password;
 }
 ```
-或者当您没有导入 jackson 库时
+or when there is no jackson library
 ```java
 public class JsonIgnoreDocTestPOJO {
 
@@ -214,7 +214,7 @@ public class User {
     }
 }
 ```
-或者当您没有导入 jackson 库时
+or when there is no jackson library
 ```java
 import java.util.List;
 
@@ -245,11 +245,11 @@ paste result:
 }
 ```
 
-您在使用过程中可能会遇到此问题。
+You may encounter this problem during use.
 ```
 This class reference level exceeds maximum limit or has nested references!
 ```
-上述方法可以很好地解决嵌套引用问题。
+The above method can solve the nested reference problem well.
 
 ### @JsonIgnoreType
 
@@ -281,5 +281,5 @@ paste result:
 
 ## Contributors
 
-想法和部分实现来自
+Ideas and partial realization from
 [![](https://avatars.githubusercontent.com/u/12984934?s=28)linsage](https://github.com/linsage)

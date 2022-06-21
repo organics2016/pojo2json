@@ -11,7 +11,7 @@
 [github]: https://github.com/organics2016/pojo2json
 [plugin]: https://plugins.jetbrains.com/plugin/12066-pojo-to-json
 
-### [中文](./README_ZH.md) | [English](./README.md)
+### [English](./README.md) | [中文](./README_ZH.md) | [日本語](./README_JP.md)
 
 <!-- Plugin description -->
 
