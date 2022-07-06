@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import ink.organics.pojo2json.parser.POJO2JSONParser;
 import org.jetbrains.annotations.NotNull;
@@ -31,8 +32,9 @@ public abstract class EditorPopupMenuAction extends POJO2JSONAction {
     public void actionPerformed(AnActionEvent e) {
         final Editor editor = e.getData(CommonDataKeys.EDITOR);
         final PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
+        final PsiElement psiElement = e.getData(CommonDataKeys.PSI_ELEMENT);
 
-        pojo2jsonAction(psiFile, editor);
+        pojo2jsonAction(psiFile, editor, psiElement);
     }
 }
 
