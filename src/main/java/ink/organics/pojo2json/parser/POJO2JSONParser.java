@@ -59,7 +59,8 @@ public abstract class POJO2JSONParser {
         if (uElement instanceof UVariable) {
             result = parseFieldValueType(((UVariable) uElement).getType(), 0, List.of());
         } else if (uElement instanceof UClass) {
-            result = parseClass(((UClass) uElement).getPsi(), 0, List.of());
+            // UClass.getJavaPsi() IDEA 21* and last version recommend
+            result = parseClass(((UClass) uElement).getJavaPsi(), 0, List.of());
         }
 
         return gsonBuilder.create().toJson(result);
