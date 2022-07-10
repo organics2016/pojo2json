@@ -7,6 +7,10 @@ import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.parser.type.*;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.uast.UClass;
+import org.jetbrains.uast.UElement;
+import org.jetbrains.uast.UVariable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,6 +55,17 @@ public abstract class POJO2JSONParser {
     public String psiClassToJSONString(PsiClass psiClass) {
         Map<String, Object> kv = parseClass(psiClass, 0, List.of());
         return gsonBuilder.create().toJson(kv);
+    }
+
+    public String uElementToJSONString(@NotNull final UElement uElement) {
+
+        Object result = null;
+        if (uElement instanceof UVariable) {
+            result = parseFieldValueType(((UVariable) uElement).getType(), 0, List.of());
+        } else if (uElement instanceof UClass) {
+            result = parseClass(((UClass) uElement).getJavaPsi(), 0, List.of());
+        }
+        return gsonBuilder.create().toJson(result);
     }
 
     private Map<String, Object> parseClass(PsiClass psiClass, int level, List<String> ignoreProperties) {

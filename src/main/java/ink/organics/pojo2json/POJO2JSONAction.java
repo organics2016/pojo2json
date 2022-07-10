@@ -3,10 +3,8 @@ package ink.organics.pojo2json;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.parser.KnownException;
 import ink.organics.pojo2json.parser.POJO2JSONParser;
 import org.jetbrains.annotations.NotNull;
@@ -26,9 +24,7 @@ public abstract class POJO2JSONAction extends AnAction {
         pojo2jsonAction(psiFile, null, null);
     }
 
-    public void pojo2jsonAction(@NotNull final PsiFile psiFile,
-                                @Nullable final Editor editor,
-                                @Nullable final PsiElement psiElement) {
+    public void pojo2jsonAction(@NotNull final PsiFile psiFile, @Nullable final Editor editor, @Nullable final PsiElement psiElement) {
         final Project project = psiFile.getProject();
 
         if (!uastSupported(psiFile)) {
@@ -36,26 +32,19 @@ public abstract class POJO2JSONAction extends AnAction {
             return;
         }
 
-        PsiClass psiClass = null;
-
+        UElement uElement = null;
         if (psiElement != null) {
-            UVariable uVariable = UastContextKt.toUElement(psiElement, UVariable.class);
-            if (uVariable != null) {
-                psiClass = PsiUtil.resolveClassInClassTypeOnly(uVariable.getType());
-            }
+            uElement = UastContextKt.toUElement(psiElement, UVariable.class);
         }
 
-        if (psiClass == null) {
+        if (uElement == null) {
             if (editor != null) {
                 PsiElement elementAt = psiFile.findElementAt(editor.getCaretModel().getOffset());
-                UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
-                if (uClass != null) {
-                    psiClass = uClass.getJavaPsi();
-                }
+                uElement = UastUtils.findContaining(elementAt, UClass.class);
             }
         }
 
-        if (psiClass == null) {
+        if (uElement == null) {
             String fileText = psiFile.getText();
             int offset = fileText.contains("class") ? fileText.indexOf("class") : fileText.indexOf("record");
             if (offset < 0) {
@@ -63,15 +52,15 @@ public abstract class POJO2JSONAction extends AnAction {
                 return;
             }
             PsiElement elementAt = psiFile.findElementAt(offset);
-            psiClass = UastUtils.findContaining(elementAt, UClass.class).getJavaPsi();
+            uElement = UastUtils.findContaining(elementAt, UClass.class);
         }
 
         try {
-            String json = pojo2JSONParser.psiClassToJSONString(psiClass);
+            String json = pojo2JSONParser.uElementToJSONString(uElement);
 
             ClipboardHandler.copyToClipboard(json);
 
-            Notifier.notifyInfo("Convert " + psiClass.getName() + " to JSON success, copied to clipboard.", project);
+            Notifier.notifyInfo("Convert " + "." + " to JSON success, copied to clipboard.", project);
 
         } catch (KnownException ex) {
             Notifier.notifyWarn(ex.getMessage(), project);
@@ -80,8 +69,6 @@ public abstract class POJO2JSONAction extends AnAction {
 
 
     public boolean uastSupported(@NotNull final PsiFile psiFile) {
-        return UastLanguagePlugin.Companion.getInstances()
-                .stream()
-                .anyMatch(l -> l.isFileSupported(psiFile.getName()));
+        return UastLanguagePlugin.Companion.getInstances().stream().anyMatch(l -> l.isFileSupported(psiFile.getName()));
     }
 }
