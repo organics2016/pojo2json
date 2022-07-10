@@ -52,11 +52,6 @@ public abstract class POJO2JSONParser {
 
     protected abstract Object getFakeValue(SpecifyType specifyType);
 
-    public String psiClassToJSONString(PsiClass psiClass) {
-        Map<String, Object> kv = parseClass(psiClass, 0, List.of());
-        return gsonBuilder.create().toJson(kv);
-    }
-
     public String uElementToJSONString(@NotNull final UElement uElement) {
 
         Object result = null;

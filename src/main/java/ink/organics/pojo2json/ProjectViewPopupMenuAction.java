@@ -76,7 +76,7 @@ public abstract class ProjectViewPopupMenuAction extends POJO2JSONAction {
                     PsiElement elementAt = psiFile.findElementAt(offset);
                     UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
                     try {
-                        String json = pojo2JSONParser.psiClassToJSONString(uClass.getJavaPsi());
+                        String json = pojo2JSONParser.uElementToJSONString(uClass);
 
                         return ScratchRootType.getInstance().createScratchFile(
                                 project,
