@@ -60,11 +60,13 @@ public abstract class POJO2JSONParser {
     public String uElementToJSONString(@NotNull final UElement uElement) {
 
         Object result = null;
+
         if (uElement instanceof UVariable) {
             result = parseFieldValueType(((UVariable) uElement).getType(), 0, List.of());
         } else if (uElement instanceof UClass) {
-            result = parseClass(((UClass) uElement).getJavaPsi(), 0, List.of());
+            result = parseClass(((UClass) uElement).getPsi(), 0, List.of());
         }
+
         return gsonBuilder.create().toJson(result);
     }
 

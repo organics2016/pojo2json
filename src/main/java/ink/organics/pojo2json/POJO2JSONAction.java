@@ -24,7 +24,9 @@ public abstract class POJO2JSONAction extends AnAction {
         pojo2jsonAction(psiFile, null, null);
     }
 
-    public void pojo2jsonAction(@NotNull final PsiFile psiFile, @Nullable final Editor editor, @Nullable final PsiElement psiElement) {
+    public void pojo2jsonAction(@NotNull final PsiFile psiFile,
+                                @Nullable final Editor editor,
+                                @Nullable final PsiElement psiElement) {
         final Project project = psiFile.getProject();
 
         if (!uastSupported(psiFile)) {
@@ -60,7 +62,7 @@ public abstract class POJO2JSONAction extends AnAction {
 
             ClipboardHandler.copyToClipboard(json);
 
-            Notifier.notifyInfo("Convert " + "." + " to JSON success, copied to clipboard.", project);
+            Notifier.notifyInfo("Convert to JSON success, copied to clipboard.", project);
 
         } catch (KnownException ex) {
             Notifier.notifyWarn(ex.getMessage(), project);
@@ -69,6 +71,8 @@ public abstract class POJO2JSONAction extends AnAction {
 
 
     public boolean uastSupported(@NotNull final PsiFile psiFile) {
-        return UastLanguagePlugin.Companion.getInstances().stream().anyMatch(l -> l.isFileSupported(psiFile.getName()));
+        return UastLanguagePlugin.Companion.getInstances()
+                .stream()
+                .anyMatch(l -> l.isFileSupported(psiFile.getName()));
     }
 }
