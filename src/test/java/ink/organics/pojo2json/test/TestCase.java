@@ -48,6 +48,9 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
     protected final MemberClassTestModel memberClassTestModel = new MemberClassTestModel(this);
 
+
+    protected final VariableTestModel variableTestModel = new VariableTestModel(this);
+
     public TestCase() {
         // https://github.com/FasterXML/jackson-databind/issues/2087
         this.objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);

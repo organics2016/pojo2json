@@ -9,7 +9,7 @@ plugins {
     // Kotlin support
 //    id("org.jetbrains.kotlin.jvm") version "1.6.10"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.3.0"
+    id("org.jetbrains.intellij") version "1.7.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
 }
@@ -23,7 +23,7 @@ dependencies {
 }
 
 group = "ink.organics"
-version = "1.2.2"
+version = "1.2.3"
 
 
 repositories {
@@ -31,7 +31,7 @@ repositories {
 }
 
 intellij {
-    version.set("2020.3")
+    version.set("2021.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
     plugins.set(listOf("java", "Kotlin"))
@@ -44,10 +44,17 @@ changelog {
 
 tasks {
 
-    withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-        options.encoding = "UTF-8"
+    // Set the JVM compatibility versions
+    properties("javaVersion").let {
+        withType<JavaCompile> {
+            sourceCompatibility = it
+            targetCompatibility = it
+            options.encoding = "UTF-8"
+        }
+    }
+
+    wrapper {
+        gradleVersion = properties("gradleVersion")
     }
 
     buildSearchableOptions {
@@ -61,7 +68,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("203")
+        sinceBuild.set("213")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription.set(

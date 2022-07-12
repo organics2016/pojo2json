@@ -29,6 +29,10 @@ public class JavaTestCase extends TestCase {
         System.out.println(sss);
     }
 
+    public void testVariable() {
+//        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuDefaultAction());
+    }
+
     public void testJavaDateType() {
         dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.java", new EditorPopupMenuDefaultAction());
         dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.java", new EditorPopupMenuDefaultAction());

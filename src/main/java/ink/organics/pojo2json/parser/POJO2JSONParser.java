@@ -1,6 +1,7 @@
 package ink.organics.pojo2json.parser;
 
 import com.google.gson.GsonBuilder;
+import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.javadoc.PsiDocTag;
@@ -57,28 +58,29 @@ public abstract class POJO2JSONParser {
         Object result = null;
 
         if (uElement instanceof UVariable) {
-            result = parseFieldValueType(((UVariable) uElement).getType(), 0, List.of());
+            PsiType type = ((UVariable) uElement).getType();
+            result = parseFieldValueType(type, 0, List.of(), getPsiClassGenerics(type));
         } else if (uElement instanceof UClass) {
             // UClass.getJavaPsi() IDEA 21* and last version recommend
-            result = parseClass(((UClass) uElement).getJavaPsi(), 0, List.of());
+            result = parseClass(((UClass) uElement).getJavaPsi(), 0, List.of(), Map.of());
         }
 
         return gsonBuilder.create().toJson(result);
     }
 
-    private Map<String, Object> parseClass(PsiClass psiClass, int level, List<String> ignoreProperties) {
+    private Map<String, Object> parseClass(PsiClass psiClass, int level, List<String> ignoreProperties, Map<String, PsiType> psiClassGenerics) {
         PsiAnnotation annotation = psiClass.getAnnotation(com.fasterxml.jackson.annotation.JsonIgnoreType.class.getName());
         if (annotation != null) {
             return null;
         }
         return Arrays.stream(psiClass.getAllFields())
-                .map(field -> parseField(field, level, ignoreProperties))
+                .map(field -> parseField(field, level, ignoreProperties, psiClassGenerics))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (ov, nv) -> ov, LinkedHashMap::new));
     }
 
 
-    private Map.Entry<String, Object> parseField(PsiField field, int level, List<String> ignoreProperties) {
+    private Map.Entry<String, Object> parseField(PsiField field, int level, List<String> ignoreProperties, Map<String, PsiType> psiClassGenerics) {
         // 移除所有 static 属性，这其中包括 kotlin 中的 companion object 和 INSTANCE
         if (field.hasModifierProperty(PsiModifier.STATIC)) {
             return null;
@@ -112,7 +114,7 @@ public abstract class POJO2JSONParser {
         if (fieldKey == null) {
             return null;
         }
-        Object fieldValue = parseFieldValue(field, level, ignoreProperties);
+        Object fieldValue = parseFieldValue(field, level, ignoreProperties, psiClassGenerics);
         if (fieldValue == null) {
             return null;
         }
@@ -139,11 +141,14 @@ public abstract class POJO2JSONParser {
         return field.getName();
     }
 
-    private Object parseFieldValue(PsiField field, int level, List<String> ignoreProperties) {
-        return parseFieldValueType(field.getType(), level, ignoreProperties);
+    private Object parseFieldValue(PsiField field, int level, List<String> ignoreProperties, Map<String, PsiType> psiClassGenerics) {
+        return parseFieldValueType(field.getType(), level, ignoreProperties, psiClassGenerics);
     }
 
-    private Object parseFieldValueType(PsiType type, int level, List<String> ignoreProperties) {
+    private Object parseFieldValueType(PsiType type,
+                                       int level,
+                                       List<String> ignoreProperties,
+                                       Map<String, PsiType> psiClassGenerics) {
 
         level = ++level;
 
@@ -154,7 +159,7 @@ public abstract class POJO2JSONParser {
         } else if (type instanceof PsiArrayType) {   //array type
 
             PsiType deepType = type.getDeepComponentType();
-            Object obj = parseFieldValueType(deepType, level, ignoreProperties);
+            Object obj = parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
             return obj != null ? List.of(obj) : List.of();
 
         } else {    //reference Type
@@ -173,23 +178,19 @@ public abstract class POJO2JSONParser {
 
                 List<String> fieldTypeNames = new ArrayList<>();
 
-                fieldTypeNames.add(type.getPresentableText());
-                fieldTypeNames.addAll(Arrays.stream(type.getSuperTypes())
-                        .map(PsiType::getPresentableText).collect(Collectors.toList()));
+                fieldTypeNames.add(psiClass.getName());
+                fieldTypeNames.addAll(Arrays.stream(psiClass.getSupers())
+                        .map(PsiClass::getName).collect(Collectors.toList()));
 
+                boolean iterable = fieldTypeNames.stream().anyMatch(iterableTypes::contains);
 
-                boolean iterable = fieldTypeNames.stream().map(typeName -> {
-                    int subEnd = typeName.indexOf("<");
-                    return typeName.substring(0, subEnd > 0 ? subEnd : typeName.length());
-                }).anyMatch(iterableTypes::contains);
-
-                if (iterable) {// Iterable
+                if (iterable) {// Iterable List<Test<String>>
 
                     PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                    Object obj = parseFieldValueType(deepType, level, ignoreProperties);
+                    Object obj = parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
                     return obj != null ? List.of(obj) : List.of();
 
-                } else { // Object
+                } else { // Object Test<String,String>
 
                     List<String> retain = new ArrayList<>(fieldTypeNames);
                     retain.retainAll(specifyTypes.keySet());
@@ -201,11 +202,26 @@ public abstract class POJO2JSONParser {
                             throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 
-                        return parseClass(psiClass, level, ignoreProperties);
+                        PsiType deepType = psiClassGenerics.get(psiClass.getName());
+                        if (deepType != null) {
+                            return parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
+                        }
+
+                        return parseClass(psiClass, level, ignoreProperties, getPsiClassGenerics(type));
                     }
                 }
             }
         }
+    }
+
+    private Map<String, PsiType> getPsiClassGenerics(PsiType type) {
+        PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
+        if (psiClass != null) {
+            return Arrays.stream(psiClass.getTypeParameters())
+                    .collect(Collectors.toMap(NavigationItem::getName,
+                            p -> PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false)));
+        }
+        return Map.of();
     }
 
     private Object getPrimitiveTypeValue(PsiType type) {
