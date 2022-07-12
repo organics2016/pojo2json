@@ -87,15 +87,49 @@ public class DataTypeTestModel extends TestModel {
     public void testGenericTestPOJO(String fileName, AnAction action) {
         JsonNode result = testCase.testAction(fileName, action);
 
-        assertTrue(result.get("list").isArray());
-        assertTrue(result.get("listArr").get(0).isArray());
-        assertTrue(result.get("listListArr").get(0).get(0).isArray());
-        assertTrue(result.get("listEnum").get(0).isTextual());
-        assertTrue(result.get("listList").get(0).isArray());
-        assertTrue(result.get("listListList").get(0).get(0).isArray());
+        assertEquals(0, result.get("list").get(0).asInt());
+        assertEquals(0, result.get("listArr").get(0).get(0).asInt());
+        assertEquals(0, result.get("listListArr").get(0).get(0).get(0).asInt());
+        assertEquals("TYPE_A", result.get("listEnum").get(0).asText());
+        assertEquals(0, result.get("listList").get(0).get(0).asInt());
+        assertEquals(0, result.get("listListList").get(0).get(0).get(0).asInt());
         assertTrue(result.get("listObject").get(0).isObject());
         assertTrue(result.get("listGenericObject").get(0).isObject());
-        assertTrue(result.get("objectGeneric").isObject());
+
+        JsonNode g = result.get("generic");
+        assertTrue(g.get("username").isTextual());
+        assertEquals(0, g.get("data").asInt());
+
+        g = result.get("genericArr");
+        assertTrue(g.get("username").isTextual());
+        assertEquals(0, g.get("data").get(0).asInt());
+
+        g = result.get("genericListArr");
+        assertTrue(g.get("username").isTextual());
+        assertEquals(0, g.get("data").get(0).get(0).asInt());
+
+        g = result.get("genericEnum");
+        assertTrue(g.get("username").isTextual());
+        assertEquals("TYPE_A", g.get("data").asText());
+
+        g = result.get("genericGeneric");
+        assertTrue(g.get("username").isTextual());
+        assertTrue(g.get("data").get("username").isTextual());
+        assertEquals(0, g.get("data").get("data").asInt());
+
+        g = result.get("genericGenericGeneric");
+        assertTrue(g.get("username").isTextual());
+        assertTrue(g.get("data").get("username").isTextual());
+        assertTrue(g.get("data").get("data").get("username").isTextual());
+        assertEquals(0, g.get("data").get("data").asInt());
+
+        g = result.get("genericObject");
+        assertTrue(g.get("username").isTextual());
+        assertTrue(g.get("data").isObject());
+
+        g = result.get("genericGenericObject");
+        assertTrue(g.get("username").isTextual());
+        assertTrue(g.get("data").isObject());
     }
 
     public void testSpecialObjectTestPOJO(String fileName, AnAction action) {

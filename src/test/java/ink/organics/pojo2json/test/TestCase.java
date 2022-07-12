@@ -6,14 +6,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.roots.ContentEntry;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiElement;
+import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.LightProjectDescriptor;
+import com.intellij.testFramework.fixtures.DefaultLightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
-import com.intellij.testFramework.fixtures.MavenDependencyUtil;
 import ink.organics.pojo2json.test.model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,15 +22,9 @@ import java.io.IOException;
 
 public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
-    public static final LightProjectDescriptor MOCK_JAVA_11 = new ProjectDescriptor(LanguageLevel.JDK_11) {
-
-        @Override
-        public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
-            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
-            super.configureModule(module, model, contentEntry);
-        }
-    };
+    public static final DefaultLightProjectDescriptor MOCK_JAVA_11 = new DefaultLightProjectDescriptor(IdeaTestUtil::getMockJdk11)
+            .withRepositoryLibrary("com.alibaba:fastjson:1.2.76")
+            .withRepositoryLibrary("com.fasterxml.jackson.core:jackson-annotations:2.11.0");
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 

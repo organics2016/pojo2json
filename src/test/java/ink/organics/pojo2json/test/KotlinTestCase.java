@@ -11,6 +11,10 @@ public class KotlinTestCase extends TestCase {
     }
 
 
+    public void testKotlinVariable() {
+        variableTestModel.testVariableTestPOJO("VariableTestPOJO.kt", new EditorPopupMenuDefaultAction());
+    }
+
     public void testKotlinDateType() {
         dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.kt", new EditorPopupMenuDefaultAction());
         dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.kt", new EditorPopupMenuDefaultAction());

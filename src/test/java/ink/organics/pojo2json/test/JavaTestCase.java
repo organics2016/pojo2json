@@ -3,10 +3,6 @@ package ink.organics.pojo2json.test;
 
 import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 
 public class JavaTestCase extends TestCase {
 
@@ -18,19 +14,11 @@ public class JavaTestCase extends TestCase {
 
 
     public void testCurrent() {
-        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new EditorPopupMenuDefaultAction());
-
-        List<String> sss = Stream.of(1, 2, 3, 4, 5).map(d -> {
-            if (d % 2 == 0) {
-                return d + "";
-            }
-            return null;
-        }).collect(Collectors.toList());
-        System.out.println(sss);
+        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuDefaultAction());
     }
 
-    public void testVariable() {
-//        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuDefaultAction());
+    public void testJavaVariable() {
+        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuDefaultAction());
     }
 
     public void testJavaDateType() {

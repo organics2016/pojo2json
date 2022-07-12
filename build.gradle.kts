@@ -44,21 +44,26 @@ changelog {
 
 tasks {
 
-    // Set the JVM compatibility versions
-    properties("javaVersion").let {
-        withType<JavaCompile> {
-            sourceCompatibility = it
-            targetCompatibility = it
-            options.encoding = "UTF-8"
-        }
+    withType<JavaCompile> {
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
+        options.encoding = "UTF-8"
     }
 
     wrapper {
-        gradleVersion = properties("gradleVersion")
+        gradleVersion = "7.4"
     }
 
     buildSearchableOptions {
         enabled = false
+    }
+
+    // TODO https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0
+    val test by getting(Test::class) {
+        setScanForTestClasses(false)
+        // Only run tests from classes that end with "Test"
+        include("**/JavaTestCase.class")
+        include("**/KotlinTestCase.class")
     }
 
     test {
