@@ -24,6 +24,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 - Support Enum.
 - Partial support Jackson and Fastjson annotations.
 - Support Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
+- Support conversion Inner Class | Global Variable | Constructor Parameter | Method Parameter | Local Variable
 
 ## Support JVM platform languages
 
@@ -32,7 +33,8 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 ## Usage
 
-- <kbd>Open class file</kbd> > <kbd>Right click</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
+- Note that the position of the cursor can affect the result!
+- <kbd>Open class file</kbd> > <kbd>Move cursor to Class/Variable/Parameter</kbd> > <kbd>Right click</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
 
 - <kbd>Project view select a class file</kbd> > <kbd>Right click</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>

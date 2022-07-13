@@ -1,5 +1,13 @@
 # POJO to JSON Changelog
 
+
+## [1.3.0]
+### Added
+- Supports direct conversion of Global Variable | Constructor Parameter | Method Parameter | Local Variable
+### Changed
+- Update org.jetbrains.intellij 1.7.0
+- IDEA minimum supported version 2021.3
+
 ## [1.2.2]
 ### Changed
 - Optimize menu operation.
