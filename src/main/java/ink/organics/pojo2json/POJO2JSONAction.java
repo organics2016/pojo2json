@@ -62,7 +62,8 @@ public abstract class POJO2JSONAction extends AnAction {
 
             ClipboardHandler.copyToClipboard(json);
 
-            Notifier.notifyInfo("Convert to JSON success, copied to clipboard.", project);
+
+            Notifier.notifyInfo("Convert " + psiFile.getName() + " to JSON success, copied to clipboard.", project);
 
         } catch (KnownException ex) {
             Notifier.notifyWarn(ex.getMessage(), project);
