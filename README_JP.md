@@ -34,7 +34,7 @@ POJOをJSONに変換するシンプルなプラグイン
 ## Support JVM platform languages
 
 - Java - 完全にサポートます
-- Kotlin - test,完全にサポートされている可能性があります
+- Kotlin - どうやら完全にサポートます
 
 ## Usage
 
