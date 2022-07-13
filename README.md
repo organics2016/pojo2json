@@ -24,7 +24,12 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 - Support Enum.
 - Partial support Jackson and Fastjson annotations.
 - Support Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
-- Support conversion Inner Class | Global Variable | Constructor Parameter | Method Parameter | Local Variable
+- Support conversion
+  - Inner Class
+  - Global Variable
+  - Local Variable
+  - Constructor Parameter
+  - Method Parameter
 
 ## Support JVM platform languages
 

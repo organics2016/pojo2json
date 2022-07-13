@@ -20,10 +20,16 @@
 POJOをJSONに変換するシンプルなプラグイン
 
 - BigDecimalと他のNumericぷったいをサポートます
-- Java8の時間タイプをサポートます
+- Java8 時間タイプをサポートます
 - Enumをサポートます
-- JacksonとFastjsonの注釈は部分的なサポートます
-- Java14のRecordsをサポートます [JEP-359](https://openjdk.java.net/jeps/359)
+- JacksonとFastjson 注釈は部分的なサポートます
+- Java14 Recordsをサポートます [JEP-359](https://openjdk.java.net/jeps/359)
+- Support conversion
+  - Inner Class
+  - Global Variable
+  - Local Variable
+  - Constructor Parameter
+  - Method Parameter
 
 ## Support JVM platform languages
 
@@ -32,13 +38,14 @@ POJOをJSONに変換するシンプルなプラグイン
 
 ## Usage
 
-- <kbd>classのファイルを開く</kbd> > <kbd>右クリック</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSONの結果がクリップボードにコピーされます</kbd>
+- カーソルの位置が結果に影響を与える可能性があることに注意してください！
+- <kbd>classファイルを開く</kbd> > <kbd>カーソルを Class/Variable/Parameter に移動します</kbd> > <kbd>右クリック</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSONの結果がクリップボードにコピーされます</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
 
-- <kbd>Project viewでclassのファイルを選択</kbd> > <kbd>右クリック</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSONの結果がクリップボードにコピーされます</kbd>
+- <kbd>Project viewでclassファイルを選択</kbd> > <kbd>右クリック</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSONの結果がクリップボードにコピーされます</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)
 
-- <kbd>Project viewで複数のファイルを選択</kbd> > <kbd>右クリック</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will generate to files in the Scratches folder</kbd>
+- <kbd>Project viewで複数ファイルを選択</kbd> > <kbd>右クリック</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will generate to files in the Scratches folder</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/batch.gif)
 
 ## Installation

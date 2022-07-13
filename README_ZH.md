@@ -24,6 +24,12 @@
 - 支持 枚举
 - 部分支持 Jackson 和 Fastjson 注解
 - 支持 Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
+- 支持转换
+  - Inner Class
+  - Global Variable
+  - Local Variable
+  - Constructor Parameter
+  - Method Parameter
 
 ## Support JVM platform languages
 
@@ -32,7 +38,8 @@
 
 ## Usage
 
-- <kbd>打开class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
+- 请注意，光标的位置会影响结果！
+- <kbd>打开class文件</kbd> > <kbd>移动光标到 Class/Variable/Parameter</kbd> > <kbd>右键单击</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
 
 - <kbd>项目视图选择一个class文件</kbd> > <kbd>右键单击</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON 结果将复制到剪贴板</kbd>
