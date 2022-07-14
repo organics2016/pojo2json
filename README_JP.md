@@ -19,11 +19,11 @@
 
 POJOをJSONに変換するシンプルなプラグイン
 
-- BigDecimalと他のNumericぷったいをサポートます
-- Java8 時間タイプをサポートます
-- Enumをサポートます
-- JacksonとFastjson 注釈は部分的なサポートます
-- Java14 Recordsをサポートます [JEP-359](https://openjdk.java.net/jeps/359)
+- BigDecimalと他のNumericぷったいをサポートします
+- Java8 時間タイプをサポートします
+- Enumをサポートします
+- JacksonとFastjson 注釈は部分的なサポートします
+- Java14 Recordsをサポートします [JEP-359](https://openjdk.java.net/jeps/359)
 - Support conversion
   - Inner Class
   - Global Variable
@@ -33,8 +33,8 @@ POJOをJSONに変換するシンプルなプラグイン
 
 ## Support JVM platform languages
 
-- Java - 完全にサポートます
-- Kotlin - どうやら完全にサポートます
+- Java - 完全にサポートします
+- Kotlin - どうやら完全にサポートします
 
 ## Usage
 
