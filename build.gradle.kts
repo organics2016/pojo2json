@@ -31,7 +31,7 @@ repositories {
 }
 
 intellij {
-    version.set("2021.3")
+    version.set("2020.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
     plugins.set(listOf("java", "Kotlin"))
@@ -73,7 +73,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("213")
+        sinceBuild.set("203")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription.set(
