@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [1.2.5]
+### Changed
+- IDEA minimum supported version 2020.3
+- Update String type random value
 
 ## [1.2.4]
 ### Added
