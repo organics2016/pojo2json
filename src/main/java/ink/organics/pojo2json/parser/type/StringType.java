@@ -1,6 +1,11 @@
 package ink.organics.pojo2json.parser.type;
 
+import java.util.UUID;
+
 public class StringType implements SpecifyType {
+
+    public StringType() {
+    }
 
     @Override
     public Object def() {
@@ -9,6 +14,7 @@ public class StringType implements SpecifyType {
 
     @Override
     public Object random() {
-        return "fake_data";
+        String uuid = UUID.randomUUID().toString();
+        return "test_" + uuid.substring(uuid.lastIndexOf("-") + 1);
     }
 }

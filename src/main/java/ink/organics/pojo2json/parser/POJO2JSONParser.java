@@ -147,13 +147,13 @@ public abstract class POJO2JSONParser {
 
     /**
      * PsiType 转换为特定 Object
-     * @param type PsiType
-     * @param level 当前转换层级。当递归层级过深时会导致stack overflow，这个参数用于控制递归层级
+     *
+     * @param type             PsiType
+     * @param level            当前转换层级。当递归层级过深时会导致stack overflow，这个参数用于控制递归层级
      * @param ignoreProperties 过滤的属性，这个参数只在这里使用 {@link ink.organics.pojo2json.parser.POJO2JSONParser#parseField}
      *                         用于过滤用户指定移除的属性
      * @param psiClassGenerics 当前PsiType的Class所拥有的泛型Map，Map中包含当前PsiClass所定义的 泛型 和 泛型对应的用户指定类型 (E=CustomObject)
      *                         并在解析当前PsiClass所包含的Field时，尝试获取这个Field所定义的泛型Map，然后传入下一层
-     *
      * @return JSON Value所期望的Object
      */
     private Object parseFieldValueType(PsiType type,
