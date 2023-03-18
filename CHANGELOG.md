@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [1.2.6]
+### Fixed
+- Fix stack overflow errors
+
 ## [1.2.5]
 ### Changed
 - IDEA minimum supported version 2020.3

@@ -15,7 +15,7 @@ plugins {
 }
 
 dependencies {
-    testCompileOnly("com.alibaba:fastjson:1.2.76")
+    testCompileOnly("com.alibaba:fastjson:1.2.83")
     testCompileOnly("com.fasterxml.jackson.core:jackson-annotations:2.11.0")
     // https://projectlombok.org/setup/gradle
     testCompileOnly("org.projectlombok:lombok:1.18.22")
@@ -23,7 +23,7 @@ dependencies {
 }
 
 group = "ink.organics"
-version = "1.2.5"
+version = "1.2.6"
 
 
 repositories {
@@ -55,6 +55,14 @@ tasks {
     }
 
     buildSearchableOptions {
+        enabled = false
+    }
+
+    instrumentCode {
+        enabled = false
+    }
+
+    instrumentTestCode {
         enabled = false
     }
 
