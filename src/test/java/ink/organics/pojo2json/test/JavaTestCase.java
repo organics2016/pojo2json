@@ -14,7 +14,7 @@ public class JavaTestCase extends TestCase {
 
 
     public void testCurrent() {
-        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuDefaultAction());
+        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuDefaultAction());
     }
 
     public void testJavaVariable() {

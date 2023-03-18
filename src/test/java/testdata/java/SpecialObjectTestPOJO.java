@@ -1,5 +1,11 @@
 package testdata.java;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.math.BigDecimal;
 import java.time.*;
 import java.time.temporal.Temporal;
@@ -52,4 +58,13 @@ public class SpecialObjectTestPOJO {
 
     private UUID uuid = UUID.randomUUID();
 
+    //-----
+    @JsonIgnore
+    protected final ObjectMapper objectMapper = new ObjectMapper();
+
+    private JsonNode jsonNode = objectMapper.createObjectNode();
+
+    private ObjectNode objectNode = objectMapper.createObjectNode();
+
+    private ArrayNode arrayNode = objectMapper.createArrayNode();
 }

@@ -33,6 +33,7 @@ public abstract class POJO2JSONParser {
 
         DecimalType decimalType = new DecimalType();
         LocalDateTimeType localDateTimeType = new LocalDateTimeType();
+        ObjectType objectType = new ObjectType();
 
         specifyTypes.put("Boolean", new BooleanType());
         specifyTypes.put("Float", decimalType);
@@ -49,6 +50,9 @@ public abstract class POJO2JSONParser {
         specifyTypes.put("ZonedDateTime", new ZonedDateTimeType());
         specifyTypes.put("YearMonth", new YearMonthType());
         specifyTypes.put("UUID", new UUIDType());
+        specifyTypes.put("JsonNode", objectType);
+        specifyTypes.put("ObjectNode", objectType);
+        specifyTypes.put("ArrayNode", new ArrayType());
     }
 
     protected abstract Object getFakeValue(SpecifyType specifyType);
@@ -193,20 +197,21 @@ public abstract class POJO2JSONParser {
                 fieldTypeNames.addAll(Arrays.stream(psiClass.getSupers())
                         .map(PsiClass::getName).collect(Collectors.toList()));
 
-                boolean iterable = fieldTypeNames.stream().anyMatch(iterableTypes::contains);
 
-                if (iterable) {// Iterable List<Test<String>>
+                List<String> retain = new ArrayList<>(fieldTypeNames);
+                retain.retainAll(specifyTypes.keySet());
+                if (!retain.isEmpty()) {  // Object Test<String,String>
+                    return this.getFakeValue(specifyTypes.get(retain.get(0)));
+                } else {
 
-                    PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                    Object obj = parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
-                    return obj != null ? List.of(obj) : List.of();
+                    boolean iterable = fieldTypeNames.stream().anyMatch(iterableTypes::contains);
 
-                } else { // Object Test<String,String>
+                    if (iterable) {// Iterable List<Test<String>>
 
-                    List<String> retain = new ArrayList<>(fieldTypeNames);
-                    retain.retainAll(specifyTypes.keySet());
-                    if (!retain.isEmpty()) {
-                        return this.getFakeValue(specifyTypes.get(retain.get(0)));
+                        PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
+                        Object obj = parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
+                        return obj != null ? List.of(obj) : List.of();
+
                     } else {
 
                         if (level > 500) {
@@ -221,6 +226,7 @@ public abstract class POJO2JSONParser {
                         return parseClass(psiClass, level, ignoreProperties, getPsiClassGenerics(type));
                     }
                 }
+
             }
         }
     }
