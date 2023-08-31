@@ -1,17 +1,17 @@
+import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
-    // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
     // Java support
     id("java")
     // Kotlin support
 //    id("org.jetbrains.kotlin.jvm") version "1.6.10"
-    // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.7.0"
-    // Gradle Changelog Plugin
-    id("org.jetbrains.changelog") version "1.3.1"
+    // Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
+    id("org.jetbrains.intellij") version "1.15.0"
+    // Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+    id("org.jetbrains.changelog") version "2.2.0"
 }
 
 dependencies {
@@ -31,7 +31,7 @@ repositories {
 }
 
 intellij {
-    version.set("2020.3")
+    version.set("2022.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
     plugins.set(listOf("java", "Kotlin"))
@@ -45,13 +45,13 @@ changelog {
 tasks {
 
     withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
         options.encoding = "UTF-8"
     }
 
     wrapper {
-        gradleVersion = "7.4"
+        gradleVersion = "8.3"
     }
 
     buildSearchableOptions {
@@ -81,7 +81,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("203")
+        sinceBuild.set("223")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
         pluginDescription.set(
@@ -97,7 +97,7 @@ tasks {
         )
 
         // Get the latest available change notes from the changelog file
-        changeNotes.set(provider { changelog.getLatest().toHTML() })
+        changeNotes.set(provider { changelog.renderItem(changelog.getLatest(), Changelog.OutputType.HTML) })
     }
 
     signPlugin {
