@@ -8,8 +8,10 @@
 name: Gradle Publish
 
 on:
-  release:
-    types: [released]
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - v*
 
 jobs:
   # Prepare and publish the plugin to JetBrains Marketplace repository
