@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ContentEntry;
+import com.intellij.openapi.roots.LanguageLevelProjectExtension;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiElement;
@@ -25,7 +26,7 @@ import java.io.IOException;
 
 public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
-    public static final LightProjectDescriptor MOCK_JDK = new ProjectDescriptor(LanguageLevel.JDK_17) {
+    public static final LightProjectDescriptor MOCK_JDK = new ProjectDescriptor(LanguageLevel.JDK_11) {
 
         @Override
         public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
@@ -56,15 +57,16 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
         this.objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
         this.objectMapper.configure(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN, true);
         this.objectMapper.setNodeFactory(JsonNodeFactory.withExactBigDecimals(true));
-
-        System.out.println(MOCK_JDK.getSdk().getHomePath());
-        System.out.println(MOCK_JDK.getSdk().getHomeDirectory());
-        System.out.println(MOCK_JDK.getSdk().getVersionString());
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        LanguageLevelProjectExtension.getInstance(getProject()).setLanguageLevel(LanguageLevel.JDK_11);
+
+        System.out.println(MOCK_JDK.getSdk().getHomePath());
+        System.out.println(MOCK_JDK.getSdk().getHomeDirectory());
+        System.out.println(MOCK_JDK.getSdk().getVersionString());
     }
 
     @Override

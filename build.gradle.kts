@@ -16,7 +16,7 @@ plugins {
 
 dependencies {
     testCompileOnly("com.alibaba:fastjson:1.2.83")
-    testCompileOnly("com.fasterxml.jackson.core:jackson-annotations:2.11.0")
+    testCompileOnly("com.fasterxml.jackson.core:jackson-databind:2.14.3")
     // https://projectlombok.org/setup/gradle
     testCompileOnly("org.projectlombok:lombok:1.18.22")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
@@ -34,7 +34,7 @@ intellij {
     version.set("2022.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
-    plugins.set(listOf("java", "Kotlin"))
+    plugins.set(listOf("org.intellij.intelliLang", "com.intellij.java"))
 }
 
 changelog {
@@ -75,9 +75,11 @@ tasks {
     }
 
     test {
-        // 这个路径下要存在mockJDK，其目录结构为 java/mockJDK-$JAVA_VERSION$
+        // 这里要签出一个完整的 Intellij IC 版本作为JVM语言的测试环境。这个配置真蠢。
         // https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
-        systemProperties(Pair("idea.home.path", project.projectDir))
+        systemProperty("idea.home.path", "C:\\Users\\organ\\IdeaProjects\\intellij-community")
+//        systemProperty("idea.home.path", project.projectDir)
+        println(getSystemProperties())
     }
 
     patchPluginXml {
