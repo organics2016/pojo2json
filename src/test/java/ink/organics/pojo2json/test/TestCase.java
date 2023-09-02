@@ -25,12 +25,12 @@ import java.io.IOException;
 
 public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
-    public static final LightProjectDescriptor MOCK_JAVA_11 = new ProjectDescriptor(LanguageLevel.JDK_11) {
+    public static final LightProjectDescriptor MOCK_JDK = new ProjectDescriptor(LanguageLevel.JDK_17) {
 
         @Override
         public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
             MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
-            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-annotations:2.11.0");
+            MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-databind:2.14.3");
             super.configureModule(module, model, contentEntry);
         }
     };
@@ -56,6 +56,10 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
         this.objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
         this.objectMapper.configure(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN, true);
         this.objectMapper.setNodeFactory(JsonNodeFactory.withExactBigDecimals(true));
+
+        System.out.println(MOCK_JDK.getSdk().getHomePath());
+        System.out.println(MOCK_JDK.getSdk().getHomeDirectory());
+        System.out.println(MOCK_JDK.getSdk().getVersionString());
     }
 
     @Override
@@ -69,7 +73,7 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
     @Override
     protected @NotNull LightProjectDescriptor getProjectDescriptor() {
-        return MOCK_JAVA_11;
+        return MOCK_JDK;
     }
 
     public JsonNode testAction(@NotNull String fileName, @NotNull AnAction action) {

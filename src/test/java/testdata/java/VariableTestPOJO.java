@@ -1,5 +1,7 @@
 package testdata.java;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -38,7 +40,7 @@ class SimpleTestPOJO<T> {
 
 class Data {
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JsonIgnore
     private String username;
     private String password;
 }

@@ -1,9 +1,11 @@
 package testdata.java;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class JsonIgnoreTestPOJO {
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JsonIgnore
     private String username;
     private String password;
 }

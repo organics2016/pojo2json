@@ -1,12 +1,14 @@
 package testdata.java;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 public class JsonIgnorePropertiesTestPOJO {
 
     private String username;
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"users", "aaa", "bbb"})
+    @JsonIgnoreProperties({"users", "aaa", "bbb"})
     private List<Role> roles;
 
     public class Role {
