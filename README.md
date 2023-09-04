@@ -39,8 +39,11 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 ## Usage
 
 - Note that the position of the cursor can affect the result!
-- <kbd>Open class file</kbd> > <kbd>Move cursor to Class/Variable/Parameter</kbd> > <kbd>Right click</kbd> > <kbd>Copy/Paste Special</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
+- <kbd>Open class file</kbd> > <kbd>Move cursor to Class/Variable/Parameter</kbd> > <kbd>Right click</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_single.gif)
+
+- <kbd>Open class file</kbd> > <kbd>Move cursor to Class/Variable/Parameter</kbd> > <kbd>Alt + Insert</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
+![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/file_generate.gif)
 
 - <kbd>Project view select a class file</kbd> > <kbd>Right click</kbd> > <kbd>Copy JSON</kbd> > <kbd>JSON result will copy to clipboard</kbd>
 ![Image text](https://raw.githubusercontent.com/organics2016/pojo2json/master/screenshot/list_single.gif)

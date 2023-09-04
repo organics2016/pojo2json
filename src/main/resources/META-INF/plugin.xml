@@ -26,7 +26,25 @@
                     text="Copy JSON and Random Values"
                     description="Convert POJO to JSON and copy to the clipboard and randomly generate some test data">
             </action>
-            <add-to-group group-id="Copy.Paste.Special" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="Copy.Paste.Special"/>
+        </group>
+
+        <group id="ink.organics.pojo2json.GenerateGroup">
+            <separator/>
+            <action class="ink.organics.pojo2json.EditorPopupMenuDefaultAction"
+                    id="ink.organics.pojo2json.EditorPopupMenuDefaultAction"
+                    icon="AllIcons.Json.Object"
+                    text="Copy JSON"
+                    description="Convert POJO to JSON and copy to the clipboard">
+            </action>
+            <action class="ink.organics.pojo2json.EditorPopupMenuRandomAction"
+                    id="ink.organics.pojo2json.EditorPopupMenuRandomAction"
+                    icon="AllIcons.Json.Object"
+                    text="Copy JSON and Random Values"
+                    description="Convert POJO to JSON and copy to the clipboard and randomly generate some test data">
+            </action>
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+            <separator/>
         </group>
 
         <group id="ink.organics.pojo2json.ProjectViewPopupMenuGroup">
