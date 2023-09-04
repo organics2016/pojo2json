@@ -1,7 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 
-fun properties(key: String) = project.findProperty(key).toString()
+fun environment(key: String) = providers.environmentVariable(key)
 
 plugins {
     // Java support
@@ -103,13 +103,13 @@ tasks {
     }
 
     signPlugin {
-        certificateChain.set(File(projectDir, ".keys/chain.crt").readText(Charsets.UTF_8))
-        privateKey.set(File(projectDir, ".keys/private.pem").readText(Charsets.UTF_8))
-        password.set(properties("PRIVATE_KEY_PASSWORD"))
+        certificateChain.set(environment("CERTIFICATE_CHAIN"))
+        privateKey.set(environment("PRIVATE_KEY"))
+        password.set(environment("PRIVATE_KEY_PASSWORD"))
     }
 
     publishPlugin {
-        token.set(properties("PUBLISH_TOKEN"))
+        token.set(environment("PUBLISH_TOKEN"))
     }
 }
 
