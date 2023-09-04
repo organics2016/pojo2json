@@ -235,6 +235,7 @@ public abstract class POJO2JSONParser {
         PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
         if (psiClass != null) {
             return Arrays.stream(psiClass.getTypeParameters())
+                    .filter(p -> PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false) != null)
                     .collect(Collectors.toMap(NavigationItem::getName,
                             p -> PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false)));
         }
