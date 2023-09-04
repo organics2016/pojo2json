@@ -1,5 +1,8 @@
 package testdata.kotlin
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.math.BigDecimal
 import java.time.*
 import java.time.temporal.Temporal
@@ -30,4 +33,14 @@ class SpecialObjectTestPOJO {
 
     //-----
     private val uuid: UUID = UUID.randomUUID()
+
+    //-----
+    @JsonIgnore
+    protected val objectMapper: ObjectMapper = ObjectMapper()
+
+    private val jsonNode: JsonNode = objectMapper.createObjectNode()
+
+    private val objectNode = objectMapper.createObjectNode()
+
+    private val arrayNode = objectMapper.createArrayNode()
 }
