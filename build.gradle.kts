@@ -7,7 +7,7 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-//    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+//    id("org.jetbrains.kotlin.jvm") version "1.9.10"
     // Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
     id("org.jetbrains.intellij") version "1.15.0"
     // Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
@@ -34,7 +34,7 @@ intellij {
     version.set("2022.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
-    plugins.set(listOf("org.intellij.intelliLang", "com.intellij.java"))
+    plugins.set(listOf("org.intellij.intelliLang", "com.intellij.java", "org.jetbrains.kotlin"))
 }
 
 changelog {
@@ -75,9 +75,9 @@ tasks {
     }
 
     test {
-        // 这里要签出一个完整的 Intellij IC 版本作为JVM语言的测试环境。这个配置真蠢。
+        // 这里要签出一个完整的 Intellij IC 作为JVM语言的测试环境，并且要注意版本与 version.set("2022.3") 分发环境相同 。这个配置真蠢。
         // https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
-        systemProperty("idea.home.path", "C:\\Users\\organ\\IdeaProjects\\intellij-community")
+        systemProperty("idea.home.path", "D:\\IdeaProjects\\intellij-community")
 //        systemProperty("idea.home.path", project.projectDir)
         println(getSystemProperties())
     }
