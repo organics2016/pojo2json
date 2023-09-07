@@ -10,6 +10,12 @@
         <notificationGroup id="ink.organics.pojo2json.NotificationGroup"
                            displayType="BALLOON"
                            key="ink.organics.pojo2json.NotificationGroup"/>
+        <applicationService serviceImplementation="ink.organics.pojo2json.SettingsState"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="ink.organics.pojo2json.SettingsConfigurable"
+                id="ink.organics.pojo2json.SettingsConfigurable"
+                displayName="SDK: Application Settings Example"/>
     </extensions>
 
     <actions>
