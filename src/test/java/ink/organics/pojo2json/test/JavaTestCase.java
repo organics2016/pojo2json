@@ -4,7 +4,7 @@ package ink.organics.pojo2json.test;
 import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
 
 
-public class JavaTestCase extends TestCase {
+public class JavaTestCase extends MyTestCase {
 
 
     @Override

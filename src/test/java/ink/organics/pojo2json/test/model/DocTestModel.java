@@ -2,14 +2,14 @@ package ink.organics.pojo2json.test.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.actionSystem.AnAction;
-import ink.organics.pojo2json.test.TestCase;
+import ink.organics.pojo2json.test.MyTestCase;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public class DocTestModel extends TestModel {
 
-    public DocTestModel(TestCase testCase) {
+    public DocTestModel(MyTestCase testCase) {
         super(testCase);
     }
 

@@ -15,6 +15,8 @@ plugins {
 }
 
 dependencies {
+    implementation("org.springframework:spring-expression:6.0.11")
+    implementation("org.reflections:reflections:0.10.2")
     testCompileOnly("com.alibaba:fastjson:1.2.83")
     testCompileOnly("com.fasterxml.jackson.core:jackson-databind:2.14.3")
     // https://projectlombok.org/setup/gradle
@@ -67,12 +69,13 @@ tasks {
     }
 
     // TODO https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0
-    val test by getting(Test::class) {
-        setScanForTestClasses(false)
-        // Only run tests from classes that end with "Test"
-        include("**/JavaTestCase.class")
-        include("**/KotlinTestCase.class")
-    }
+//    val test by getting(Test::class) {
+//        setScanForTestClasses(false)
+//        // Only run tests from classes that end with "Test"
+//        include("**/JavaTestCase.class")
+//        include("**/KotlinTestCase.class")
+//        include("**/SpELTest.class")
+//    }
 
     test {
         // 这里要签出一个完整的 Intellij IC 作为JVM语言的测试环境，并且要注意版本与 version.set("2022.3") 分发环境相同 。这个配置真蠢。

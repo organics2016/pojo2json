@@ -1,12 +1,12 @@
 package ink.organics.pojo2json.test.model;
 
-import ink.organics.pojo2json.test.TestCase;
+import ink.organics.pojo2json.test.MyTestCase;
 
 public class TestModel {
 
-    protected final TestCase testCase;
+    protected final MyTestCase testCase;
 
-    public TestModel(TestCase testCase) {
+    public TestModel(MyTestCase testCase) {
         this.testCase = testCase;
     }
 

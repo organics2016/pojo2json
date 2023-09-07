@@ -3,7 +3,7 @@ package ink.organics.pojo2json.test.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.actionSystem.AnAction;
 import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
-import ink.organics.pojo2json.test.TestCase;
+import ink.organics.pojo2json.test.MyTestCase;
 import testdata.java.EnumTestPOJO;
 
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class DataTypeTestModel extends TestModel {
     private final BigDecimal zero = BigDecimal.ZERO.setScale(2, RoundingMode.UNNECESSARY);
 
 
-    public DataTypeTestModel(TestCase testCase) {
+    public DataTypeTestModel(MyTestCase testCase) {
         super(testCase);
     }
 

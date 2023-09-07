@@ -2,7 +2,7 @@ package ink.organics.pojo2json.test.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.actionSystem.AnAction;
-import ink.organics.pojo2json.test.TestCase;
+import ink.organics.pojo2json.test.MyTestCase;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class VariableTestModel extends TestModel {
 
-    public VariableTestModel(TestCase testCase) {
+    public VariableTestModel(MyTestCase testCase) {
         super(testCase);
     }
 

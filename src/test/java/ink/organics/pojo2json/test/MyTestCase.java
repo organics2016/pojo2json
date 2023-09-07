@@ -24,14 +24,15 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
+public abstract class MyTestCase extends LightJavaCodeInsightFixtureTestCase {
 
     public static final LightProjectDescriptor MOCK_JDK = new ProjectDescriptor(LanguageLevel.JDK_11) {
 
         @Override
         public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
-            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.76");
+            MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.83");
             MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-databind:2.14.3");
+            MavenDependencyUtil.addFromMaven(model, "org.springframework:spring-expression:6.0.11");
             super.configureModule(module, model, contentEntry);
         }
     };
@@ -52,7 +53,7 @@ public abstract class TestCase extends LightJavaCodeInsightFixtureTestCase {
 
     protected final VariableTestModel variableTestModel = new VariableTestModel(this);
 
-    public TestCase() {
+    public MyTestCase() {
         // https://github.com/FasterXML/jackson-databind/issues/2087
         this.objectMapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
         this.objectMapper.configure(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN, true);

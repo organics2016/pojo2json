@@ -2,7 +2,7 @@ package ink.organics.pojo2json.test;
 
 import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
 
-public class KotlinTestCase extends TestCase {
+public class KotlinTestCase extends MyTestCase {
 
 
     @Override
