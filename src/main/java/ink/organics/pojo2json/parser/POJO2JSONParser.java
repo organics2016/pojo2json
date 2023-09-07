@@ -57,13 +57,20 @@ public abstract class POJO2JSONParser {
 
     protected abstract Object getFakeValue(SpecifyType specifyType);
 
+    public String uElementToJSONString(@NotNull final UElement uElement,
+                                       // {"Character":"#{#fieldName}_#{#uuid}_test"}
+                                       final Map<String, String> psiTypeExpression) {
+
+        return null;
+    }
+
     public String uElementToJSONString(@NotNull final UElement uElement) {
 
         Object result = null;
 
         if (uElement instanceof UVariable) {
-            PsiType type = ((UVariable) uElement).getType();
-            result = parseFieldValueType(type, 0, List.of(), getPsiClassGenerics(type));
+            UVariable variable = (UVariable) uElement;
+            result = parseFieldValue((PsiVariable) variable.getJavaPsi(), null, 0, List.of(), getPsiClassGenerics(variable.getType()));
         } else if (uElement instanceof UClass) {
             // UClass.getJavaPsi() IDEA 21* and last version recommend
             result = parseClass(((UClass) uElement).getJavaPsi(), 0, List.of(), Map.of());
@@ -118,7 +125,7 @@ public abstract class POJO2JSONParser {
         if (fieldKey == null) {
             return null;
         }
-        Object fieldValue = parseFieldValue(field, level, ignoreProperties, psiClassGenerics);
+        Object fieldValue = parseFieldValue(field, null, level, ignoreProperties, psiClassGenerics);
         if (fieldValue == null) {
             return null;
         }
@@ -145,14 +152,11 @@ public abstract class POJO2JSONParser {
         return field.getName();
     }
 
-    private Object parseFieldValue(PsiField field, int level, List<String> ignoreProperties, Map<String, PsiType> psiClassGenerics) {
-        return parseFieldValueType(field.getType(), level, ignoreProperties, psiClassGenerics);
-    }
-
     /**
-     * PsiType 转换为特定 Object
+     * 解析变量值
      *
-     * @param type             PsiType
+     * @param variable         当前变量
+     * @param deepType         当前变量的深度类型，如果为null则deepType就是当前variable的Type
      * @param level            当前转换层级。当递归层级过深时会导致stack overflow，这个参数用于控制递归层级
      * @param ignoreProperties 过滤的属性，这个参数只在这里使用 {@link ink.organics.pojo2json.parser.POJO2JSONParser#parseField}
      *                         用于过滤用户指定移除的属性
@@ -160,12 +164,15 @@ public abstract class POJO2JSONParser {
      *                         并在解析当前PsiClass所包含的Field时，尝试获取这个Field所定义的泛型Map，然后传入下一层
      * @return JSON Value所期望的Object
      */
-    private Object parseFieldValueType(PsiType type,
-                                       int level,
-                                       List<String> ignoreProperties,
-                                       Map<String, PsiType> psiClassGenerics) {
+    private Object parseFieldValue(PsiVariable variable,
+                                   PsiType deepType,
+                                   int level,
+                                   List<String> ignoreProperties,
+                                   Map<String, PsiType> psiClassGenerics) {
 
         level = ++level;
+
+        PsiType type = deepType != null ? deepType : variable.getType();
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 
@@ -173,8 +180,8 @@ public abstract class POJO2JSONParser {
 
         } else if (type instanceof PsiArrayType) {   //array type
 
-            PsiType deepType = type.getDeepComponentType();
-            Object obj = parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
+            PsiType typeToDeepType = type.getDeepComponentType();
+            Object obj = parseFieldValue(variable, typeToDeepType, level, ignoreProperties, getPsiClassGenerics(typeToDeepType));
             return obj != null ? List.of(obj) : List.of();
 
         } else {    //reference Type
@@ -208,8 +215,8 @@ public abstract class POJO2JSONParser {
 
                     if (iterable) {// Iterable List<Test<String>>
 
-                        PsiType deepType = PsiUtil.extractIterableTypeParameter(type, false);
-                        Object obj = parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
+                        PsiType typeToDeepType = PsiUtil.extractIterableTypeParameter(type, false);
+                        Object obj = parseFieldValue(variable, typeToDeepType, level, ignoreProperties, getPsiClassGenerics(typeToDeepType));
                         return obj != null ? List.of(obj) : List.of();
 
                     } else {
@@ -218,9 +225,9 @@ public abstract class POJO2JSONParser {
                             throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 
-                        PsiType deepType = psiClassGenerics.get(psiClass.getName());
-                        if (deepType != null) {
-                            return parseFieldValueType(deepType, level, ignoreProperties, getPsiClassGenerics(deepType));
+                        PsiType typeToDeepType = psiClassGenerics.get(psiClass.getName());
+                        if (typeToDeepType != null) {
+                            return parseFieldValue(variable, typeToDeepType, level, ignoreProperties, getPsiClassGenerics(typeToDeepType));
                         }
 
                         return parseClass(psiClass, level, ignoreProperties, getPsiClassGenerics(type));
