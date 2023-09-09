@@ -6,14 +6,9 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import ink.organics.pojo2json.parser.POJO2JSONParser;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class EditorPopupMenuAction extends POJO2JSONAction {
-
-    public EditorPopupMenuAction(POJO2JSONParser pojo2JSONParser) {
-        super(pojo2JSONParser);
-    }
+public class EditorPopupMenuAction extends POJO2JSONAction {
 
     @Override
     public void update(@NotNull AnActionEvent e) {

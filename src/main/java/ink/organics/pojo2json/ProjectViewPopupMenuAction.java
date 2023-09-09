@@ -13,7 +13,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiUtil;
 import ink.organics.pojo2json.parser.KnownException;
-import ink.organics.pojo2json.parser.POJO2JSONParser;
+import ink.organics.pojo2json.parser.el.EvaluationContextFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UastUtils;
@@ -24,11 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class ProjectViewPopupMenuAction extends POJO2JSONAction {
-
-    public ProjectViewPopupMenuAction(POJO2JSONParser pojo2JSONParser) {
-        super(pojo2JSONParser);
-    }
+public class ProjectViewPopupMenuAction extends POJO2JSONAction {
 
     @Override
     public void update(@NotNull AnActionEvent e) {
@@ -76,7 +72,7 @@ public abstract class ProjectViewPopupMenuAction extends POJO2JSONAction {
                     PsiElement elementAt = psiFile.findElementAt(offset);
                     UClass uClass = UastUtils.findContaining(elementAt, UClass.class);
                     try {
-                        String json = pojo2JSONParser.uElementToJSONString(uClass);
+                        String json = pojo2JSONParser.uElementToJSONString(uClass, EvaluationContextFactory.todoExpressionMap());
 
                         return ScratchRootType.getInstance().createScratchFile(
                                 project,

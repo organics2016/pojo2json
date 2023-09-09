@@ -2,7 +2,6 @@ package ink.organics.pojo2json.test.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.actionSystem.AnAction;
-import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
 import ink.organics.pojo2json.test.MyTestCase;
 import testdata.java.EnumTestPOJO;
 
@@ -67,7 +66,7 @@ public class DataTypeTestModel extends TestModel {
     }
 
     public void testIterableTestPOJO(String fileName, AnAction action) {
-        JsonNode result = testCase.testAction(fileName, new EditorPopupMenuDefaultAction());
+        JsonNode result = testCase.testAction(fileName, action);
 
         assertTrue(result.get("iterable").isArray());
         assertTrue(result.get("collection").isArray());

@@ -16,7 +16,9 @@ plugins {
 
 dependencies {
     implementation("org.springframework:spring-expression:6.0.11")
-    implementation("org.reflections:reflections:0.10.2")
+    implementation("org.reflections:reflections:0.10.2") {
+        exclude(group = "org.slf4j")
+    }
     testCompileOnly("com.alibaba:fastjson:1.2.83")
     testCompileOnly("com.fasterxml.jackson.core:jackson-databind:2.14.3")
     // https://projectlombok.org/setup/gradle

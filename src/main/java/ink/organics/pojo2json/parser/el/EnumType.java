@@ -1,4 +1,4 @@
-package ink.organics.pojo2json.parser.type;
+package ink.organics.pojo2json.parser.el;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiEnumConstant;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EnumType implements SpecifyType {
+public class EnumType {
 
     private final PsiClass psiClass;
 
@@ -17,7 +17,6 @@ public class EnumType implements SpecifyType {
         this.psiClass = psiClass;
     }
 
-    @Override
     public Object def() {
         return Arrays.stream(psiClass.getAllFields())
                 .filter(psiField -> psiField instanceof PsiEnumConstant)
@@ -26,7 +25,6 @@ public class EnumType implements SpecifyType {
                 .orElse("");
     }
 
-    @Override
     public Object random() {
         List<String> psiFieldNames = Arrays.stream(psiClass.getAllFields())
                 .filter(psiField -> psiField instanceof PsiEnumConstant)

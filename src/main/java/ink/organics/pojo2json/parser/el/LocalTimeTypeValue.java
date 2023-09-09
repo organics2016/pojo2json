@@ -1,25 +1,24 @@
-package ink.organics.pojo2json.parser.type;
+package ink.organics.pojo2json.parser.el;
 
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class LocalTimeType extends TemporalType implements SpecifyType {
-
+public class LocalTimeTypeValue extends TemporalTypeValue {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override
-    public Object random() {
+    public Object getRandomValue() {
         return LocalTime
-                .ofInstant(Instant.ofEpochMilli((long) super.random()), ZoneId.systemDefault())
+                .ofInstant(Instant.ofEpochMilli((long) super.getRandomValue()), ZoneId.systemDefault())
                 .format(formatter);
     }
 
     @Override
-    public Object def() {
+    public Object getValue() {
         return LocalTime
-                .ofInstant(Instant.ofEpochMilli((long) super.def()), ZoneId.systemDefault())
+                .ofInstant(Instant.ofEpochMilli((long) super.getValue()), ZoneId.systemDefault())
                 .format(formatter);
     }
 }

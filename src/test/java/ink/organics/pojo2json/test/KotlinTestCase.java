@@ -1,6 +1,6 @@
 package ink.organics.pojo2json.test;
 
-import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
+import ink.organics.pojo2json.EditorPopupMenuAction;
 
 public class KotlinTestCase extends MyTestCase {
 
@@ -12,24 +12,24 @@ public class KotlinTestCase extends MyTestCase {
 
 
     public void testKotlinVariable() {
-        variableTestModel.testVariableTestPOJO("VariableTestPOJO.kt", new EditorPopupMenuDefaultAction());
+        variableTestModel.testVariableTestPOJO("VariableTestPOJO.kt", new EditorPopupMenuAction());
     }
 
     public void testKotlinDateType() {
-        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testEnumTestPOJO("EnumTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testIterableTestPOJO("IterableTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.kt", new EditorPopupMenuDefaultAction());
+        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.kt", new EditorPopupMenuAction());
+        dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.kt", new EditorPopupMenuAction());
+        dataTypeTestModel.testEnumTestPOJO("EnumTestPOJO.kt", new EditorPopupMenuAction());
+        dataTypeTestModel.testIterableTestPOJO("IterableTestPOJO.kt", new EditorPopupMenuAction());
+        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.kt", new EditorPopupMenuAction());
+        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.kt", new EditorPopupMenuAction());
     }
 
 
     public void testKotlinAnnotation() {
-        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.kt", new EditorPopupMenuDefaultAction());
-        annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.kt", new EditorPopupMenuDefaultAction());
+        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.kt", new EditorPopupMenuAction());
+        annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.kt", new EditorPopupMenuAction());
+        annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.kt", new EditorPopupMenuAction());
+        annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.kt", new EditorPopupMenuAction());
     }
 
 
@@ -40,10 +40,10 @@ public class KotlinTestCase extends MyTestCase {
 
 
     public void testKotlinStaticField() {
-        staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.kt", new EditorPopupMenuDefaultAction());
+        staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.kt", new EditorPopupMenuAction());
     }
 
     public void testKotlinMemberClass() {
-        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.kt", new EditorPopupMenuDefaultAction());
+        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.kt", new EditorPopupMenuAction());
     }
 }

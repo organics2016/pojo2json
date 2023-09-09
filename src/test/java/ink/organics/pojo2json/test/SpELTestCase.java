@@ -41,4 +41,8 @@ public class SpELTestCase {
         Expression expression = parser.parseExpression("#{#arr.getValue}", template);
         System.out.println(expression.getValue(evaluationContext));
     }
+
+    @Test
+    public void test4(){
+    }
 }

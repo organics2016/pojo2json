@@ -1,7 +1,7 @@
 package ink.organics.pojo2json.test;
 
 
-import ink.organics.pojo2json.EditorPopupMenuDefaultAction;
+import ink.organics.pojo2json.EditorPopupMenuAction;
 
 
 public class JavaTestCase extends MyTestCase {
@@ -15,43 +15,44 @@ public class JavaTestCase extends MyTestCase {
 
     public void testCurrent() {
         // TODO 测试环境2022.3版本 MockJDK 不再包含java.time依赖包，可能是JB的BUG
-        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuDefaultAction());
+        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuAction());
+//        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new EditorPopupMenuAction());
     }
 
     public void testJavaVariable() {
-        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuDefaultAction());
+        variableTestModel.testVariableTestPOJO("VariableTestPOJO.java", new EditorPopupMenuAction());
     }
 
     public void testJavaDateType() {
-        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.java", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.java", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testEnumTestPOJO("EnumTestPOJO.java", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testIterableTestPOJO("IterableTestPOJO.java", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new EditorPopupMenuDefaultAction());
-        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuDefaultAction());
+        dataTypeTestModel.testPrimitiveTestPOJO("PrimitiveTestPOJO.java", new EditorPopupMenuAction());
+        dataTypeTestModel.testPrimitiveArrayTestPOJO("PrimitiveArrayTestPOJO.java", new EditorPopupMenuAction());
+        dataTypeTestModel.testEnumTestPOJO("EnumTestPOJO.java", new EditorPopupMenuAction());
+        dataTypeTestModel.testIterableTestPOJO("IterableTestPOJO.java", new EditorPopupMenuAction());
+        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new EditorPopupMenuAction());
+        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuAction());
     }
 
 
     public void testJavaAnnotation() {
-        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new EditorPopupMenuDefaultAction());
-        annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.java", new EditorPopupMenuDefaultAction());
-        annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.java", new EditorPopupMenuDefaultAction());
-        annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.java", new EditorPopupMenuDefaultAction());
+        annotationTestModel.testJsonPropertyTestPOJO("JsonPropertyTestPOJO.java", new EditorPopupMenuAction());
+        annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.java", new EditorPopupMenuAction());
+        annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.java", new EditorPopupMenuAction());
+        annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.java", new EditorPopupMenuAction());
     }
 
 
     public void testJavaDoc() {
-        docTestModel.testJsonIgnoreDocTestPOJO("JsonIgnoreDocTestPOJO.java", new EditorPopupMenuDefaultAction());
-        docTestModel.testJsonIgnorePropertiesDocTestPOJO("JsonIgnorePropertiesDocTestPOJO.java", new EditorPopupMenuDefaultAction());
+        docTestModel.testJsonIgnoreDocTestPOJO("JsonIgnoreDocTestPOJO.java", new EditorPopupMenuAction());
+        docTestModel.testJsonIgnorePropertiesDocTestPOJO("JsonIgnorePropertiesDocTestPOJO.java", new EditorPopupMenuAction());
     }
 
 
     public void testJavaStaticField() {
-        staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.java", new EditorPopupMenuDefaultAction());
+        staticFieldTestModel.testStaticFieldPOJO("StaticFieldPOJO.java", new EditorPopupMenuAction());
     }
 
 
     public void testJavaMemberClass() {
-        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.java", new EditorPopupMenuDefaultAction());
+        memberClassTestModel.testMemberClassTestPOJO("MemberClassTestPOJO.java", new EditorPopupMenuAction());
     }
 }
