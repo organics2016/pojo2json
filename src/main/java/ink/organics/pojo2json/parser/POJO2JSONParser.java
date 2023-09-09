@@ -24,10 +24,10 @@ public abstract class POJO2JSONParser {
     private final Map<String, SpecifyType> specifyTypes = new HashMap<>();
 
     private final List<String> iterableTypes = List.of(
-            "Iterable",
-            "Collection",
-            "List",
-            "Set");
+            "java.lang.Iterable",
+            "java.util.Collection",
+            "java.util.List",
+            "java.util.Set");
 
     public POJO2JSONParser() {
 
@@ -35,24 +35,24 @@ public abstract class POJO2JSONParser {
         LocalDateTimeType localDateTimeType = new LocalDateTimeType();
         ObjectType objectType = new ObjectType();
 
-        specifyTypes.put("Boolean", new BooleanType());
-        specifyTypes.put("Float", decimalType);
-        specifyTypes.put("Double", decimalType);
-        specifyTypes.put("BigDecimal", decimalType);
-        specifyTypes.put("Number", new IntegerType());
-        specifyTypes.put("Character", new CharType());
-        specifyTypes.put("CharSequence", new StringType());
-        specifyTypes.put("Date", localDateTimeType);
-        specifyTypes.put("Temporal", new TemporalType());
-        specifyTypes.put("LocalDateTime", localDateTimeType);
-        specifyTypes.put("LocalDate", new LocalDateType());
-        specifyTypes.put("LocalTime", new LocalTimeType());
-        specifyTypes.put("ZonedDateTime", new ZonedDateTimeType());
-        specifyTypes.put("YearMonth", new YearMonthType());
-        specifyTypes.put("UUID", new UUIDType());
-        specifyTypes.put("JsonNode", objectType);
-        specifyTypes.put("ObjectNode", objectType);
-        specifyTypes.put("ArrayNode", new ArrayType());
+        specifyTypes.put("java.lang.Boolean", new BooleanType());
+        specifyTypes.put("java.lang.Float", decimalType);
+        specifyTypes.put("java.lang.Double", decimalType);
+        specifyTypes.put("java.math.BigDecimal", decimalType);
+        specifyTypes.put("java.lang.Number", new IntegerType());
+        specifyTypes.put("java.lang.Character", new CharType());
+        specifyTypes.put("java.lang.CharSequence", new StringType());
+        specifyTypes.put("java.util.Date", localDateTimeType);
+        specifyTypes.put("java.time.temporal.Temporal", new TemporalType());
+        specifyTypes.put("java.time.LocalDateTime", localDateTimeType);
+        specifyTypes.put("java.time.LocalDate", new LocalDateType());
+        specifyTypes.put("java.time.LocalTime", new LocalTimeType());
+        specifyTypes.put("java.time.ZonedDateTime", new ZonedDateTimeType());
+        specifyTypes.put("java.time.YearMonth", new YearMonthType());
+        specifyTypes.put("java.util.UUID", new UUIDType());
+        specifyTypes.put("com.fasterxml.jackson.databind.JsonNode", objectType);
+        specifyTypes.put("com.fasterxml.jackson.databind.node.ObjectNode", objectType);
+        specifyTypes.put("com.fasterxml.jackson.databind.node.ArrayNode", new ArrayType());
     }
 
     protected abstract Object getFakeValue(SpecifyType specifyType);
@@ -199,11 +199,10 @@ public abstract class POJO2JSONParser {
             } else {
 
                 List<String> fieldTypeNames = new ArrayList<>();
-
-                fieldTypeNames.add(psiClass.getName());
+                fieldTypeNames.add(psiClass.getQualifiedName());
                 fieldTypeNames.addAll(Arrays.stream(psiClass.getSupers())
-                        .map(PsiClass::getName).collect(Collectors.toList()));
-
+                        .map(PsiClass::getQualifiedName).collect(Collectors.toList()));
+                fieldTypeNames = fieldTypeNames.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
                 List<String> retain = new ArrayList<>(fieldTypeNames);
                 retain.retainAll(specifyTypes.keySet());
@@ -252,17 +251,17 @@ public abstract class POJO2JSONParser {
     private Object getPrimitiveTypeValue(PsiType type) {
         switch (type.getCanonicalText()) {
             case "boolean":
-                return this.getFakeValue(specifyTypes.get("Boolean"));
+                return this.getFakeValue(specifyTypes.get("java.lang.Boolean"));
             case "byte":
             case "short":
             case "int":
             case "long":
-                return this.getFakeValue(specifyTypes.get("Number"));
+                return this.getFakeValue(specifyTypes.get("java.lang.Number"));
             case "float":
             case "double":
-                return this.getFakeValue(specifyTypes.get("BigDecimal"));
+                return this.getFakeValue(specifyTypes.get("java.math.BigDecimal"));
             case "char":
-                return this.getFakeValue(specifyTypes.get("Character"));
+                return this.getFakeValue(specifyTypes.get("java.lang.Character"));
             default:
                 return null;
         }
