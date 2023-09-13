@@ -7,7 +7,9 @@ import com.intellij.util.ui.UI;
 
 import javax.swing.*;
 
-
+/**
+ * https://jetbrains.github.io/ui/
+ */
 public class SettingsComponent {
 
     private final JPanel panel;
