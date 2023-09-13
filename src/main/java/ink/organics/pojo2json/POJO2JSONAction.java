@@ -8,7 +8,6 @@ import com.intellij.psi.PsiFile;
 import ink.organics.pojo2json.parser.KnownException;
 import ink.organics.pojo2json.parser.POJO2JSONParser;
 import ink.organics.pojo2json.parser.POJO2JSONParserFactory;
-import ink.organics.pojo2json.parser.el.EvaluationContextFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.uast.*;
@@ -60,7 +59,7 @@ public abstract class POJO2JSONAction extends AnAction {
         }
 
         try {
-            String json = pojo2JSONParser.uElementToJSONString(uElement, EvaluationContextFactory.todoExpressionMap());
+            String json = pojo2JSONParser.uElementToJSONString(uElement, SettingsState.getInstance().classNameSpELMap);
 
             ClipboardHandler.copyToClipboard(json);
 

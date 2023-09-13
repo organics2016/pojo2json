@@ -14,7 +14,6 @@ public class JavaTestCase extends MyTestCase {
 
 
     public void testCurrent() {
-        // TODO 测试环境2022.3版本 MockJDK 不再包含java.time依赖包，可能是JB的BUG
         dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuAction());
 //        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new EditorPopupMenuAction());
     }

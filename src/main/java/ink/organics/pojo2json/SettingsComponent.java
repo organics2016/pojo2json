@@ -1,51 +1,38 @@
 package ink.organics.pojo2json;
 
-import com.intellij.ui.components.JBCheckBox;
-import com.intellij.ui.components.JBLabel;
-import com.intellij.ui.components.JBTextField;
+import com.intellij.lang.properties.PropertiesLanguage;
+import com.intellij.ui.LanguageTextField;
 import com.intellij.util.ui.FormBuilder;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.util.ui.UI;
 
 import javax.swing.*;
 
 
 public class SettingsComponent {
 
-    private final JPanel myMainPanel;
-    private final JBTextField myUserNameText = new JBTextField();
-    private final JBCheckBox myIdeaUserStatus = new JBCheckBox("Do you use IntelliJ IDEA? ");
+    private final JPanel panel;
+
+    private final LanguageTextField textField;
 
     public SettingsComponent() {
-        myMainPanel = FormBuilder.createFormBuilder()
-                .addLabeledComponent(new JBLabel("Enter user name: "), myUserNameText, 1, false)
-                .addComponent(myIdeaUserStatus, 1)
-                .addComponentFillVertically(new JPanel(), 0)
+
+        textField = new LanguageTextField(PropertiesLanguage.INSTANCE, null, "", false);
+
+        panel = FormBuilder.createFormBuilder()
+                .addComponentFillVertically(textField, 0)
+                .addComponent(
+                        UI.PanelFactory.panel(new JPanel())
+                                .withComment("<p>Please note that this will not include personal data or any sensitive information, such as source code, file names, etc. The data sent complies with the <a href=\"http://jetbrains.com\">JetBrains Privacy Policy</a></p>")
+                                .createPanel()
+                )
                 .getPanel();
     }
 
     public JPanel getPanel() {
-        return myMainPanel;
+        return panel;
     }
 
-    public JComponent getPreferredFocusedComponent() {
-        return myUserNameText;
+    public LanguageTextField getTextField() {
+        return textField;
     }
-
-    @NotNull
-    public String getUserNameText() {
-        return myUserNameText.getText();
-    }
-
-    public void setUserNameText(@NotNull String newText) {
-        myUserNameText.setText(newText);
-    }
-
-    public boolean getIdeaUserStatus() {
-        return myIdeaUserStatus.isSelected();
-    }
-
-    public void setIdeaUserStatus(boolean newStatus) {
-        myIdeaUserStatus.setSelected(newStatus);
-    }
-
 }

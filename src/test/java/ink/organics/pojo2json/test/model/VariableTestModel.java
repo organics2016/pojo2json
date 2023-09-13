@@ -34,14 +34,14 @@ public class VariableTestModel extends TestModel {
         result = testCase.testAction(fileName, action, "mParameter");
         assertTrue(result.isObject());
         test(result);
-        assertEquals("", result.get("data").asText());
+        assertTrue(result.get("data").isTextual());
 
 
         result = testCase.testAction(fileName, action, "localVariable");
         assertTrue(result.isObject());
         test(result);
         assertNull(result.get("data").get("username"));
-        assertEquals("", result.get("data").get("password").asText());
+        assertTrue(result.get("data").get("password").isTextual());
     }
 
     private void test(JsonNode result) {

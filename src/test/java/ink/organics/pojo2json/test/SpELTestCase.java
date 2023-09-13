@@ -12,6 +12,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class SpELTestCase {
 
@@ -21,7 +22,7 @@ public class SpELTestCase {
 
         EvaluationContext evaluationContext = new StandardEvaluationContext("TTTTTT");
         evaluationContext.setVariable("xxhh", LocalDate.now());
-        evaluationContext.setVariable("boolean",false);
+        evaluationContext.setVariable("boolean", false);
 
         ExpressionParser parser = new SpelExpressionParser();
         ParserContext template = new TemplateParserContext();
@@ -38,11 +39,12 @@ public class SpELTestCase {
 
         ExpressionParser parser = new SpelExpressionParser();
         ParserContext template = new TemplateParserContext();
-        Expression expression = parser.parseExpression("#{#arr.getValue}", template);
+        Expression expression = parser.parseExpression("#{#array.getValue}", template);
         System.out.println(expression.getValue(evaluationContext));
     }
 
     @Test
-    public void test4(){
+    public void test4() {
+        System.out.println(Arrays.asList("fsdfsef\n\nsdfeeef\n\nsdfefesf\n\n".split("\n")));
     }
 }

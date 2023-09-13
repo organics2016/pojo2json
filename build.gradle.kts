@@ -38,7 +38,14 @@ intellij {
     version.set("2022.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
-    plugins.set(listOf("org.intellij.intelliLang", "com.intellij.java", "org.jetbrains.kotlin"))
+    plugins.set(
+        listOf(
+            "org.intellij.intelliLang",
+            "com.intellij.java",
+            "org.jetbrains.kotlin",
+            "com.intellij.properties"
+        )
+    )
 }
 
 changelog {
@@ -70,7 +77,7 @@ tasks {
         enabled = false
     }
 
-    // TODO https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0
+    // https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0
 //    val test by getting(Test::class) {
 //        setScanForTestClasses(false)
 //        // Only run tests from classes that end with "Test"

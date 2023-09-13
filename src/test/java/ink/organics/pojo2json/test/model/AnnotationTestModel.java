@@ -16,9 +16,9 @@ public class AnnotationTestModel extends TestModel {
     public void testJsonPropertyTestPOJO(String fileName, AnAction action) {
         JsonNode result = testCase.testAction(fileName, action);
 
-        assertEquals(result.get("name").textValue(),"");
-        assertEquals(result.get("pass").textValue(),"");
-        assertEquals(result.get("userId").textValue(),"");
+        assertTrue(result.get("name").isTextual());
+        assertTrue(result.get("pass").isTextual());
+        assertTrue(result.get("userId").isTextual());
     }
 
     public void testJsonIgnoreTestPOJO(String fileName, AnAction action) {
