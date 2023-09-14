@@ -30,7 +30,6 @@
         </group>
 
         <group id="ink.organics.pojo2json.GenerateGroup">
-            <separator/>
             <action class="ink.organics.pojo2json.EditorPopupMenuAction"
                     id="ink.organics.pojo2json.GenerateGroupAction"
                     icon="AllIcons.Json.Object"
@@ -38,7 +37,6 @@
                     description="Convert POJO to JSON and copy to the clipboard">
             </action>
             <add-to-group group-id="GenerateGroup" anchor="last"/>
-            <separator/>
         </group>
 
         <group id="ink.organics.pojo2json.ProjectViewPopupMenuGroup">
