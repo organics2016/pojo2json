@@ -1,5 +1,12 @@
 # POJO to JSON Changelog
 
+## [2.0.1]
+### Added
+- [Integrated SpEL expression](https://github.com/organics2016/pojo2json#configure-spel-expression)
+- [Add new interactions](https://github.com/organics2016/pojo2json/issues/25)
+### Fixed
+- Fix NPE problem caused when generics are not defined https://github.com/organics2016/pojo2json/issues/28
+
 ## [1.2.6]
 ### Fixed
 - Fix stack overflow errors
