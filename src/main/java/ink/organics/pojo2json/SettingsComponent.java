@@ -20,11 +20,19 @@ public class SettingsComponent {
 
         textField = new LanguageTextField(PropertiesLanguage.INSTANCE, null, "", false);
 
+        String comment = """
+                <p>
+                This is a .properties configuration.
+                The Key is a Reference Class Path, and Value is a <a href="https://docs.spring.io/spring-framework/reference/core/expressions.html">SpEL expression.</a>
+                When the plugin convert POJO into JSON, it will map the parsing result of the SpEL expression to the specified Class according to this configuration.
+                <a href="https://github.com/organics2016/pojo2json#usage">More details.</a>
+                </p>
+                """;
         panel = FormBuilder.createFormBuilder()
                 .addComponentFillVertically(textField, 0)
                 .addComponent(
                         UI.PanelFactory.panel(new JPanel())
-                                .withComment("<p>Please note that this will not include personal data or any sensitive information, such as source code, file names, etc. The data sent complies with the <a href=\"http://jetbrains.com\">JetBrains Privacy Policy</a></p>")
+                                .withComment(comment)
                                 .createPanel()
                 )
                 .getPanel();
