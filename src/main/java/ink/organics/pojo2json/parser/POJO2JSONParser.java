@@ -182,14 +182,18 @@ public class POJO2JSONParser {
                 List<String> fieldTypeNames = new ArrayList<>();
                 fieldTypeNames.add(psiClass.getQualifiedName());
                 fieldTypeNames.addAll(Arrays.stream(psiClass.getSupers())
-                        .map(PsiClass::getQualifiedName).collect(Collectors.toList()));
-                fieldTypeNames = fieldTypeNames.stream().filter(Objects::nonNull).collect(Collectors.toList());
+                        .map(PsiClass::getQualifiedName).toList());
+                fieldTypeNames = fieldTypeNames.stream().filter(Objects::nonNull).toList();
 
                 List<String> retain = new ArrayList<>(fieldTypeNames);
                 retain.retainAll(psiTypeExpression.keySet());
                 if (!retain.isEmpty()) {  // Object Test<String,String>
-                    Expression expression = expressionParser.parseExpression(psiTypeExpression.get(retain.get(0)), templateParserContext);
-                    return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                    try {
+                        Expression expression = expressionParser.parseExpression(psiTypeExpression.get(retain.get(0)), templateParserContext);
+                        return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                    } catch (Exception e) {
+                        throw new KnownException(e);
+                    }
                 } else {
 
                     boolean iterable = fieldTypeNames.stream().anyMatch(iterableTypes::contains);
