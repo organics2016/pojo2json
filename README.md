@@ -404,24 +404,24 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
   com.example.TestClass=ABCD#{"_" + 2+2 + "_" + #shortuuid.getValue()}
   ```
 
-    - The plugin has some built-in Value shortcut references.Note that only some of these references
-      support `getRandomValue()`
+- The plugin has some built-in Value shortcut references.Note that only some of these references
+  support `getRandomValue()`
 
-      | Ref              | Expression                     | Result Eg                            | Support getRandomValue() |
-            |:-----------------|:-------------------------------|:-------------------------------------|:------------------------:|
-      | `#boolean`       | `#{#boolean.getValue())`       | false                                |                          |
-      | `#array`         | `#{#array.getValue())`         | []                                   |            N             |
-      | `#object`        | `#{#object.getValue())`        | {}                                   |            N             |
-      | `#decimal`       | `#{#decimal.getValue())`       | 0.00                                 |                          |
-      | `#integer`       | `#{#integer.getValue())`       | 0                                    |                          |
-      | `#localdatetime` | `#{#localdatetime.getValue())` | 2023-09-14 15:04:52                  |                          |
-      | `#localdate`     | `#{#localdate.getValue())`     | 2023-09-14                           |                          |
-      | `#localtime`     | `#{#localtime.getValue())`     | 15:04:52                             |                          |
-      | `#yearmonth`     | `#{#yearmonth.getValue())`     | 2023-09                              |                          |
-      | `#temporal`      | `#{#temporal.getValue())`      | 1694675092600                        |                          |
-      | `#zoneddatetime` | `#{#zoneddatetime.getValue())` | 2023-09-14T15:04:52.601+08:00        |                          |
-      | `#uuid`          | `#{#uuid.getValue())`          | 679e70fa-d24b-4726-ab87-2de620333f20 |            N             |
-      | `#shortuuid`     | `#{#shortuuid.getValue())`     | 732f65b6b9cf                         |            N             |
+  | Ref              | Expression                     | Result Eg                            | Support getRandomValue() |
+    |:-----------------|:-------------------------------|:-------------------------------------|:------------------------:|
+  | `#boolean`       | `#{#boolean.getValue())`       | false                                |                          |
+  | `#array`         | `#{#array.getValue())`         | []                                   |            N             |
+  | `#object`        | `#{#object.getValue())`        | {}                                   |            N             |
+  | `#decimal`       | `#{#decimal.getValue())`       | 0.00                                 |                          |
+  | `#integer`       | `#{#integer.getValue())`       | 0                                    |                          |
+  | `#localdatetime` | `#{#localdatetime.getValue())` | 2023-09-14 15:04:52                  |                          |
+  | `#localdate`     | `#{#localdate.getValue())`     | 2023-09-14                           |                          |
+  | `#localtime`     | `#{#localtime.getValue())`     | 15:04:52                             |                          |
+  | `#yearmonth`     | `#{#yearmonth.getValue())`     | 2023-09                              |                          |
+  | `#temporal`      | `#{#temporal.getValue())`      | 1694675092600                        |                          |
+  | `#zoneddatetime` | `#{#zoneddatetime.getValue())` | 2023-09-14T15:04:52.601+08:00        |                          |
+  | `#uuid`          | `#{#uuid.getValue())`          | 679e70fa-d24b-4726-ab87-2de620333f20 |            N             |
+  | `#shortuuid`     | `#{#shortuuid.getValue())`     | 732f65b6b9cf                         |            N             |
 
 - Custom String type
 
