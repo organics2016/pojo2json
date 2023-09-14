@@ -408,7 +408,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
   support `getRandomValue()`
 
   | Ref              | Expression                     | Result Eg                            | Support getRandomValue() |
-    |:-----------------|:-------------------------------|:-------------------------------------|:------------------------:|
+      |:-----------------|:-------------------------------|:-------------------------------------|:------------------------:|
   | `#boolean`       | `#{#boolean.getValue())`       | false                                |                          |
   | `#array`         | `#{#array.getValue())`         | []                                   |            N             |
   | `#object`        | `#{#object.getValue())`        | {}                                   |            N             |
@@ -466,7 +466,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
   ```
 
 - Some special cases, SpEL expressions cannot be adapted.
-    - You cannot create custom classes outside of Java because plugins cannot reflect instances of custom classes.
+    - You cannot create custom classes outside of Java Base package because plugins cannot reflect instances of custom classes.
 
       You can
         ```properties
@@ -483,10 +483,13 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
       ```properties
       java.lang.Number=#{#integer.getRandomValue}
       ```
-      But recommended it
+      But recommended this
       ```properties
       java.lang.Number=#{#integer.getRandomValue()}
       ```
+
+    - When incorrect configuration causes the plugin to fail to run properly, you can clear the configuration and save
+      it, and the plugin will initialize the default configuration.
 
 <!-- Plugin description end -->
 
