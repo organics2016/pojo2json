@@ -33,7 +33,8 @@ public class EvaluationContextFactory {
     }
 
     public static EvaluationContext newEvaluationContext(PsiVariable rootObject) {
-        EvaluationContext context = new StandardEvaluationContext(rootObject);
+        EvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("field", rootObject);
         context.setVariable("boolean", presetTypeValueMap.get(BooleanTypeValue.class));
         context.setVariable("array", presetTypeValueMap.get(ArrayTypeValue.class));
         context.setVariable("decimal", presetTypeValueMap.get(DecimalTypeValue.class));
@@ -58,7 +59,7 @@ public class EvaluationContextFactory {
         map.put("com.fasterxml.jackson.databind.node.ArrayNode", "#{#array.getValue()}");
         map.put("com.fasterxml.jackson.databind.node.ObjectNode", "#{#object.getValue()}");
         map.put("java.lang.Boolean", "#{#boolean.getValue()}");
-        map.put("java.lang.CharSequence", "#{#this.getName() + '_' + #shortuuid.getValue()}");
+        map.put("java.lang.CharSequence", "#{#field.getName() + '_' + #shortuuid.getValue()}");
         map.put("java.lang.Character", "#{'c'}");
         map.put("java.lang.Double", "#{#decimal.getValue()}");
         map.put("java.lang.Float", "#{#decimal.getValue()}");
