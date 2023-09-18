@@ -441,7 +441,7 @@
 - 你会发现这个配置有继承关系。所以你可以定义父类的表达式，让子类也可以收益。
 
   ```properties
-  com.example.ParentClass=#{#this.getName() + '_' + #shortuuid.getValue()}
+  com.example.ParentClass=#{#field.getName() + '_' + #shortuuid.getValue()}
   ```
 
   ```java

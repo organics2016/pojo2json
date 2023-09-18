@@ -445,7 +445,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
   and the sub-class will also benefit.
 
   ```properties
-  com.example.ParentClass=#{#this.getName() + '_' + #shortuuid.getValue()}
+  com.example.ParentClass=#{#field.getName() + '_' + #shortuuid.getValue()}
   ```
 
   ```java
