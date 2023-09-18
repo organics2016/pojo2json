@@ -23,9 +23,9 @@ public class SettingsComponent {
         String comment = """
                 <p>
                 This is a .properties configuration.
-                The Key is a Reference Class Path, and Value is a <a href="https://docs.spring.io/spring-framework/reference/core/expressions.html">SpEL expression.</a>
-                When the plugin convert POJO into JSON, it will map the parsing result of the SpEL expression to the specified Class according to this configuration.
-                <a href="https://github.com/organics2016/pojo2json#usage">More details.</a>
+                The Key is Reference Class, and Value is <a href="https://docs.spring.io/spring-framework/reference/core/expressions.html">SpEL expression.</a>
+                Clear the configuration and save, the default configuration will be initialized.
+                <a href="https://github.com/organics2016/pojo2json#configure-spel-expression">More details.</a>
                 </p>
                 """;
         panel = FormBuilder.createFormBuilder()
