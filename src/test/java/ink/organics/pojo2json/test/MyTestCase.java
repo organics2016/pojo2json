@@ -26,13 +26,13 @@ import java.io.IOException;
 
 public abstract class MyTestCase extends LightJavaCodeInsightFixtureTestCase {
 
-    public static final LightProjectDescriptor MOCK_JDK = new ProjectDescriptor(LanguageLevel.JDK_11) {
+    public static final LanguageLevel LANGUAGE_LEVEL = LanguageLevel.JDK_11;
+    public static final LightProjectDescriptor MOCK_JDK = new ProjectDescriptor(LANGUAGE_LEVEL) {
 
         @Override
         public void configureModule(@NotNull Module module, @NotNull ModifiableRootModel model, @NotNull ContentEntry contentEntry) {
             MavenDependencyUtil.addFromMaven(model, "com.alibaba:fastjson:1.2.83");
             MavenDependencyUtil.addFromMaven(model, "com.fasterxml.jackson.core:jackson-databind:2.14.3");
-            MavenDependencyUtil.addFromMaven(model, "org.springframework:spring-expression:6.0.11");
             super.configureModule(module, model, contentEntry);
         }
     };
@@ -63,7 +63,7 @@ public abstract class MyTestCase extends LightJavaCodeInsightFixtureTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        LanguageLevelProjectExtension.getInstance(getProject()).setLanguageLevel(LanguageLevel.JDK_11);
+        LanguageLevelProjectExtension.getInstance(getProject()).setLanguageLevel(LANGUAGE_LEVEL);
 
         System.out.println(MOCK_JDK.getSdk().getHomePath());
         System.out.println(MOCK_JDK.getSdk().getHomeDirectory());
