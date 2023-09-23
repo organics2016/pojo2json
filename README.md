@@ -26,6 +26,7 @@
 A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 - Support any type you can think of in Java.
+- Support Java17 and last
 - Support Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
 - Partial support Jackson and Fastjson annotations.
 - Support conversion

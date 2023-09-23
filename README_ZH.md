@@ -26,6 +26,7 @@
 将 POJO 转换为 JSON 的简单插件
 
 - 支持Java中您能想到的任何类型
+- Support Java17 and last
 - 支持 Java14 Records [JEP-359](https://openjdk.java.net/jeps/359)
 - 部分支持 Jackson 和 Fastjson 注解
 - 支持转换
