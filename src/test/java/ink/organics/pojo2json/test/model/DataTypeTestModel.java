@@ -86,6 +86,9 @@ public class DataTypeTestModel extends TestModel {
     public void testGenericTestPOJO(String fileName, AnAction action) {
         JsonNode result = testCase.testAction(fileName, action);
 
+        assertTrue(result.get("listNonGeneric").isArray());
+        assertTrue(result.get("mapNonGeneric").isObject());
+
         assertEquals(0, result.get("list").get(0).asInt());
         assertEquals(0, result.get("listArr").get(0).get(0).asInt());
         assertEquals(0, result.get("listListArr").get(0).get(0).get(0).asInt());
@@ -129,6 +132,16 @@ public class DataTypeTestModel extends TestModel {
         g = result.get("genericGenericObject");
         assertTrue(g.get("username").isTextual());
         assertTrue(g.get("data").isObject());
+
+        g = result.get("nonGenerics");
+        assertTrue(g.get("a").isObject());
+        assertTrue(g.get("b").isObject());
+        assertTrue(g.get("c").isObject());
+
+        g = result.get("generics");
+        assertTrue(g.get("a").isTextual());
+        assertTrue(g.get("b").isInt());
+        assertTrue(g.get("c").isArray());
     }
 
     public void testSpecialObjectTestPOJO(String fileName, AnAction action) {

@@ -201,12 +201,15 @@ public class POJO2JSONParser {
                     if (iterable) {// Iterable List<Test<String>>
 
                         PsiType typeToDeepType = PsiUtil.extractIterableTypeParameter(type, false);
+                        if (typeToDeepType == null) {
+                            return List.of();
+                        }
                         Object obj = parseFieldValue(variable, typeToDeepType, level, ignoreProperties, getPsiClassGenerics(typeToDeepType), psiTypeExpression);
                         return obj != null ? List.of(obj) : List.of();
 
                     } else {
 
-                        if (level > 500) {
+                        if (level > 200) {
                             throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 

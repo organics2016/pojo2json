@@ -1,6 +1,9 @@
 package testdata.kotlin
 
 class GenericTestPOJO {
+    private val listNonGeneric: List<*> = ArrayList<Any?>()
+    private val mapNonGeneric: Map<*, *> = HashMap<Any?, Any?>()
+
     private val list: List<Int> = ArrayList()
     private val listArr: List<Array<Int>> = ArrayList()
     private val listListArr: List<Array<List<Int>>> = ArrayList()
@@ -27,5 +30,15 @@ class GenericTestPOJO {
 
     enum class Type {
         TYPE_A, TYPE_B, TYPE_C
+    }
+
+    // --
+    private val nonGenerics: Generics<*, *, *> = Generics<Any?, Any?, Any?>()
+    private val generics = Generics<String, Int, List<*>>()
+
+    inner class Generics<A, B, C> {
+        private val a: A? = null
+        private val b: B? = null
+        private val c: C? = null
     }
 }

@@ -1,9 +1,15 @@
 package testdata.java;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GenericTestPOJO {
+
+    private List listNonGeneric = new ArrayList();
+
+    private Map mapNonGeneric = new HashMap();
 
 
     private List<Integer> list = new ArrayList<>();
@@ -51,5 +57,15 @@ public class GenericTestPOJO {
         TYPE_A,
         TYPE_B,
         TYPE_C;
+    }
+
+    private Generics nonGenerics = new Generics();
+
+    private Generics<String, Integer, List> generics = new Generics<>();
+
+    public class Generics<A, B, C> {
+        private A a;
+        private B b;
+        private C c;
     }
 }

@@ -109,7 +109,7 @@ public class A {
 }
 ```
 
-2. This class reference level > 500 
+2. This class reference level > 200 
 
 eg:
 ```java
@@ -120,7 +120,7 @@ public class A {
         public class C {
             private D _2;
             public class D {
-                // _3 ..... _501..
+                // _3 ..... _201..
             }
         }
     }

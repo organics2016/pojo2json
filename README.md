@@ -129,7 +129,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
         }
         ```
 
-    2. This class reference level > 500
+    2. This class reference level > 200
 
        eg:
         ```java
@@ -143,7 +143,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
                     private D _2;
         
                     public class D {
-                        // _3 ..... _501..
+                        // _3 ..... _201..
                     }
                 }
             }
