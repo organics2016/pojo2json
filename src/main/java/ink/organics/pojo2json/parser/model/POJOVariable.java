@@ -15,12 +15,15 @@ public class POJOVariable extends POJOObject {
 
     protected PsiClass psiClass;
 
+    protected final String srcName;
+
     protected String name;
 
 
     protected POJOVariable(PsiVariable psiVariable) {
         this.psiVariable = psiVariable;
         this.psiType = psiVariable.getType();
+        this.srcName = psiVariable.getName();
         this.name = psiVariable.getName();
     }
 
@@ -48,6 +51,10 @@ public class POJOVariable extends POJOObject {
         this.psiClass = psiClass;
         this.psiClassGenerics = psiClassGenerics;
         return POJOClass.init(this);
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public PsiVariable getPsiVariable() {

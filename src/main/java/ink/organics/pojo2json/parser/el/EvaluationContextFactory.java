@@ -1,6 +1,6 @@
 package ink.organics.pojo2json.parser.el;
 
-import com.intellij.psi.PsiVariable;
+import ink.organics.pojo2json.parser.model.POJOVariable;
 import org.reflections.Reflections;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -32,7 +32,7 @@ public class EvaluationContextFactory {
                 }));
     }
 
-    public static EvaluationContext newEvaluationContext(PsiVariable rootObject) {
+    public static EvaluationContext newEvaluationContext(POJOVariable rootObject) {
         EvaluationContext context = new StandardEvaluationContext();
         context.setVariable("field", rootObject);
         context.setVariable("boolean", presetTypeValueMap.get(BooleanTypeValue.class));

@@ -106,6 +106,8 @@ public class POJO2JSONParser {
         if (fieldKey == null) {
             return null;
         }
+        pojoField.setName(fieldKey);
+
         Object fieldValue = parseFieldValue(pojoField);
         if (fieldValue == null) {
             return null;
@@ -133,20 +135,19 @@ public class POJO2JSONParser {
         return field.getName();
     }
 
-    private Object parseFieldValue(POJOVariable variable) {
+    private Object parseFieldValue(POJOVariable pojoVariable) {
 
-        PsiVariable psiVariable = variable.getPsiVariable();
-        PsiType type = variable.getPsiType();
-        Map<String, String> psiTypeExpression = variable.getPsiTypeExpression();
+        PsiType type = pojoVariable.getPsiType();
+        Map<String, String> psiTypeExpression = pojoVariable.getPsiTypeExpression();
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 
-            return getPrimitiveTypeValue(psiVariable, type, psiTypeExpression);
+            return getPrimitiveTypeValue(pojoVariable, type, psiTypeExpression);
 
         } else if (type instanceof PsiArrayType) {   //array type
 
             PsiType typeToDeepType = type.getDeepComponentType();
-            Object obj = parseFieldValue(variable.deepVariable(typeToDeepType, getPsiClassGenerics(typeToDeepType)));
+            Object obj = parseFieldValue(pojoVariable.deepVariable(typeToDeepType, getPsiClassGenerics(typeToDeepType)));
             return obj != null ? List.of(obj) : List.of();
 
         } else {    //reference Type
@@ -178,7 +179,7 @@ public class POJO2JSONParser {
                 if (!retain.isEmpty()) {  // Object Test<String,String>
                     try {
                         Expression expression = expressionParser.parseExpression(psiTypeExpression.get(retain.get(0)), templateParserContext);
-                        return expression.getValue(EvaluationContextFactory.newEvaluationContext(psiVariable));
+                        return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoVariable));
                     } catch (Exception e) {
                         throw new KnownException(e);
                     }
@@ -192,21 +193,21 @@ public class POJO2JSONParser {
                         if (typeToDeepType == null) {
                             return List.of();
                         }
-                        Object obj = parseFieldValue(variable.deepVariable(typeToDeepType, getPsiClassGenerics(typeToDeepType)));
+                        Object obj = parseFieldValue(pojoVariable.deepVariable(typeToDeepType, getPsiClassGenerics(typeToDeepType)));
                         return obj != null ? List.of(obj) : List.of();
 
                     } else {
 
-                        if (variable.getRecursionLevel() > 200) {
+                        if (pojoVariable.getRecursionLevel() > 200) {
                             throw new KnownException("This class reference level exceeds maximum limit or has nested references!");
                         }
 
-                        PsiType typeToDeepType = variable.getPsiClassGenerics().get(psiClass.getName());
+                        PsiType typeToDeepType = pojoVariable.getPsiClassGenerics().get(psiClass.getName());
                         if (typeToDeepType != null) {
-                            return parseFieldValue(variable.deepVariable(typeToDeepType, getPsiClassGenerics(typeToDeepType)));
+                            return parseFieldValue(pojoVariable.deepVariable(typeToDeepType, getPsiClassGenerics(typeToDeepType)));
                         }
 
-                        return parseClass(variable.deepClass(psiClass, getPsiClassGenerics(type)));
+                        return parseClass(pojoVariable.deepClass(psiClass, getPsiClassGenerics(type)));
                     }
                 }
 
@@ -225,28 +226,28 @@ public class POJO2JSONParser {
         return Map.of();
     }
 
-    private Object getPrimitiveTypeValue(PsiVariable variable, PsiType type, Map<String, String> psiTypeExpression) {
+    private Object getPrimitiveTypeValue(POJOVariable pojoVariable, PsiType type, Map<String, String> psiTypeExpression) {
 
         Expression expression;
         switch (type.getCanonicalText()) {
             case "boolean":
                 expression = expressionParser.parseExpression(psiTypeExpression.get("java.lang.Boolean"), templateParserContext);
-                return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoVariable));
             case "byte":
             case "short":
             case "int":
             case "long":
                 expression = expressionParser.parseExpression(psiTypeExpression.get("java.lang.Number"), templateParserContext);
-                return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoVariable));
             case "float":
                 expression = expressionParser.parseExpression(psiTypeExpression.get("java.lang.Float"), templateParserContext);
-                return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoVariable));
             case "double":
                 expression = expressionParser.parseExpression(psiTypeExpression.get("java.lang.Double"), templateParserContext);
-                return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoVariable));
             case "char":
                 expression = expressionParser.parseExpression(psiTypeExpression.get("java.lang.Character"), templateParserContext);
-                return expression.getValue(EvaluationContextFactory.newEvaluationContext(variable));
+                return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoVariable));
             default:
                 return null;
         }
