@@ -106,7 +106,7 @@ public class POJO2JSONParser {
         if (fieldKey == null) {
             return null;
         }
-        Object fieldValue = parseFieldValue(pojoField.toVariable());
+        Object fieldValue = parseFieldValue(pojoField);
         if (fieldValue == null) {
             return null;
         }

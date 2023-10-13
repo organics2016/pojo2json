@@ -6,25 +6,22 @@ import java.util.List;
 
 public class POJOField extends POJOVariable {
 
-    protected PsiField psiField;
+    protected final PsiField psiField;
 
+    protected POJOField(PsiField psiField) {
+        super(psiField);
+        this.psiField = psiField;
+    }
 
     public static POJOField init(PsiField psiField,
                                  POJOClass pojoClass) {
 
-        var pojo = new POJOField();
-        pojo.psiField = psiField;
+        var pojo = new POJOField(psiField);
         pojo.psiTypeExpression = pojoClass.psiTypeExpression;
         pojo.recursionLevel = pojoClass.recursionLevel;
         pojo.ignoreProperties = pojoClass.ignoreProperties;
         pojo.psiClassGenerics = pojoClass.psiClassGenerics;
         return pojo;
-    }
-
-    public POJOVariable toVariable() {
-        this.psiVariable = this.psiField;
-        this.psiType = this.psiField.getType();
-        return this;
     }
 
     public void setIgnoreProperties(List<String> ignoreProperties) {
