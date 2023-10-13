@@ -1,7 +1,6 @@
 package ink.organics.pojo2json.parser;
 
 import com.google.gson.GsonBuilder;
-import com.intellij.navigation.NavigationItem;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.javadoc.PsiDocTag;
@@ -11,6 +10,7 @@ import ink.organics.pojo2json.parser.model.POJOClass;
 import ink.organics.pojo2json.parser.model.POJOField;
 import ink.organics.pojo2json.parser.model.POJOVariable;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.uast.UClass;
 import org.jetbrains.uast.UElement;
@@ -218,9 +218,9 @@ public class POJO2JSONParser {
         PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
         if (psiClass != null) {
             return Arrays.stream(psiClass.getTypeParameters())
-                    .filter(p -> PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false) != null)
-                    .collect(Collectors.toMap(NavigationItem::getName,
-                            p -> PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false)));
+                    .map(p -> Pair.of(p, PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false)))
+                    .filter(p -> p.getValue() != null)
+                    .collect(Collectors.toMap(p -> p.getKey().getName(), Pair::getValue));
         }
         return Map.of();
     }
