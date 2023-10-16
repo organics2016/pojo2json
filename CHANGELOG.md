@@ -1,5 +1,14 @@
 # POJO to JSON Changelog
 
+## [2.0.3]
+### Added
+- [Support JSON Keys Format Configuration](https://github.com/organics2016/pojo2json#json-keys-format-configuration)
+### Fixed
+- Fix listNonGeneric SOF
+### Changed
+- IDEA minimum supported version 2022.3
+- Change recursion level to 200
+
 ## [2.0.2]
 ### Added
 - [Integrated SpEL expression](https://github.com/organics2016/pojo2json#configure-spel-expression)
