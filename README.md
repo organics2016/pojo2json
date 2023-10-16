@@ -340,7 +340,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 #### Default Configuration
 
-- This is a default configuration. Normally no modification is required.
+- This is a default configuration. Normally no modification.
 
     ```properties
     com.fasterxml.jackson.databind.JsonNode=#{#object.getValue()}
