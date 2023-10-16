@@ -1,4 +1,4 @@
-package ink.organics.pojo2json;
+package ink.organics.pojo2json.parser;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -16,15 +16,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@State(name = "ink.organics.pojo2json.SettingsState",
+@State(name = "ink.organics.pojo2json.parser.SettingsState",
         storages = @Storage("Pojo2jsonPlugin.xml"),
         category = SettingsCategory.TOOLS)
 public class SettingsState implements PersistentStateComponent<SettingsState> {
 
+    /**
+     * PSI类型表达式
+     * eg: {"java.util.UUID":"#{#uuid.getValue()}"}
+     * init: {@link EvaluationContextFactory#initExpressionMap()}
+     */
     public Map<String, String> classNameSpELMap;
+
+    public String fieldNameSpEL;
 
     public SettingsState() {
         classNameSpELMap = EvaluationContextFactory.initExpressionMap();
+        fieldNameSpEL = EvaluationContextFactory.initJsonKeysExpression();
     }
 
     public static SettingsState getInstance() {

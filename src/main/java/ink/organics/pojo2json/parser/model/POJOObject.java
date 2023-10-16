@@ -1,19 +1,11 @@
 package ink.organics.pojo2json.parser.model;
 
 import com.intellij.psi.PsiType;
-import ink.organics.pojo2json.parser.el.EvaluationContextFactory;
 
 import java.util.List;
 import java.util.Map;
 
 public abstract class POJOObject {
-
-    /**
-     * PSI类型表达式
-     * eg: {"java.util.UUID":"#{#uuid.getValue()}"}
-     * init: {@link EvaluationContextFactory#initExpressionMap()}
-     */
-    protected Map<String, String> psiTypeExpression;
 
     /**
      * 递归深度
@@ -32,10 +24,6 @@ public abstract class POJOObject {
      * 并在解析当前PsiClass所包含的Field时，尝试获取这个Field所定义的泛型Map，然后传入下一层
      */
     protected Map<String, PsiType> psiClassGenerics;
-
-    public Map<String, String> getPsiTypeExpression() {
-        return psiTypeExpression;
-    }
 
     public int getRecursionLevel() {
         return recursionLevel;

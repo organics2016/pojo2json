@@ -14,10 +14,8 @@ public class POJOClass extends POJOObject {
         this.psiClass = psiClass;
     }
 
-    public static POJOClass init(PsiClass psiClass,
-                                 Map<String, String> psiTypeExpression) {
+    public static POJOClass init(PsiClass psiClass) {
         var pojo = new POJOClass(psiClass);
-        pojo.psiTypeExpression = psiTypeExpression;
         pojo.recursionLevel = 0;
         pojo.ignoreProperties = List.of();
         pojo.psiClassGenerics = Map.of();
@@ -26,7 +24,6 @@ public class POJOClass extends POJOObject {
 
     public static POJOClass init(POJOVariable pojoVariable) {
         var pojo = new POJOClass(pojoVariable.psiClass);
-        pojo.psiTypeExpression = pojoVariable.psiTypeExpression;
         pojo.recursionLevel = pojoVariable.recursionLevel;
         pojo.ignoreProperties = pojoVariable.ignoreProperties;
         pojo.psiClassGenerics = pojoVariable.psiClassGenerics;

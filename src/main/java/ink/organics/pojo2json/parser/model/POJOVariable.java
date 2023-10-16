@@ -28,10 +28,8 @@ public class POJOVariable extends POJOObject {
     }
 
     public static POJOVariable init(PsiVariable psiVariable,
-                                    Map<String, String> psiTypeExpression,
                                     Map<String, PsiType> psiClassGenerics) {
         var pojo = new POJOVariable(psiVariable);
-        pojo.psiTypeExpression = psiTypeExpression;
         pojo.recursionLevel = 0;
         pojo.ignoreProperties = List.of();
         pojo.psiClassGenerics = psiClassGenerics;

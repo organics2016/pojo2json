@@ -1,6 +1,7 @@
 package ink.organics.pojo2json.test;
 
 
+import com.google.common.base.CaseFormat;
 import ink.organics.pojo2json.parser.el.EvaluationContextFactory;
 import org.junit.Test;
 import org.springframework.expression.EvaluationContext;
@@ -14,7 +15,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class SpELTestCase {
+public class TempTestCase {
 
     @Test
     public void test1() {
@@ -46,5 +47,16 @@ public class SpELTestCase {
     @Test
     public void test4() {
         System.out.println(Arrays.asList("fsdfsef\n\nsdfeeef\n\nsdfefesf\n\n".split("\n")));
+    }
+
+    @Test
+    public void test5() {
+        // #{#field.getName()}
+        String sss = "classNameSpELMap";
+        System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_CAMEL, sss));
+        System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, sss));
+        System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, sss));
+        System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, sss));
+        System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, sss));
     }
 }

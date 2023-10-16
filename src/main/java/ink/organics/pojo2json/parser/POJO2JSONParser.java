@@ -35,23 +35,24 @@ public class POJO2JSONParser {
             "java.util.Set");
 
     private final ExpressionParser expressionParser = new SpelExpressionParser();
+
     private final ParserContext templateParserContext = new TemplateParserContext();
+
+    private final SettingsState settingsState = SettingsState.getInstance();
 
     public POJO2JSONParser() {
     }
 
 
-    public String uElementToJSONString(@NotNull final UElement uElement,
-                                       // {"Character":"#{#fieldName}_#{#uuid}_test"}
-                                       @NotNull final Map<String, String> psiTypeExpression) {
+    public String uElementToJSONString(@NotNull final UElement uElement) {
 
         Object result = null;
 
         if (uElement instanceof UVariable variable) {
-            result = parseFieldValue(POJOVariable.init((PsiVariable) variable.getJavaPsi(), psiTypeExpression, getPsiClassGenerics(variable.getType())));
+            result = parseFieldValue(POJOVariable.init((PsiVariable) variable.getJavaPsi(), getPsiClassGenerics(variable.getType())));
         } else if (uElement instanceof UClass) {
             // UClass.getJavaPsi() IDEA 21* and last version recommend
-            result = parseClass(POJOClass.init(((UClass) uElement).getJavaPsi(), psiTypeExpression));
+            result = parseClass(POJOClass.init(((UClass) uElement).getJavaPsi()));
         }
 
         return gsonBuilder.create().toJson(result);
@@ -102,7 +103,7 @@ public class POJO2JSONParser {
             }
         }
 
-        String fieldKey = parseFieldKey(field);
+        String fieldKey = parseFieldKey(pojoField);
         if (fieldKey == null) {
             return null;
         }
@@ -115,7 +116,8 @@ public class POJO2JSONParser {
         return Map.entry(fieldKey, fieldValue);
     }
 
-    private String parseFieldKey(PsiField field) {
+    private String parseFieldKey(POJOField pojoField) {
+        PsiField field = pojoField.getPsiField();
 
         PsiAnnotation annotation = field.getAnnotation(com.fasterxml.jackson.annotation.JsonProperty.class.getName());
         if (annotation != null) {
@@ -132,13 +134,15 @@ public class POJO2JSONParser {
                 return fieldName;
             }
         }
-        return field.getName();
+
+        Expression expression = expressionParser.parseExpression(settingsState.fieldNameSpEL, templateParserContext);
+        return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoField), String.class);
     }
 
     private Object parseFieldValue(POJOVariable pojoVariable) {
 
         PsiType type = pojoVariable.getPsiType();
-        Map<String, String> psiTypeExpression = pojoVariable.getPsiTypeExpression();
+        Map<String, String> psiTypeExpression = settingsState.classNameSpELMap;
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 

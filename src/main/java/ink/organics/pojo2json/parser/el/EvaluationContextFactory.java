@@ -76,4 +76,8 @@ public class EvaluationContextFactory {
 
         return map;
     }
+
+    public static String initJsonKeysExpression() {
+        return "#{#field.getCamelCaseName()}";
+    }
 }

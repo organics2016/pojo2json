@@ -1,5 +1,6 @@
 package ink.organics.pojo2json.parser.model;
 
+import com.google.common.base.CaseFormat;
 import com.intellij.psi.PsiField;
 
 import java.util.List;
@@ -17,7 +18,6 @@ public class POJOField extends POJOVariable {
                                  POJOClass pojoClass) {
 
         var pojo = new POJOField(psiField);
-        pojo.psiTypeExpression = pojoClass.psiTypeExpression;
         pojo.recursionLevel = pojoClass.recursionLevel;
         pojo.ignoreProperties = pojoClass.ignoreProperties;
         pojo.psiClassGenerics = pojoClass.psiClassGenerics;
@@ -30,5 +30,25 @@ public class POJOField extends POJOVariable {
 
     public PsiField getPsiField() {
         return psiField;
+    }
+
+    public String getSnakeCaseName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.psiField.getName());
+    }
+
+    public String getUpperSnakeCaseName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, this.psiField.getName());
+    }
+
+    public String getKebabCaseName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, this.psiField.getName());
+    }
+
+    public String getCamelCaseName() {
+        return this.psiField.getName();
+    }
+
+    public String getPascalCaseName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, this.psiField.getName());
     }
 }

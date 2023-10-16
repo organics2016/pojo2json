@@ -59,7 +59,7 @@ public abstract class POJO2JSONAction extends AnAction {
         }
 
         try {
-            String json = pojo2JSONParser.uElementToJSONString(uElement, SettingsState.getInstance().classNameSpELMap);
+            String json = pojo2JSONParser.uElementToJSONString(uElement);
 
             ClipboardHandler.copyToClipboard(json);
 
