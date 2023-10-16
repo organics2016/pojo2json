@@ -67,6 +67,10 @@ public class POJOVariable extends POJOObject {
         return psiClass;
     }
 
+    public String getSrcName() {
+        return srcName;
+    }
+
     public String getName() {
         return name;
     }

@@ -32,23 +32,23 @@ public class POJOField extends POJOVariable {
         return psiField;
     }
 
-    public String getSnakeCaseName() {
-        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.psiField.getName());
+    public String getCamelCaseName() {
+        return this.getName();
     }
 
-    public String getUpperSnakeCaseName() {
-        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, this.psiField.getName());
+    public String getSnakeCaseName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, this.psiField.getName());
     }
 
     public String getKebabCaseName() {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, this.psiField.getName());
     }
 
-    public String getCamelCaseName() {
-        return this.psiField.getName();
-    }
-
     public String getPascalCaseName() {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, this.psiField.getName());
+    }
+
+    public String getSnakeCaseUpperName() {
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, this.psiField.getName());
     }
 }

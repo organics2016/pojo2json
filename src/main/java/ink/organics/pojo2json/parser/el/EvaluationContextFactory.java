@@ -78,6 +78,6 @@ public class EvaluationContextFactory {
     }
 
     public static String initJsonKeysExpression() {
-        return "#{#field.getCamelCaseName()}";
+        return "#{#field.getName()}";
     }
 }
