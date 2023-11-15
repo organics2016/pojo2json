@@ -359,7 +359,9 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     java.time.YearMonth=#{#yearmonth.getValue()}
     java.time.ZonedDateTime=#{#zoneddatetime.getValue()}
     java.time.temporal.Temporal=#{#temporal.getValue()}
+    java.util.AbstractMap=#{#object.getValue()}
     java.util.Date=#{#localdatetime.getValue()}
+    java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
 
@@ -385,7 +387,9 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     java.time.YearMonth=#{#yearmonth.getRandomValue()}
     java.time.ZonedDateTime=#{#zoneddatetime.getRandomValue()}
     java.time.temporal.Temporal=#{#temporal.getRandomValue()}
+    java.util.AbstractMap=#{#object.getValue()}
     java.util.Date=#{#localdatetime.getRandomValue()}
+    java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
 

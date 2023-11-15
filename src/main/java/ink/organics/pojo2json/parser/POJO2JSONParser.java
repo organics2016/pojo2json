@@ -30,9 +30,13 @@ public class POJO2JSONParser {
 
     private final List<String> iterableTypes = List.of(
             "java.lang.Iterable",
+            "java.util.Iterator",
             "java.util.Collection",
+            "java.util.AbstractCollection",
             "java.util.List",
-            "java.util.Set");
+            "java.util.AbstractList",
+            "java.util.Set",
+            "java.util.AbstractSet");
 
     private final ExpressionParser expressionParser = new SpelExpressionParser();
 

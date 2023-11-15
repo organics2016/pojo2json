@@ -71,7 +71,9 @@ public class EvaluationContextFactory {
         map.put("java.time.YearMonth", "#{#yearmonth.getValue()}");
         map.put("java.time.ZonedDateTime", "#{#zoneddatetime.getValue()}");
         map.put("java.time.temporal.Temporal", "#{#temporal.getValue()}");
+        map.put("java.util.AbstractMap", "#{#object.getValue()}");
         map.put("java.util.Date", "#{#localdatetime.getValue()}");
+        map.put("java.util.Map", "#{#object.getValue()}");
         map.put("java.util.UUID", "#{#uuid.getValue()}");
 
         return map;
