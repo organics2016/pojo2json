@@ -368,7 +368,7 @@
 
 #### Random Value Configuration
 
-- 如果你想问之前的随机值JSON去哪儿了？使用如下配置即可达到之前的效果。
+- 如果你想问之前的 `Copy JSON and Random Values` 选项去哪儿了？使用如下配置即可达到之前的效果。
 
     ```properties
     com.fasterxml.jackson.databind.JsonNode=#{#object.getValue()}

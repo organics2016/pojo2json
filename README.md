@@ -367,7 +367,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 #### Random Value Configuration
 
-- If you want to ask where did the previous random value JSON? Use the following configuration to achieve the previous
+- If you want to ask where the previous option `Copy JSON and Random Values` went? Use the following configuration to achieve the previous
   effect.
 
     ```properties
