@@ -418,7 +418,7 @@
   com.example.TestClass=ABCD#{"_" + 2+2 + "_" + #shortuuid.getValue()}
   ```
 
-- 插件有一些内置Value的快捷引用.请注意只有部分引用支持`getRandomValue()`
+- 插件有一些内置的快捷引用.请注意，不是所有引用都支持`getRandomValue()`
 
 | Ref              | Expression                     | Result Eg                            | Support getRandomValue() |
 |:-----------------|:-------------------------------|:-------------------------------------|:------------------------:|

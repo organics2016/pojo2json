@@ -367,8 +367,8 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 
 #### Random Value Configuration
 
-- If you want to ask where the previous option `Copy JSON and Random Values` went? Use the following configuration to achieve the previous
-  effect.
+- If you want to ask where the previous option `Copy JSON and Random Values` went? Use the following configuration to
+  achieve the previous effect.
 
     ```properties
     com.fasterxml.jackson.databind.JsonNode=#{#object.getValue()}
@@ -419,8 +419,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
   com.example.TestClass=ABCD#{"_" + 2+2 + "_" + #shortuuid.getValue()}
   ```
 
-- The plugin has some built-in Value shortcut references.Note that only some of these references
-  support `getRandomValue()`
+- The plugin has some built-in shortcut references.Note that not all references support `getRandomValue()`
 
 | Ref              | Expression                     | Result Eg                            | Support getRandomValue() |
 |:-----------------|:-------------------------------|:-------------------------------------|:------------------------:|
