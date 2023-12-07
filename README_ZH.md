@@ -348,7 +348,7 @@
     com.fasterxml.jackson.databind.node.ArrayNode=#{#array.getValue()}
     com.fasterxml.jackson.databind.node.ObjectNode=#{#object.getValue()}
     java.lang.Boolean=#{#boolean.getValue()}
-    java.lang.CharSequence=#{#field.getName() + '_' + #shortuuid.getValue()}
+    java.lang.CharSequence=#{'test_data'}
     java.lang.Character=#{'c'}
     java.lang.Double=#{#decimal.getValue()}
     java.lang.Float=#{#decimal.getValue()}
