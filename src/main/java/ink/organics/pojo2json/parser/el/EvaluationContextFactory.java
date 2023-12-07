@@ -59,7 +59,7 @@ public class EvaluationContextFactory {
         map.put("com.fasterxml.jackson.databind.node.ArrayNode", "#{#array.getValue()}");
         map.put("com.fasterxml.jackson.databind.node.ObjectNode", "#{#object.getValue()}");
         map.put("java.lang.Boolean", "#{#boolean.getValue()}");
-        map.put("java.lang.CharSequence", "#{'test_data'}");
+        map.put("java.lang.CharSequence", "#{#field.getName() + '_' + #shortuuid.getValue()}");
         map.put("java.lang.Character", "#{'c'}");
         map.put("java.lang.Double", "#{#decimal.getValue()}");
         map.put("java.lang.Float", "#{#decimal.getValue()}");

@@ -1,8 +1,6 @@
 # POJO to JSON Changelog
 
 ## [2.0.4]
-### Changed
-- Default String type outputs a fixed value to facilitate global replacement.
 ### Fixed
 - Fix bugs caused by some collection types.
 
