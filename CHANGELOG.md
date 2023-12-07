@@ -1,5 +1,11 @@
 # POJO to JSON Changelog
 
+## [2.0.4]
+### Changed
+- Default String type outputs a fixed value to facilitate global replacement.
+### Fixed
+- Fix bugs caused by some collection types.
+
 ## [2.0.3]
 ### Added
 - [Support JSON Keys Format Configuration](https://github.com/organics2016/pojo2json#json-keys-format-configuration)
