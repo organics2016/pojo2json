@@ -9,7 +9,7 @@ import com.intellij.util.ui.UI;
 import javax.swing.*;
 
 /**
- * https://jetbrains.github.io/ui/
+ * <a href="https://jetbrains.github.io/ui/">...</a>
  */
 public class SettingsComponent {
 
@@ -19,16 +19,8 @@ public class SettingsComponent {
 
     private final EditorTextField fieldNameSpELEditor;
 
-//    private final Map<String, String> comboBoxMap;
 
     public SettingsComponent() {
-//        comboBoxMap = Map.of(
-//                "Camel Case(Def)", "#{#field.getCamelCaseName()}",
-//                "Snake Case", "#{#field.getSnakeCaseName()}",
-//                "Kebab Case", "#{#field.getKebabCaseName()}",
-//                "Pascal Case", "#{#field.getPascalCaseName()}",
-//                "Snake Case Upper", "#{#field.getUpperSnakeCaseName()}");
-
 
         classNameSpELEditor = new LanguageTextField(PropertiesLanguage.INSTANCE, null, "", false);
         fieldNameSpELEditor = new EditorTextField();
