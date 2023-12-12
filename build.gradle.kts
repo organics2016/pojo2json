@@ -35,7 +35,7 @@ repositories {
 }
 
 intellij {
-    version.set("2022.3")
+    version.set("2023.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
     plugins.set(
