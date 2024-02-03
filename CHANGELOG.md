@@ -3,6 +3,8 @@
 ## [2.0.4]
 ### Fixed
 - Fix bugs caused by some collection types.
+### Remove
+- Build for idea 233 Remove commons.lang3
 
 ## [2.0.3]
 ### Added

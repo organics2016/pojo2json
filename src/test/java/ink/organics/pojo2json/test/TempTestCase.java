@@ -1,6 +1,7 @@
 package ink.organics.pojo2json.test;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.CaseFormat;
 import ink.organics.pojo2json.parser.el.EvaluationContextFactory;
 import org.junit.Test;
@@ -58,5 +59,22 @@ public class TempTestCase {
         System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, sss));
         System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, sss));
         System.out.println(CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, sss));
+    }
+
+    public void test6(){
+
+        // https://github.com/FasterXML/jackson-core/issues/734
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        // 过滤空属性
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        // setter 失败不抛出异常
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        // 允许出现特殊字符和转义符
+//        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+//        // 允许出现单引号
+//        objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+
     }
 }
