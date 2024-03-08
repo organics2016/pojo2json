@@ -15,7 +15,7 @@ plugins {
 }
 
 dependencies {
-    implementation("org.springframework:spring-expression:6.0.11")
+    implementation("org.springframework:spring-expression:6.1.4")
     implementation("org.reflections:reflections:0.10.2") {
         exclude(group = "org.slf4j")
     }
