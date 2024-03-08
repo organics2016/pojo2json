@@ -10,15 +10,27 @@ public class ZonedDateTimeTypeValue extends TemporalTypeValue {
 
     @Override
     public Object getRandomValue() {
-        return ZonedDateTime
-                .ofInstant(Instant.ofEpochMilli((long) super.getRandomValue()), ZoneId.systemDefault())
-                .format(formatter);
+        return this.getRandomValue(formatter);
     }
 
     @Override
     public Object getValue() {
-        return ZonedDateTime
-                .ofInstant(Instant.ofEpochMilli((long) super.getValue()), ZoneId.systemDefault())
-                .format(formatter);
+        return this.getValue(formatter);
+    }
+
+    public Object getRandomValue(String format) {
+        return this.getRandomValue(DateTimeFormatter.ofPattern(format));
+    }
+
+    public Object getValue(String format) {
+        return this.getValue(DateTimeFormatter.ofPattern(format));
+    }
+
+    public Object getRandomValue(DateTimeFormatter formatter) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli((long) super.getRandomValue()), ZoneId.systemDefault()).format(formatter);
+    }
+
+    public Object getValue(DateTimeFormatter formatter) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli((long) super.getValue()), ZoneId.systemDefault()).format(formatter);
     }
 }

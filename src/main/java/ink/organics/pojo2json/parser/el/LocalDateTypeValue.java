@@ -1,24 +1,18 @@
 package ink.organics.pojo2json.parser.el;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class LocalDateTypeValue extends TemporalTypeValue{
+public class LocalDateTypeValue extends LocalDateTimeTypeValue {
+
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public Object getRandomValue() {
-        return LocalDateTime
-                .ofInstant(Instant.ofEpochMilli((long) super.getRandomValue()), ZoneId.systemDefault())
-                .format(formatter);
+        return this.getRandomValue(formatter);
     }
 
     @Override
     public Object getValue() {
-        return LocalDateTime
-                .ofInstant(Instant.ofEpochMilli((long) super.getValue()), ZoneId.systemDefault())
-                .format(formatter);
+        return this.getValue(formatter);
     }
 }

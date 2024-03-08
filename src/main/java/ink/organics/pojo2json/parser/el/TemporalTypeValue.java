@@ -8,8 +8,8 @@ public class TemporalTypeValue implements RandomTypeValue {
     @Override
     public Object getRandomValue() {
         LocalDateTime now = LocalDateTime.now();
-        long begin = now.plusYears(10).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long end = now.minusYears(10).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long begin = now.minusYears(10).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long end = now.plusYears(10).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         return begin + (long) (Math.random() * (end - begin));
     }
 
