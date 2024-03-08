@@ -39,9 +39,9 @@ jobs:
 
     # Setup Gradle
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
-        gradle-version: '8.3'
+        gradle-version: '8.6'
         gradle-home-cache-cleanup: true
 
     # Publish the plugin to JetBrains Marketplace

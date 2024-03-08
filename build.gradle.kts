@@ -9,7 +9,7 @@ plugins {
     // Kotlin support
 //    id("org.jetbrains.kotlin.jvm") version "1.9.10"
     // Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.intellij") version "1.17.2"
     // Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
     id("org.jetbrains.changelog") version "2.2.0"
 }
@@ -22,8 +22,8 @@ dependencies {
     testCompileOnly("com.alibaba:fastjson:1.2.83")
     testCompileOnly("com.fasterxml.jackson.core:jackson-databind:2.14.3")
     // https://projectlombok.org/setup/gradle
-    testCompileOnly("org.projectlombok:lombok:1.18.22")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.22")
+    testCompileOnly("org.projectlombok:lombok:1.18.30")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
 group = "ink.organics"
@@ -62,7 +62,7 @@ tasks {
     }
 
     wrapper {
-        gradleVersion = "8.3"
+        gradleVersion = "8.6"
     }
 
     buildSearchableOptions {
