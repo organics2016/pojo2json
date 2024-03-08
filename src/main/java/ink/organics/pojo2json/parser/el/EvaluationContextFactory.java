@@ -48,6 +48,7 @@ public class EvaluationContextFactory {
         context.setVariable("shortuuid", presetTypeValueMap.get(ShortUUIDTypeValue.class));
         context.setVariable("yearmonth", presetTypeValueMap.get(YearMonthTypeValue.class));
         context.setVariable("zoneddatetime", presetTypeValueMap.get(ZonedDateTimeTypeValue.class));
+        context.setVariable("datetime", presetTypeValueMap.get(ZonedDateTimeTypeValue.class));
 
         return context;
     }
@@ -65,14 +66,14 @@ public class EvaluationContextFactory {
         map.put("java.lang.Float", "#{#decimal.getValue()}");
         map.put("java.lang.Number", "#{#integer.getValue()}");
         map.put("java.math.BigDecimal", "#{#decimal.getValue()}");
-        map.put("java.time.LocalDate", "#{#localdate.getValue()}");
-        map.put("java.time.LocalDateTime", "#{#localdatetime.getValue()}");
-        map.put("java.time.LocalTime", "#{#localtime.getValue()}");
-        map.put("java.time.YearMonth", "#{#yearmonth.getValue()}");
-        map.put("java.time.ZonedDateTime", "#{#zoneddatetime.getValue()}");
+        map.put("java.time.LocalDate", "#{#datetime.getValue('yyyy-MM-dd')}");
+        map.put("java.time.LocalDateTime", "#{#datetime.getValue('yyyy-MM-dd HH:mm:ss')}");
+        map.put("java.time.LocalTime", "#{#datetime.getValue('HH:mm:ss')}");
+        map.put("java.time.YearMonth", "#{#datetime.getValue('yyyy-MM')}");
+        map.put("java.time.ZonedDateTime", "#{#datetime.getValue()}");
         map.put("java.time.temporal.Temporal", "#{#temporal.getValue()}");
         map.put("java.util.AbstractMap", "#{#object.getValue()}");
-        map.put("java.util.Date", "#{#localdatetime.getValue()}");
+        map.put("java.util.Date", "#{#datetime.getValue('yyyy-MM-dd HH:mm:ss')}");
         map.put("java.util.Map", "#{#object.getValue()}");
         map.put("java.util.UUID", "#{#uuid.getValue()}");
 

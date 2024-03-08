@@ -353,14 +353,14 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     java.lang.Float=#{#decimal.getValue()}
     java.lang.Number=#{#integer.getValue()}
     java.math.BigDecimal=#{#decimal.getValue()}
-    java.time.LocalDate=#{#localdate.getValue()}
-    java.time.LocalDateTime=#{#localdatetime.getValue()}
-    java.time.LocalTime=#{#localtime.getValue()}
-    java.time.YearMonth=#{#yearmonth.getValue()}
-    java.time.ZonedDateTime=#{#zoneddatetime.getValue()}
+    java.time.LocalDate=#{#datetime.getValue('yyyy-MM-dd')}
+    java.time.LocalDateTime=#{#datetime.getValue('yyyy-MM-dd HH:mm:ss')}
+    java.time.LocalTime=#{#datetime.getValue('HH:mm:ss')}
+    java.time.YearMonth=#{#datetime.getValue('yyyy-MM')}
+    java.time.ZonedDateTime=#{#datetime.getValue()}
     java.time.temporal.Temporal=#{#temporal.getValue()}
     java.util.AbstractMap=#{#object.getValue()}
-    java.util.Date=#{#localdatetime.getValue()}
+    java.util.Date=#{#datetime.getValue('yyyy-MM-dd HH:mm:ss')}
     java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
@@ -381,14 +381,14 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     java.lang.Float=#{#decimal.getRandomValue()}
     java.lang.Number=#{#integer.getRandomValue()}
     java.math.BigDecimal=#{#decimal.getRandomValue()}
-    java.time.LocalDate=#{#localdate.getRandomValue()}
-    java.time.LocalDateTime=#{#localdatetime.getRandomValue()}
-    java.time.LocalTime=#{#localtime.getRandomValue()}
-    java.time.YearMonth=#{#yearmonth.getRandomValue()}
-    java.time.ZonedDateTime=#{#zoneddatetime.getRandomValue()}
+    java.time.LocalDate=#{#datetime.getRandomValue('yyyy-MM-dd')}
+    java.time.LocalDateTime=#{#datetime.getRandomValue('yyyy-MM-dd HH:mm:ss')}
+    java.time.LocalTime=#{#datetime.getRandomValue('HH:mm:ss')}
+    java.time.YearMonth=#{#datetime.getRandomValue('yyyy-MM')}
+    java.time.ZonedDateTime=#{#datetime.getRandomValue()}
     java.time.temporal.Temporal=#{#temporal.getRandomValue()}
     java.util.AbstractMap=#{#object.getValue()}
-    java.util.Date=#{#localdatetime.getRandomValue()}
+    java.util.Date=#{#datetime.getRandomValue('yyyy-MM-dd HH:mm:ss')}
     java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
@@ -436,15 +436,23 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 | `#zoneddatetime` | `#{#zoneddatetime.getValue()}` | 2023-09-14T15:04:52.601+08:00        |                          |
 | `#uuid`          | `#{#uuid.getValue()}`          | 679e70fa-d24b-4726-ab87-2de620333f20 |            N             |
 | `#shortuuid`     | `#{#shortuuid.getValue()}`     | 732f65b6b9cf                         |            N             |
+| `#datetime`      | `#{#datetime.getValue()}`      | 2023-09-14T15:04:52.601+08:00        |            N             |
+
+- Custom Date Format (v2.0.5 and last)
+  ```properties
+  java.time.YearMonth=#{#datetime.getValue('yyyy-MM')}
+  ```
+  or need random values
+  ```properties
+  java.time.YearMonth=#{#datetime.getRandomValue('yyyy-MM')}
+  ```
 
 - Custom String type
 
   ```properties
   java.lang.CharSequence=#{#field.getName() + '_' + #shortuuid.getValue()}
   ```
-
   or
-
   ```properties
   java.lang.String=#{#field.getName() + '_' + #shortuuid.getValue()}
   ```

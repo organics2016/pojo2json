@@ -354,14 +354,14 @@
     java.lang.Float=#{#decimal.getValue()}
     java.lang.Number=#{#integer.getValue()}
     java.math.BigDecimal=#{#decimal.getValue()}
-    java.time.LocalDate=#{#localdate.getValue()}
-    java.time.LocalDateTime=#{#localdatetime.getValue()}
-    java.time.LocalTime=#{#localtime.getValue()}
-    java.time.YearMonth=#{#yearmonth.getValue()}
-    java.time.ZonedDateTime=#{#zoneddatetime.getValue()}
+    java.time.LocalDate=#{#datetime.getValue('yyyy-MM-dd')}
+    java.time.LocalDateTime=#{#datetime.getValue('yyyy-MM-dd HH:mm:ss')}
+    java.time.LocalTime=#{#datetime.getValue('HH:mm:ss')}
+    java.time.YearMonth=#{#datetime.getValue('yyyy-MM')}
+    java.time.ZonedDateTime=#{#datetime.getValue()}
     java.time.temporal.Temporal=#{#temporal.getValue()}
     java.util.AbstractMap=#{#object.getValue()}
-    java.util.Date=#{#localdatetime.getValue()}
+    java.util.Date=#{#datetime.getValue('yyyy-MM-dd HH:mm:ss')}
     java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
@@ -381,14 +381,14 @@
     java.lang.Float=#{#decimal.getRandomValue()}
     java.lang.Number=#{#integer.getRandomValue()}
     java.math.BigDecimal=#{#decimal.getRandomValue()}
-    java.time.LocalDate=#{#localdate.getRandomValue()}
-    java.time.LocalDateTime=#{#localdatetime.getRandomValue()}
-    java.time.LocalTime=#{#localtime.getRandomValue()}
-    java.time.YearMonth=#{#yearmonth.getRandomValue()}
-    java.time.ZonedDateTime=#{#zoneddatetime.getRandomValue()}
+    java.time.LocalDate=#{#datetime.getRandomValue('yyyy-MM-dd')}
+    java.time.LocalDateTime=#{#datetime.getRandomValue('yyyy-MM-dd HH:mm:ss')}
+    java.time.LocalTime=#{#datetime.getRandomValue('HH:mm:ss')}
+    java.time.YearMonth=#{#datetime.getRandomValue('yyyy-MM')}
+    java.time.ZonedDateTime=#{#datetime.getRandomValue()}
     java.time.temporal.Temporal=#{#temporal.getRandomValue()}
     java.util.AbstractMap=#{#object.getValue()}
-    java.util.Date=#{#localdatetime.getRandomValue()}
+    java.util.Date=#{#datetime.getRandomValue('yyyy-MM-dd HH:mm:ss')}
     java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```

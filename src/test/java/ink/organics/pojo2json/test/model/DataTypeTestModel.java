@@ -7,7 +7,7 @@ import testdata.java.EnumTestPOJO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -165,13 +165,12 @@ public class DataTypeTestModel extends TestModel {
         DateTimeFormatter ymf = DateTimeFormatter.ofPattern("yyyy-MM");
 
         assertEquals(result.get("date").textValue(), LocalDateTime.parse(result.get("date").textValue(), ldtf).format(ldtf));
-        // TODO 测试环境2022.3版本 MockJDK 不再包含java.time依赖包，可能是JB的BUG
-//        assertEquals(result.get("temporal").longValue(), Instant.ofEpochMilli(result.get("temporal").longValue()).toEpochMilli());
-//        assertEquals(result.get("localDateTime").textValue(), LocalDateTime.parse(result.get("localDateTime").textValue(), ldtf).format(ldtf));
-//        assertEquals(result.get("localDate").textValue(), LocalDate.parse(result.get("localDate").textValue(), ldf).format(ldf));
-//        assertEquals(result.get("localTime").textValue(), LocalTime.parse(result.get("localTime").textValue(), ltf).format(ltf));
-//        assertEquals(result.get("zonedDateTime").textValue(), ZonedDateTime.parse(result.get("zonedDateTime").textValue(), zdtf).format(zdtf));
-//        assertEquals(result.get("yearMonth").textValue(), YearMonth.parse(result.get("yearMonth").textValue(), ymf).format(ymf));
+        assertEquals(result.get("temporal").longValue(), Instant.ofEpochMilli(result.get("temporal").longValue()).toEpochMilli());
+        assertEquals(result.get("localDateTime").textValue(), LocalDateTime.parse(result.get("localDateTime").textValue(), ldtf).format(ldtf));
+        assertEquals(result.get("localDate").textValue(), LocalDate.parse(result.get("localDate").textValue(), ldf).format(ldf));
+        assertEquals(result.get("localTime").textValue(), LocalTime.parse(result.get("localTime").textValue(), ltf).format(ltf));
+        assertEquals(result.get("zonedDateTime").textValue(), ZonedDateTime.parse(result.get("zonedDateTime").textValue(), zdtf).format(zdtf));
+        assertEquals(result.get("yearMonth").textValue(), YearMonth.parse(result.get("yearMonth").textValue(), ymf).format(ymf));
 
         assertEquals(result.get("uuid").textValue(), UUID.fromString(result.get("uuid").textValue()).toString());
 

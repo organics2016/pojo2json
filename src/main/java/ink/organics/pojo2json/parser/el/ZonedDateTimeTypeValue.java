@@ -1,5 +1,7 @@
 package ink.organics.pojo2json.parser.el;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -19,11 +21,19 @@ public class ZonedDateTimeTypeValue extends TemporalTypeValue {
     }
 
     public Object getRandomValue(String format) {
-        return this.getRandomValue(DateTimeFormatter.ofPattern(format));
+        if (StringUtils.isNotBlank(format)) {
+            return this.getRandomValue(DateTimeFormatter.ofPattern(format));
+        } else {
+            return this.getRandomValue();
+        }
     }
 
     public Object getValue(String format) {
-        return this.getValue(DateTimeFormatter.ofPattern(format));
+        if (StringUtils.isNotBlank(format)) {
+            return this.getValue(DateTimeFormatter.ofPattern(format));
+        } else {
+            return this.getValue();
+        }
     }
 
     public Object getRandomValue(DateTimeFormatter formatter) {
