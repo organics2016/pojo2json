@@ -23,33 +23,83 @@ jobs:
       pull-requests: write
 
     steps:
-    # Check out current repository
-    - name: Fetch Sources
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.release.tag_name }}
-        
-    # Set up Java environment for the next steps
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: zulu
-        java-version: 17
-        #settings-path: ${{ github.workspace }} # location for the settings.xml file
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
-    # Setup Gradle
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        gradle-version: '8.6'
-        gradle-home-cache-cleanup: true
+      # Set up Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+          #settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    # Publish the plugin to JetBrains Marketplace
-    # See https://github.com/JetBrains/intellij-platform-plugin-template
-    - name: Publish Plugin
-      env:
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
-      run: gradle publishPlugin -x test
+      # Setup Gradle
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: '8.6'
+          gradle-home-cache-cleanup: true
+
+      # Publish the plugin to JetBrains Marketplace
+      # See https://github.com/JetBrains/intellij-platform-plugin-template
+      - name: Publish Plugin
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          CERTIFICATE_CHAIN: ${{ secrets.CERTIFICATE_CHAIN }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
+        run: gradle build -x test
+
+      # Set environment variables
+      - name: Export Properties
+        id: properties
+        shell: bash
+        run: |
+          CHANGELOG="$(cat << 'EOM' | sed -e 's/^[[:space:]]*$//g' -e '/./,$!d'
+          ${{ github.event.release.body }}
+          EOM
+          )"
+          
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # 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
+      # Upload artifact as a release asset
+      - name: Upload Release Asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} ./build/distributions/*
+
+      # Create a pull request
+      - name: Create Pull Request
+        if: ${{ steps.properties.outputs.changelog != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          BRANCH="changelog-update-$VERSION"
+          LABEL="release changelog"
+
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+
+          git checkout -b $BRANCH
+          git commit -am "Changelog update - $VERSION"
+          git push --set-upstream origin $BRANCH
+          
+          gh label create "$LABEL" \
+            --description "Pull requests with release changelog update" \
+            --force \
+            || true
+
+          gh pr create \
+            --title "Changelog update - \`$VERSION\`" \
+            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
+            --label "$LABEL" \
+            --head $BRANCH
+

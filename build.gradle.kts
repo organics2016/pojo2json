@@ -27,7 +27,7 @@ dependencies {
 }
 
 group = "ink.organics"
-version = "2.0.4"
+version = "2.0.5"
 
 
 repositories {
@@ -35,6 +35,7 @@ repositories {
 }
 
 intellij {
+    // 这个版本是本地Runtime版本
     version.set("2023.3")
     updateSinceUntilBuild.set(false)
     // https://github.com/JetBrains/gradle-intellij-plugin/issues/38
@@ -95,6 +96,7 @@ tasks {
     }
 
     patchPluginXml {
+        // 这个版本是插件页面展示的最低支持版本
         sinceBuild.set("223")
 
         // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest

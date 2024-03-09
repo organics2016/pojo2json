@@ -1,5 +1,12 @@
 # POJO to JSON Changelog
 
+## [2.0.5]
+### Add
+- Add custom date format configuration
+- Add custom number configuration
+### Changed
+- Changed Default Configuration
+
 ## [2.0.4]
 ### Fixed
 - Fix bugs caused by some collection types.
