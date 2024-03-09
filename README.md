@@ -393,7 +393,7 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     java.util.UUID=#{#uuid.getValue()}
     ```
 
-#### JSON Keys Format Configuration
+#### Global JSON Keys Format Configuration
 
 |                     | Expression                                              | Result Eg   |
 |:--------------------|:--------------------------------------------------------|:------------|
@@ -438,13 +438,23 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
 | `#shortuuid`     | `#{#shortuuid.getValue()}`     | 732f65b6b9cf                         |            N             |
 | `#datetime`      | `#{#datetime.getValue()}`      | 2023-09-14T15:04:52.601+08:00        |            N             |
 
-- Custom Date Format (v2.0.5 and last)
+- Custom Date Format
   ```properties
   java.time.YearMonth=#{#datetime.getValue('yyyy-MM')}
   ```
   or need random values
   ```properties
   java.time.YearMonth=#{#datetime.getRandomValue('yyyy-MM')}
+  ```
+  
+- Custom Number types
+  ```properties
+  # Get a random number between 0 and 100, retaining 2 decimal places.
+  java.math.BigDecimal=#{#decimal.getRandomValue(0,100,2)}
+  ```
+  ```properties
+  # Get a random number between 0 and 100, retaining 2 decimal places.
+  java.math.BigDecimal=#{#decimal.getRandomValue(2)}
   ```
 
 - Custom String type
