@@ -55,7 +55,10 @@ jobs:
         run: gradle build -x test
 
       - name: Generate Changelog
-        run: echo `gradle -q printChangelog` > ${{ github.ref_name }}-CHANGELOG.txt
+        shell: bash
+        run: |
+          gradle -q printChangelog > ${{ github.ref_name }}-CHANGELOG.txt
+          cat ${{ github.ref_name }}-CHANGELOG.txt >> $GITHUB_OUTPUT
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
