@@ -27,7 +27,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ github.ref_name }}
 
       # Set up Java environment for the next steps
       - name: Setup Java
@@ -47,7 +47,7 @@ jobs:
       - name: Test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "${{ github.event.release.tag_name }}"
+        run: echo ${{ github.ref_name }}
 
 #      # Publish the plugin to JetBrains Marketplace
 #      # See https://github.com/JetBrains/intellij-platform-plugin-template
