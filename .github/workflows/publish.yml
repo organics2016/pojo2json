@@ -54,37 +54,12 @@ jobs:
           PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
         run: gradle build -x test
 
-      # Upload artifact as a release asset
+      - name: Generate Changelog
+        run: echo `gradle -q printChangelog` > ${{ github.ref_name }}-CHANGELOG.txt
+
       - name: Upload Release Asset
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.ref_name }} ./build/distributions/*
-
-      # Create a pull request
-      - name: Create Pull Request
+        uses: softprops/action-gh-release@v2
         if: ${{ github.ref_name != '' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          VERSION="${{ github.ref_name }}"
-          BRANCH="changelog-update-$VERSION"
-          LABEL="release changelog"
-
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-
-          git checkout -b $BRANCH
-          git commit -am "Changelog update - $VERSION"
-          git push --set-upstream origin $BRANCH
-
-          gh label create "$LABEL" \
-            --description "Pull requests with release changelog update" \
-            --force \
-            || true
-
-          gh pr create \
-            --title "Changelog update - \`$VERSION\`" \
-            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
-            --label "$LABEL" \
-            --head $BRANCH
-
+        with:
+          body_path: ${{ github.ref_name }}-CHANGELOG.txt
+          files: ./build/distributions/*

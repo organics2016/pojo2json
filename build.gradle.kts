@@ -49,11 +49,6 @@ intellij {
     )
 }
 
-changelog {
-    version.set("${project.version}")
-    path.set("${project.projectDir}/CHANGELOG.md")
-}
-
 tasks {
 
     withType<JavaCompile> {
@@ -77,15 +72,6 @@ tasks {
     instrumentTestCode {
         enabled = false
     }
-
-    // https://youtrack.jetbrains.com/issue/IDEA-278926#focus=Comments-27-5561012.0-0
-//    val test by getting(Test::class) {
-//        setScanForTestClasses(false)
-//        // Only run tests from classes that end with "Test"
-//        include("**/JavaTestCase.class")
-//        include("**/KotlinTestCase.class")
-//        include("**/SpELTest.class")
-//    }
 
     test {
         // 这里要签出一个完整的 Intellij IC 作为JVM语言的测试环境，并且要注意版本与 version.set("2022.3") 分发环境相同 。这个配置真蠢。
@@ -114,6 +100,10 @@ tasks {
 
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider { changelog.renderItem(changelog.getLatest(), Changelog.OutputType.HTML) })
+    }
+
+    register("printChangelog") {
+        println(changelog.renderItem(changelog.getLatest(), Changelog.OutputType.MARKDOWN))
     }
 
     signPlugin {
