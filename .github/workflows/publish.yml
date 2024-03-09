@@ -55,7 +55,6 @@ jobs:
         run: gradle build -x test
 
       - name: Generate Changelog
-        shell: bash
         run: |
           gradle -q printChangelog > ${{ github.ref_name }}-CHANGELOG.md
 
