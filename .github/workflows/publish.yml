@@ -57,12 +57,11 @@ jobs:
       - name: Generate Changelog
         shell: bash
         run: |
-          gradle -q printChangelog > ${{ github.ref_name }}-CHANGELOG.txt
-          cat ${{ github.ref_name }}-CHANGELOG.txt >> $GITHUB_OUTPUT
+          gradle -q printChangelog > ${{ github.ref_name }}-CHANGELOG.md
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
         if: ${{ github.ref_name != '' }}
         with:
-          body_path: ${{ github.ref_name }}-CHANGELOG.txt
+          body_path: ${{ github.ref_name }}-CHANGELOG.md
           files: ./build/distributions/*
