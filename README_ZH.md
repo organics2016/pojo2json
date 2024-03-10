@@ -435,7 +435,7 @@
 | `#zoneddatetime` | `#{#zoneddatetime.getValue()}` | 2023-09-14T15:04:52.601+08:00        |                          |
 | `#uuid`          | `#{#uuid.getValue()}`          | 679e70fa-d24b-4726-ab87-2de620333f20 |            N             |
 | `#shortuuid`     | `#{#shortuuid.getValue()}`     | 732f65b6b9cf                         |            N             |
-| `#datetime`      | `#{#datetime.getValue()}`      | 2023-09-14T15:04:52.601+08:00        |            N             |
+| `#datetime`      | `#{#datetime.getValue()}`      | 2023-09-14T15:04:52.601+08:00        |                          |
 
 - 自定义 Date Format
   ```properties
