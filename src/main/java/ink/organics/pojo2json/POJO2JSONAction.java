@@ -1,5 +1,6 @@
 package ink.organics.pojo2json;
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -20,6 +21,10 @@ public abstract class POJO2JSONAction extends AnAction {
         this.pojo2JSONParser = POJO2JSONParserFactory.getInstant();
     }
 
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
 
     public void pojo2jsonAction(@NotNull final PsiFile psiFile) {
         pojo2jsonAction(psiFile, null, null);
