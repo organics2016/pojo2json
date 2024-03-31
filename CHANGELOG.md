@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [2.0.6]
+### Compatible
+- Compatible with Idea 2024.1
+
 ## [2.0.5]
 ### Add
 - Add custom date format configuration
