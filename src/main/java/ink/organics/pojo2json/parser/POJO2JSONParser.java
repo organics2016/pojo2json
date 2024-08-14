@@ -41,8 +41,6 @@ public class POJO2JSONParser {
 
     private final ParserContext templateParserContext = new TemplateParserContext();
 
-    private final SettingsState settingsState = SettingsState.getInstance();
-
     public POJO2JSONParser() {
     }
 
@@ -138,14 +136,14 @@ public class POJO2JSONParser {
             }
         }
 
-        Expression expression = expressionParser.parseExpression(settingsState.fieldNameSpEL, templateParserContext);
+        Expression expression = expressionParser.parseExpression(SettingsState.getInstance().fieldNameSpEL, templateParserContext);
         return expression.getValue(EvaluationContextFactory.newEvaluationContext(pojoField), String.class);
     }
 
     private Object parseFieldValue(POJOVariable pojoVariable) {
 
         PsiType type = pojoVariable.getPsiType();
-        Map<String, String> psiTypeExpression = settingsState.classNameSpELMap;
+        Map<String, String> psiTypeExpression = SettingsState.getInstance().classNameSpELMap;
 
         if (type instanceof PsiPrimitiveType) {       //primitive Type
 
