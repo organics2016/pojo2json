@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.actionSystem.AnAction;
 import ink.organics.pojo2json.test.MyTestCase;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 
 public class DocTestModel extends TestModel {
 

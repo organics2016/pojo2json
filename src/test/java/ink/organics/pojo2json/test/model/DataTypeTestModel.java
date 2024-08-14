@@ -13,7 +13,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.*;
 
 public class DataTypeTestModel extends TestModel {
 

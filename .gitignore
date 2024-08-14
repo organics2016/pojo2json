@@ -1,4 +1,5 @@
 /.idea
+.intellijPlatform
 /.gradle
 *.iml
 */target/

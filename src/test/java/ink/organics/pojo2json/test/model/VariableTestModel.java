@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.stream.StreamSupport;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.*;
 
 public class VariableTestModel extends TestModel {
 

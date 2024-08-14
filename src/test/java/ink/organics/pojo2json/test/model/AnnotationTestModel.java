@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.intellij.openapi.actionSystem.AnAction;
 import ink.organics.pojo2json.test.MyTestCase;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.*;
 
 public class AnnotationTestModel extends TestModel {
 
