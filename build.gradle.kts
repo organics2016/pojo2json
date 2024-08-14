@@ -134,7 +134,7 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
         systemProperty("idea.home.path", "D:\\IdeaProjects\\intellij-community")
 //        systemProperty("idea.home.path", project.projectDir)
-        println(getSystemProperties())
+//        println(getSystemProperties())
     }
 
     register("printChangelog") {
