@@ -2,10 +2,10 @@
     <id>ink.organics.pojo2json</id>
     <name>POJO to JSON</name>
     <vendor email="organics2015@outlook.com" url="https://github.com/organics2016">organics2016</vendor>
-    <!--    <depends>com.intellij.modules.platform</depends>-->
-    <!--    <depends>com.intellij.modules.lang</depends>-->
-    <!--    <depends>com.intellij.java</depends>-->
-    <!--    <depends>com.intellij.properties</depends>-->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.java</depends>
+    <depends>com.intellij.properties</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="ink.organics.pojo2json.NotificationGroup"
