@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "ink.organics"
-version = "2.0.6"
+version = "2.1.0"
 
 // Configure project's dependencies
 repositories {
@@ -123,6 +123,10 @@ tasks {
 //    instrumentTestCode {
 //        enabled = false
 //    }
+
+    buildSearchableOptions {
+        enabled = false
+    }
 
     test {
         // 这里要签出一个完整的 Intellij IC 作为JVM语言的测试环境，并且要注意版本与 version.set("2022.3") 分发环境相同 。这个配置真蠢。

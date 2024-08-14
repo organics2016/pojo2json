@@ -1,5 +1,12 @@
 # POJO to JSON Changelog
 
+## [2.1.0]
+### Fixed
+- Fix https://github.com/organics2016/pojo2json/issues/40
+### Changed
+- Update gradle-intellij-plugin to 2.0.1
+- IDEA minimum supported version 2023.3
+
 ## [2.0.6]
 ### Compatible
 - Compatible with Idea 2024.1
