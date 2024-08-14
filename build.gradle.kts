@@ -82,6 +82,7 @@ intellijPlatform {
         // 这个版本是插件页面展示的最低支持版本
         ideaVersion {
             sinceBuild = "233"
+            untilBuild = provider { null }
         }
     }
 
