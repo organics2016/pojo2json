@@ -4,6 +4,7 @@
     <vendor email="organics2015@outlook.com" url="https://github.com/organics2016">organics2016</vendor>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.json</depends>
     <depends>com.intellij.java</depends>
     <depends>com.intellij.properties</depends>
 

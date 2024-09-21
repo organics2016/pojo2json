@@ -32,6 +32,7 @@ dependencies {
 
         bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.properties")
+//        bundledPlugin("com.intellij.modules.json")
         bundledPlugin("org.jetbrains.kotlin")
 
         pluginVerifier()
