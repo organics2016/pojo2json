@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "ink.organics"
-version = "2.1.0"
+version = "2.1.1"
 
 // Configure project's dependencies
 repositories {
@@ -133,7 +133,7 @@ tasks {
     test {
         // 这里要签出一个完整的 Intellij IC 作为JVM语言的测试环境，并且要注意版本与 version.set("2022.3") 分发环境相同 。这个配置真蠢。
         // https://plugins.jetbrains.com/docs/intellij/testing-faq.html#how-to-test-a-jvm-language
-        systemProperty("idea.home.path", "D:\\IdeaProjects\\intellij-community")
+        systemProperty("idea.home.path", "E:\\IdeaProjects\\intellij-community")
 //        systemProperty("idea.home.path", project.projectDir)
 //        println(getSystemProperties())
     }

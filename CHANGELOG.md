@@ -1,5 +1,9 @@
 # POJO to JSON Changelog
 
+## [2.1.1]
+### Compatible
+- Compatible with Idea 2024.3
+
 ## [2.1.0]
 ### Fixed
 - Fix https://github.com/organics2016/pojo2json/issues/40
