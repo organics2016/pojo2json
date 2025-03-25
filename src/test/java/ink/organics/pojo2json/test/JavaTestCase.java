@@ -14,8 +14,9 @@ public class JavaTestCase extends MyTestCase {
 
 
     public void testCurrent() {
-        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuAction());
+//        dataTypeTestModel.testSpecialObjectTestPOJO("SpecialObjectTestPOJO.java", new EditorPopupMenuAction());
 //        dataTypeTestModel.testGenericTestPOJO("GenericTestPOJO.java", new EditorPopupMenuAction());
+        annotationTestModel.testJsonNamingTestPOJO("JsonNamingTestPOJO.java", new EditorPopupMenuAction());
     }
 
     public void testJavaVariable() {

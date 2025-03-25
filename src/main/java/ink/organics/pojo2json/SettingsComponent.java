@@ -44,7 +44,7 @@ public class SettingsComponent {
                 .addVerticalGap(10)
                 .addComponent(
                         UI.PanelFactory.panel(fieldNameSpELEditor)
-                                .withLabel("Global JSON keys format")
+                                .withLabel("Global JSON keys style")
                                 .withComment("""
                                         <p>
                                         <a href="https://github.com/organics2016/pojo2json#json-keys-format-configuration">More details.</a>

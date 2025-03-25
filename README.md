@@ -325,6 +325,42 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     }
     ```
 
+## JSON Keys Style Configuration
+
+There are currently two ways to control the JSON keys output style. It can be used at the same time, but with different
+priorities.
+
+1. @JsonNaming (High priority)
+      ```java
+        import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+        import com.fasterxml.jackson.databind.annotation.JsonNaming;
+        @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+        class SnakeCaseStrategyTestPOJO {
+            private String firstName;
+        }
+        /*
+        paste result:
+        {
+        "first_name" : "first_name_4123f1bb9e1b"
+        }
+        */
+      ```
+2. Global JSON Keys Format Configuration (Low priority)
+
+   <kbd>IntelliJ IDEA</kbd> > <kbd>File</kbd> > <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>POJO to JSON</kbd> > <kbd>
+   Global JSON keys format</kbd><br>
+   Enter the required expression directly in the input box and apply.
+
+   |                     | Expression                                              | src `{"testName":""}` |
+   |:--------------------|:--------------------------------------------------------|:----------------------|
+   | Camel Case(Default) | `#{#field.getName()}` or `#{#field.getCamelCaseName()}` | `{"testName":""}`     |
+   | Snake Case          | `#{#field.getSnakeCaseName()}`                          | `{"test_name":""}`    |
+   | Kebab Case          | `#{#field.getKebabCaseName()}`                          | `{"test-name":""}`    |
+   | Pascal Case         | `#{#field.getPascalCaseName()}`                         | `{"TestName":""}`     |
+   | Snake Case Upper    | `#{#field.getSnakeCaseUpperName()}`                     | `{"TEST_NAME":""}`    |
+   | Lower Case          | `#{#field.getLowerCaseName()}`                          | `{"testname":""}`     |
+   | Lower Dot Case      | `#{#field.getLowerDotCaseName()}`                       | `{"test.name":""}`    |
+
 ## Configure SpEL expression
 
 ### What can [SpEL expression][spel-url] do?
@@ -392,16 +428,6 @@ A simple plugin for converting POJO to JSON in IntelliJ IDEA
     java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
-
-#### Global JSON Keys Format Configuration
-
-|                     | Expression                                              | Result Eg   |
-|:--------------------|:--------------------------------------------------------|:------------|
-| Camel Case(Default) | `#{#field.getName()}` or `#{#field.getCamelCaseName()}` | `testName`  |
-| Snake Case          | `#{#field.getSnakeCaseName()}`                          | `test_name` |
-| Kebab Case          | `#{#field.getKebabCaseName()}`                          | `test-name` |
-| Pascal Case         | `#{#field.getPascalCaseName()}`                         | `TestName`  |
-| Snake Case Upper    | `#{#field.getSnakeCaseUpperName()}`                     | `TEST_NAME` |
 
 #### Configuration Details
 

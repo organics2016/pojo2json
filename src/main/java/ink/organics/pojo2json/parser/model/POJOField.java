@@ -1,6 +1,7 @@
 package ink.organics.pojo2json.parser.model;
 
 import com.google.common.base.CaseFormat;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 
 import java.util.List;
@@ -9,15 +10,17 @@ public class POJOField extends POJOVariable {
 
     protected final PsiField psiField;
 
-    protected POJOField(PsiField psiField) {
+    protected final PsiClass psiFieldClass;
+
+    protected POJOField(PsiField psiField, PsiClass psiFieldClass) {
         super(psiField);
         this.psiField = psiField;
+        this.psiFieldClass = psiFieldClass;
     }
 
-    public static POJOField init(PsiField psiField,
-                                 POJOClass pojoClass) {
+    public static POJOField init(PsiField psiField, POJOClass pojoClass) {
 
-        var pojo = new POJOField(psiField);
+        var pojo = new POJOField(psiField, pojoClass.psiClass);
         pojo.recursionLevel = pojoClass.recursionLevel;
         pojo.ignoreProperties = pojoClass.ignoreProperties;
         pojo.psiClassGenerics = pojoClass.psiClassGenerics;
@@ -30,6 +33,10 @@ public class POJOField extends POJOVariable {
 
     public PsiField getPsiField() {
         return psiField;
+    }
+
+    public PsiClass getPsiFieldClass() {
+        return psiFieldClass;
     }
 
     public String getCamelCaseName() {
@@ -50,5 +57,13 @@ public class POJOField extends POJOVariable {
 
     public String getSnakeCaseUpperName() {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, this.psiField.getName());
+    }
+
+    public String getLowerCaseName() {
+        return this.getCamelCaseName().toLowerCase();
+    }
+
+    public String getLowerDotCaseName() {
+        return this.getKebabCaseName().replace("-", ".");
     }
 }
