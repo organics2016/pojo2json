@@ -326,6 +326,41 @@
     }
     ```
 
+## JSON Keys Style Configuration
+
+目前有两种方式可以控制 JSON Keys 的输出样式，可以同时使用，但优先级不同。
+
+1. @JsonNaming (高优先级)
+      ```java
+        import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+        import com.fasterxml.jackson.databind.annotation.JsonNaming;
+        @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+        class SnakeCaseStrategyTestPOJO {
+            private String firstName;
+        }
+        /*
+        paste result:
+        {
+        "first_name" : "first_name_4123f1bb9e1b"
+        }
+        */
+      ```
+2. Global JSON Keys Style Configuration (低优先级)
+
+   <kbd>IntelliJ IDEA</kbd> > <kbd>File</kbd> > <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>POJO to JSON</kbd> > <kbd>
+   Global JSON keys style</kbd><br>
+   直接在输入框中输入所需的表达式并应用。
+
+   |                     | Expression                                              | src `{"testName":""}` |
+   |:--------------------|:--------------------------------------------------------|:----------------------|
+   | Camel Case(Default) | `#{#field.getName()}` or `#{#field.getCamelCaseName()}` | `{"testName":""}`     |
+   | Snake Case          | `#{#field.getSnakeCaseName()}`                          | `{"test_name":""}`    |
+   | Kebab Case          | `#{#field.getKebabCaseName()}`                          | `{"test-name":""}`    |
+   | Pascal Case         | `#{#field.getPascalCaseName()}`                         | `{"TestName":""}`     |
+   | Snake Case Upper    | `#{#field.getSnakeCaseUpperName()}`                     | `{"TEST_NAME":""}`    |
+   | Lower Case          | `#{#field.getLowerCaseName()}`                          | `{"testname":""}`     |
+   | Lower Dot Case      | `#{#field.getLowerDotCaseName()}`                       | `{"test.name":""}`    |
+
 ## Configure SpEL expression
 
 ### [SpEL expression][spel-url] 能做什么?
@@ -392,16 +427,6 @@
     java.util.Map=#{#object.getValue()}
     java.util.UUID=#{#uuid.getValue()}
     ```
-
-#### Global JSON Keys Format Configuration
-
-|                     | Expression                                              | Result Eg   |
-|:--------------------|:--------------------------------------------------------|:------------|
-| Camel Case(Default) | `#{#field.getName()}` or `#{#field.getCamelCaseName()}` | `testName`  |
-| Snake Case          | `#{#field.getSnakeCaseName()}`                          | `test_name` |
-| Kebab Case          | `#{#field.getKebabCaseName()}`                          | `test-name` |
-| Pascal Case         | `#{#field.getPascalCaseName()}`                         | `TestName`  |
-| Snake Case Upper    | `#{#field.getSnakeCaseUpperName()}`                     | `TEST_NAME` |
 
 #### Configuration Details
 

@@ -345,10 +345,10 @@ priorities.
         }
         */
       ```
-2. Global JSON Keys Format Configuration (Low priority)
+2. Global JSON Keys Style Configuration (Low priority)
 
    <kbd>IntelliJ IDEA</kbd> > <kbd>File</kbd> > <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>POJO to JSON</kbd> > <kbd>
-   Global JSON keys format</kbd><br>
+   Global JSON keys style</kbd><br>
    Enter the required expression directly in the input box and apply.
 
    |                     | Expression                                              | src `{"testName":""}` |
