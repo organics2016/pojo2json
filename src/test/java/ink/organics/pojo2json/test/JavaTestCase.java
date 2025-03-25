@@ -38,6 +38,7 @@ public class JavaTestCase extends MyTestCase {
         annotationTestModel.testJsonIgnoreTestPOJO("JsonIgnoreTestPOJO.java", new EditorPopupMenuAction());
         annotationTestModel.testJsonIgnorePropertiesTestPOJO("JsonIgnorePropertiesTestPOJO.java", new EditorPopupMenuAction());
         annotationTestModel.testJsonIgnoreTypeTestPOJO("JsonIgnoreTypeTestPOJO.java", new EditorPopupMenuAction());
+        annotationTestModel.testJsonNamingTestPOJO("JsonNamingTestPOJO.java", new EditorPopupMenuAction());
     }
 
 
