@@ -28,8 +28,8 @@ public class SettingsComponent {
         String comment = """
                 <p>
                 This is a .properties configuration.
-                The Key is Reference Class, and Value is <a href="https://docs.spring.io/spring-framework/reference/core/expressions.html">SpEL expression.</a>
-                Clear the configuration and save, the default configuration will be initialized.
+                The Key is Reference Class, and Value is <a href="https://docs.spring.io/spring-framework/reference/core/expressions.html">SpEL expression.</a><br>
+                If this plugin does not work, you can try clearing this configuration and saving it, this plugin will automatically initialize the default configuration.
                 <a href="https://github.com/organics2016/pojo2json#configure-spel-expression">More details.</a>
                 </p>
                 """;
