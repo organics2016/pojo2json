@@ -1,5 +1,11 @@
 # POJO to JSON Changelog
 
+## [2.1.2]
+### Add
+- Support for @JsonNaming
+- Add Lower Case expression
+- Add Lower Dot Case expression
+
 ## [2.1.1]
 ### Compatible
 - Compatible with Idea 2024.3

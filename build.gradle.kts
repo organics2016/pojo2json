@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "ink.organics"
-version = "2.1.1"
+version = "2.1.2"
 
 // Configure project's dependencies
 repositories {
