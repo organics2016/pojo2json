@@ -47,7 +47,7 @@ public class SettingsComponent {
                                 .withLabel("Global JSON keys style")
                                 .withComment("""
                                         <p>
-                                        <a href="https://github.com/organics2016/pojo2json#json-keys-format-configuration">More details.</a>
+                                        <a href="https://github.com/organics2016/pojo2json#json-keys-style-configuration">More details.</a>
                                         </p>
                                         """)
                                 .createPanel()
