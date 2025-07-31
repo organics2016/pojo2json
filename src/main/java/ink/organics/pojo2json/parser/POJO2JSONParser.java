@@ -28,7 +28,14 @@ public class POJO2JSONParser {
 
     private final GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
 
-    private final List<String> iterableTypes = List.of("java.lang.Iterable", "java.util.Collection", "java.util.AbstractCollection", "java.util.List", "java.util.AbstractList", "java.util.Set", "java.util.AbstractSet");
+    private final List<String> iterableTypes = List.of(
+            "java.lang.Iterable",
+            "java.util.Collection",
+            "java.util.AbstractCollection",
+            "java.util.List",
+            "java.util.AbstractList",
+            "java.util.Set",
+            "java.util.AbstractSet");
 
     private final ExpressionParser expressionParser = new SpelExpressionParser();
 
@@ -59,7 +66,10 @@ public class POJO2JSONParser {
         if (annotation != null) {
             return null;
         }
-        return Arrays.stream(psiClass.getAllFields()).map(field -> parseField(pojoClass.toField(field))).filter(Objects::nonNull).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (ov, nv) -> ov, LinkedHashMap::new));
+        return Arrays.stream(psiClass.getAllFields())
+                .map(field -> parseField(pojoClass.toField(field)))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (ov, nv) -> ov, LinkedHashMap::new));
     }
 
 
@@ -177,13 +187,21 @@ public class POJO2JSONParser {
 
             if (psiClass.isEnum()) { // enum
 
-                return Arrays.stream(psiClass.getAllFields()).filter(psiField -> psiField instanceof PsiEnumConstant).findFirst().map(PsiField::getName).orElse("");
+                return Arrays.stream(psiClass.getAllFields())
+                        .filter(psiField -> psiField instanceof PsiEnumConstant)
+                        .findFirst()
+                        .map(PsiField::getName)
+                        .orElse("");
 
             } else {
 
                 List<String> fieldTypeNames = new ArrayList<>();
                 fieldTypeNames.add(psiClass.getQualifiedName());
-                fieldTypeNames.addAll(Arrays.stream(psiClass.getSupers()).map(PsiClass::getQualifiedName).toList());
+                fieldTypeNames.addAll(
+                        Arrays.stream(psiClass.getSupers())
+                                .map(PsiClass::getQualifiedName)
+                                .toList()
+                );
                 fieldTypeNames = fieldTypeNames.stream().filter(Objects::nonNull).toList();
 
                 List<String> retain = new ArrayList<>(fieldTypeNames);
@@ -230,7 +248,10 @@ public class POJO2JSONParser {
     private Map<String, PsiType> getPsiClassGenerics(PsiType type) {
         PsiClass psiClass = PsiUtil.resolveClassInClassTypeOnly(type);
         if (psiClass != null) {
-            return Arrays.stream(psiClass.getTypeParameters()).map(p -> Pair.of(p, PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false))).filter(p -> p.getValue() != null).collect(Collectors.toMap(p -> p.getKey().getName(), Pair::getValue));
+            return Arrays.stream(psiClass.getTypeParameters())
+                    .map(p -> Pair.of(p, PsiUtil.substituteTypeParameter(type, psiClass, p.getIndex(), false)))
+                    .filter(p -> p.getValue() != null)
+                    .collect(Collectors.toMap(p -> p.getKey().getName(), Pair::getValue));
         }
         return Map.of();
     }
