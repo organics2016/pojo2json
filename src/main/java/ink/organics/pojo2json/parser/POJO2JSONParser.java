@@ -56,6 +56,9 @@ public class POJO2JSONParser {
             result = parseClass(POJOClass.init(((UClass) uElement).getJavaPsi()));
         }
 
+        // TODO 这里无法获取到完整JSONTree的注释信息，无法采用ReaderStream的方式填充 json-string
+        // 1、遍历整棵树，填充注释。
+        // 2、在解析Value时将注释写入到Value
         return gsonBuilder.create().toJson(result);
     }
 
